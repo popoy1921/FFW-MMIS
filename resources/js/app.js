@@ -1,7 +1,11 @@
-import './bootstrap';
-
+import $ from 'jquery';
+import '@popperjs/core';
+import 'bootstrap';
+import 'jquery-easing';
+import 'datatables';
 import Alpine from 'alpinejs';
 
-window.Alpine = Alpine;
+window.$ = window.jQuery = $;
 
+window.Alpine = Alpine;
 Alpine.start();

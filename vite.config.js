@@ -5,8 +5,19 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+                // css 
                 'resources/css/app.css',
-                'resources/js/app.js',
+                'resources/css/common.css',
+                'resources/css/sb-admin-2.css',
+                'resources/css/sb-admin-2.min.css',
+                
+                
+                'resources/scss/app.scss',
+
+                'resources/js/common.js',
+                'resources/js/datatables-demo.js',
+                'resources/js/sb-admin-2.js',
+                'resources/js/sb-admin-2.min.js',
             ],
             refresh: true,
         }),

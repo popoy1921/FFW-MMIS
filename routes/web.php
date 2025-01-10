@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PageRendererController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,12 +26,12 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     // SUPER-ADMIN
     Route::middleware('checkUserRole:1')->group(function () {
-        Route::get('/super-admin/blank', [ProfileController::class, 'edit'])->name('super-admin.blank');
+        Route::get('/super-admin/blank', [PageRendererController::class, 'showSuperAdminBlankPage'])->name('super-admin.blank');
     });
     
     // ADMIN
     Route::middleware('checkUserRole:2')->group(function () {
-        Route::get('/admin/blank', [ProfileController::class, 'edit'])->name('admin.blank');
+        Route::get('/admin/blank', [PageRendererController::class, 'showAdminBlankPage'])->name('admin.blank');
     });
 
     // FEDERATION-POINT-PERSON
