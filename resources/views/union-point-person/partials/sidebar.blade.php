@@ -5,7 +5,11 @@
 		<a href="{{ route('union-point-person.profile') }}">
             <img src="{{ asset('images/company-logo.png') }}" />
         </a>
-	</div>    
+	</div>
+
+    <div class="sidebar-heading">
+        Local Union Details
+    </div>
 
     <li class="nav-item{{ $page === 'union_profile' ? ' active' : ''}}" id="nav-local-union-details">
         <a class="nav-link" href="{{ route('union-point-person.profile') }}">
