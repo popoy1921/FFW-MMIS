@@ -28,7 +28,7 @@ class RedirectIfAuthenticated
                     return redirect()->route('admin');
                 }
                 if (auth()->user()->role_id === 3) {
-                    return redirect()->route('federation-point-person');
+                    return redirect()->route('federation-point-person.profile');
                 }
                 if (auth()->user()->role_id === 4) {
                     return redirect()->route('union-point-person.profile');

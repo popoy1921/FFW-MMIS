@@ -60,10 +60,10 @@ class RegisteredUserController extends Controller
             return redirect()->route('admin');
         }
         if ((int)auth()->user()->role_id === 3) {
-            return redirect()->route('federation-point-person');
+            return redirect()->route('federation-point-person.profile');
         }
         if ((int)auth()->user()->role_id === 4) {
-            return redirect()->route('union-point-person');
+            return redirect()->route('union-point-person.profile');
         }
     }
 }
