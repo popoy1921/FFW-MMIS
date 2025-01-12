@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -18,9 +19,17 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'guid',
         'email',
         'password',
+        'fname',
+        'mname',
+        'lname',
+        'photo',
+        'status_id',
+        'role_id',
+        'trade_federation_id',
+        'local_union_id',
     ];
 
     /**
@@ -42,4 +51,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Automatically generate a UUID when creating a new instance
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->guid = (string) Str::uuid();
+        });
+    }
 }

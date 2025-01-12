@@ -1,0 +1,46 @@
+/* Public */
+img.company-logo {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+/* Sidebar */
+#accordionSidebar {
+    background: #484093 !important;
+}
+
+#accordionSidebar li.nav-item.active {
+    background-color: #2d2762;
+}
+
+#accordionSidebar .company-logo img {
+    width: 100px;
+}
+
+#accordionSidebar.toggled .company-logo img {
+    width: 80px;
+}
+
+#sidebarToggleDiv {
+    border-top: 1px solid #ffffff1f;
+    padding: 20px 0px !important;
+    margin: 20px 10px !important;
+}
+
+/* Modal */
+.modal {
+    z-index: 4 !important;
+}
+
+.modal-backdrop {
+    z-index: 3 !important;
+}
+
+/* Page */
+.page-header {
+    color: #2d2762;
+}
+
+.card-title {
+    color: black;
+}
