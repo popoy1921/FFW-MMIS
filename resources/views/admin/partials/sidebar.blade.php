@@ -2,7 +2,7 @@
 
     <!-- Sidebar - Logo -->
     <div class="company-logo my-3 text-center">
-		<a href="{{ route('admin.blank') }}">
+		<a href="{{ route('admin') }}">
             <img src="{{ asset('images/company-logo.png') }}" />
         </a>
 	</div>

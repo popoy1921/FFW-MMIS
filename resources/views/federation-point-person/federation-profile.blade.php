@@ -11,7 +11,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-		@include('super-admin.partials.sidebar-super-admin')
+		@include('federation-point-person.partials.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -29,16 +29,16 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 page-header">Blank</h1>
+                        <h1 class="h3 mb-0 page-header">Trade Federation Details</h1>
                     </div>
 
                     <!-- Content  -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold card-title">Blank Example</h6>
+                            <h6 class="m-0 font-weight-bold card-title">Header 1</h6>
                         </div>
                         <div class="card-body">
-                            Hi Super admin!
+                            Hi Federation Point Person! -- for contect
                         </div>
                     </div>
 

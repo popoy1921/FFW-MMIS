@@ -26,22 +26,22 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     // SUPER-ADMIN
     Route::middleware('checkUserRole:1')->group(function () {
-        Route::get('/super-admin/blank', [PageRendererController::class, 'showSuperAdminBlankPage'])->name('super-admin.blank');
+        Route::get('/super-admin', [PageRendererController::class, 'showSuperAdminBlankPage'])->name('super-admin');
     });
     
     // ADMIN
     Route::middleware('checkUserRole:2')->group(function () {
-        Route::get('/admin/blank', [PageRendererController::class, 'showAdminBlankPage'])->name('admin.blank');
+        Route::get('/admin', [PageRendererController::class, 'showAdminBlankPage'])->name('admin');
     });
 
     // FEDERATION-POINT-PERSON
     Route::middleware('checkUserRole:3')->group(function () {
-        Route::get('/federation-point-person/blank', [ProfileController::class, 'edit'])->name('federation-point-person.blank');
+        Route::get('/federation-point-person', [PageRendererController::class, 'showFederationProfilePage'])->name('federation-point-person.profile');
     });
 
     // UNION-POINT-PERSON
     Route::middleware('checkUserRole:4')->group(function () {
-        Route::get('/union-point-person/blank', [ProfileController::class, 'edit'])->name('union-point-person.blank');
+        Route::get('/union-point-person/union-profile', [PageRendererController::class, 'showUnionProfilePage'])->name('union-point-person.profile');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

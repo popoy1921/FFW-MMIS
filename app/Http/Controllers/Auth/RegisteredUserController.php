@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
             'lname'                 => '1',
             'photo'                 => '1',
             'status_id'             => '1',
-            'role_id'               => '4',
+            'role_id'               => $request->role_id,
             'trade_federation_id'   => '1',
             'local_union_id'        => '1',
         ]);
@@ -53,6 +53,17 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        if ((int)auth()->user()->role_id === 1) {
+            return redirect()->route('super-admin');
+        }
+        if ((int)auth()->user()->role_id === 2) {
+            return redirect()->route('admin');
+        }
+        if ((int)auth()->user()->role_id === 3) {
+            return redirect()->route('federation-point-person');
+        }
+        if ((int)auth()->user()->role_id === 4) {
+            return redirect()->route('union-point-person');
+        }
     }
 }
