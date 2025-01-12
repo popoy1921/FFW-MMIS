@@ -7,10 +7,15 @@
         </a>
 	</div>    
 
+    <!-- Trade Federation Details Header -->
+    <div class="sidebar-heading">
+        Trade Federation Details
+    </div>
+
     <li class="nav-item{{ $page === 'federation_profile' ? ' active' : ''}}" id="nav-local-union-details">
         <a class="nav-link" href="{{ route('federation-point-person.profile') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Trade Federation Profile</span>
+            <span>Details</span>
         </a>
     </li>
 
@@ -20,6 +25,14 @@
             <span>Point Persons</span>
         </a>
     </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider mt-0 mb-3">
+
+    <!-- Local Unions Header --> 
+    <div class="sidebar-heading">
+        Local Unions
+    </div>
 
     <li class="nav-item" id="nav-local-union-details">
         <a class="nav-link" href="#">

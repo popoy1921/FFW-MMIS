@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
         if (auth()->user()->status_id === 0) {
             $request->session()->flush();
             throw ValidationException::withMessages([
-                'email' => 'Your account is currently inactive. Please contact support for assistance in reactivating your account.',
+                'email' => 'Your account is currently inactive. Please contact Admin for assistance in reactivating your account.',
             ]);
         }
 

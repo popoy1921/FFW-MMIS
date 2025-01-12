@@ -42,7 +42,7 @@
     <li class="nav-item" id="nav-blank">
         <a class="nav-link" href="#">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Wage and Benefits</span>
+            <span>Wages and Benefits</span>
         </a>
     </li>
 
