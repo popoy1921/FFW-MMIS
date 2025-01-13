@@ -22,10 +22,10 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 if (auth()->user()->role_id === 1) {
-                    return redirect()->route('super-admin');
+                    return redirect()->route('super-admin.users');
                 }
                 if (auth()->user()->role_id === 2) {
-                    return redirect()->route('admin');
+                    return redirect()->route('admin.local-unions');
                 }
                 if (auth()->user()->role_id === 3) {
                     return redirect()->route('federation-point-person.profile');

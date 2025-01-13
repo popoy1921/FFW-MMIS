@@ -63,12 +63,12 @@
 
         <!-- Nav Item - Menus (Visible only on large screens) -->
         <li class="nav-item d-none d-lg-inline" id="nav-local-unions">
-            <a class="nav-link " href="{{ route('union-point-person.profile')}}">
+            <a class="nav-link " href="#">
                 <span class="mr-2">Local Unions</span>
             </a>
         </li>
         <li class="nav-item d-none d-lg-inline {{ $top_menu === 'trade_federation' ? 'active' : '' }}" id="nav-local-unions">
-            <a class="nav-link " href="{{ route('union-point-person.profile')}}">
+            <a class="nav-link " href="{{ route('federation-point-person.profile') }}">
                 <span class="mr-2">Trade Federation Details</span>
             </a>
         </li>
@@ -83,11 +83,131 @@
             <!-- Dropdown - Menus -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="menuDropdown">
-                <a class="dropdown-item" href="{{ route('union-point-person.profile')}}">
+                <a class="dropdown-item" href="#">
                     <span>Local Unions</span>
                 </a>
-                <a class="dropdown-item {{ $top_menu === 'trade_federation' ? 'active' : '' }}" href="{{ route('union-point-person.profile')}}">
+                <a class="dropdown-item {{ $top_menu === 'trade_federation' ? 'active' : '' }}" href="{{ route('federation-point-person.profile') }}">
                     <span>Trade Federations Details</span>
+                </a>
+            </div>
+        </li>
+
+        <div class="topbar-divider d-sm-block"></div>
+        
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow" id="nav-profile">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>
+                <img class="img-profile rounded-circle" src="{{ asset('images/default-user.jpg') }}">
+                <small class="fas fa-angle-down text-gray-600 ml-1"></small>
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Account Settings
+                </a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cb-logout-modal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+            </div>
+        </li>
+
+    </ul>
+    @elseif ((int)auth()->user()->role_id === 2)
+    <!-- Topbar Navbar for Admin -->
+    <ul id="navbar-for-admin" class="navbar-nav ml-auto">
+
+        <!-- Nav Item - Menus (Visible only on large screens) -->
+        <li class="nav-item d-none d-lg-inline {{ $top_menu === 'local_union' ? 'active' : '' }}" id="nav-local-unions">
+            <a class="nav-link " href="{{ route('admin.local_unions') }}">
+                <span class="mr-2">Local Unions</span>
+            </a>
+        </li>
+        <li class="nav-item d-none d-lg-inline" id="nav-local-unions">
+            <a class="nav-link " href="#">
+                <span class="mr-2">Trade Federations</span>
+            </a>
+        </li>
+        <li class="nav-item d-none d-lg-inline" id="nav-local-unions">
+            <a class="nav-link " href="#">
+                <span class="mr-2">Trade Federations</span>
+            </a>
+        </li>
+        
+        <!-- Nav Item - Menus (Visible only on small screens) -->
+        <li class="nav-item dropdown no-arrow d-sm-none " id="nav-menus">
+            <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2">Menus</span>
+                <small class="fas fa-angle-down text-gray-600 ml-1"></small>
+            </a>
+            <!-- Dropdown - Menus -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="menuDropdown">
+                <a class="dropdown-item {{ $top_menu === 'local_union' ? 'active' : '' }}" href="{{ route('admin.local_unions') }}">
+                    <span>Local Unions</span>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span>Trade Federations</span>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span>Users</span>
+                </a>
+            </div>
+        </li>
+
+        <div class="topbar-divider d-sm-block"></div>
+        
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow" id="nav-profile">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>
+                <img class="img-profile rounded-circle" src="{{ asset('images/default-user.jpg') }}">
+                <small class="fas fa-angle-down text-gray-600 ml-1"></small>
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Account Settings
+                </a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cb-logout-modal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+            </div>
+        </li>
+
+    </ul>
+    @elseif ((int)auth()->user()->role_id === 1)
+    <!-- Topbar Navbar for Super-Admin -->
+    <ul id="navbar-for-super-admin" class="navbar-nav ml-auto">
+
+        <!-- Nav Item - Menus (Visible only on large screens) -->
+        <li class="nav-item d-none d-lg-inline active" id="nav-local-unions">
+            <a class="nav-link " href="{{ route('super-admin.users') }}">
+                <span class="mr-2">Local Unions</span>
+            </a>
+        </li>
+        
+        <!-- Nav Item - Menus (Visible only on small screens) -->
+        <li class="nav-item dropdown no-arrow d-sm-none " id="nav-menus">
+            <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2">Menus</span>
+                <small class="fas fa-angle-down text-gray-600 ml-1"></small>
+            </a>
+            <!-- Dropdown - Menus -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="menuDropdown">
+                <a class="dropdown-item active" href="{{ route('super-admin.users') }}">
+                    <span>Users</span>
                 </a>
             </div>
         </li>

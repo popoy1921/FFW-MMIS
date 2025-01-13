@@ -15,7 +15,7 @@ class PageRendererController extends Controller
      */
     public function showSuperAdminBlankPage() : View
     {
-        return view('super-admin.blank');
+        return view('super-admin.users');
     }
     
     // ------------------- ADMIN -------------------
@@ -26,7 +26,10 @@ class PageRendererController extends Controller
      */
     public function showAdminBlankPage() : View
     {
-        return view('admin.blank');
+        $aPageDetails = array(
+            'top_menu' => 'local_union',
+        );
+        return view('admin.local-unions', $aPageDetails);
     }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------
