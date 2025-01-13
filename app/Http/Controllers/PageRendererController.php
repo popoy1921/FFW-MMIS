@@ -37,7 +37,10 @@ class PageRendererController extends Controller
      */
     public function showFederationProfilePage() : View
     {
-        return view('federation-point-person.federation-profile', array('page' => 'federation_profile'));
+        $aPageDetails = array(
+            'top_menu' => 'trade_federation',
+        );
+        return view('federation-point-person.federation-profile', $aPageDetails);
     }
 
     // ------------------- UNION-POINT-PERSON -------------------
