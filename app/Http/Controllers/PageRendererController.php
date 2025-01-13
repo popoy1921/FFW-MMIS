@@ -7,6 +7,17 @@ use Illuminate\View\View;
 
 class PageRendererController extends Controller
 {
+    // ------------------- UNION-POINT-PERSON -------------------
+    /**
+     * showUnionProfilePage
+     *
+     * @return View
+     */
+    public function showForgotPasswordPage() : View
+    {
+        return view('guest.forgot-password');
+    }
+
     // ------------------- SUPER-ADMIN -------------------
     /**
      * showSuperAdminBlankPage

@@ -7,9 +7,9 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password as PasswordRules;
 use Illuminate\View\View;
 
 class NewPasswordController extends Controller
@@ -17,9 +17,26 @@ class NewPasswordController extends Controller
     /**
      * Display the password reset view.
      */
-    public function create(Request $request): View
+    public function create(Request $request): View | RedirectResponse
     {
+        // Retrieve the user based on the email
+        $user = \App\Models\User::where('email', $request->email)->first();
+
+        // Validate the password reset token
+        $broker = Password::broker();
+        if (!$user || !$broker->getRepository()->exists($user, $request->token)) {
+            return redirect()->route('password.email')->withErrors(['email' => "This password reset link has expired or is invalid. Please request a new one."]);
+        }
+
         return view('auth.reset-password', ['request' => $request]);
+    }
+
+    /**
+     * Display the password reset view.
+     */
+    public function showInvalidPage (): View
+    {
+        return view('guest.invalid-reset-password');
     }
 
     /**
@@ -32,7 +49,7 @@ class NewPasswordController extends Controller
         $request->validate([
             'token' => ['required'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'string', PasswordRules::min(8)->mixedCase()->numbers()->symbols(), 'confirmed'],
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -53,9 +70,11 @@ class NewPasswordController extends Controller
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
+        session()->flash('success', 'Your password has been successfully reset.');
+
         return $status == Password::PASSWORD_RESET
                     ? redirect()->route('login')->with('status', __($status))
                     : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+                            ->withErrors(['password' => __($status)]);
     }
 }
