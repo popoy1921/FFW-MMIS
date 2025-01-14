@@ -6,13 +6,15 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
-class UserRolesSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     public function run()
     {
         DB::table('users')->insert([
             [
+                'guid'                  => (string) Str::uuid(),
                 'email'                 => 'superadmin.user@mailinator.com',
                 'password'              => Hash::make('S@mple123'),
                 'fname'                 => 'Super Admin User',
@@ -25,6 +27,7 @@ class UserRolesSeeder extends Seeder
                 'local_union_id'        => '1',
             ],
             [
+                'guid'                  => (string) Str::uuid(),
                 'email'                 => 'admin.user@mailinator.com',
                 'password'              => Hash::make('S@mple123'),
                 'fname'                 => 'Admin User',
@@ -37,6 +40,7 @@ class UserRolesSeeder extends Seeder
                 'local_union_id'        => '1',
             ],
             [
+                'guid'                  => (string) Str::uuid(),
                 'email'                 => 'federation.user@mailinator.com',
                 'password'              => Hash::make('S@mple123'),
                 'fname'                 => 'Super Admin User',
@@ -49,6 +53,7 @@ class UserRolesSeeder extends Seeder
                 'local_union_id'        => '1',
             ],
             [
+                'guid'                  => (string) Str::uuid(),
                 'email'                 => 'union.user@mailinator.com',
                 'password'              => Hash::make('S@mple123'),
                 'fname'                 => 'Super Admin User',

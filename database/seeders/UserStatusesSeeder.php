@@ -6,17 +6,17 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserRolesSeeder extends Seeder
+class UserStatusesSeeder extends Seeder
 {
     public function run()
     {
         DB::table('lu_user_statuses')->insert([
             [
-                'id'          => '0',
+                'id'          => 0,
                 'description' => 'Inactive',
             ],
             [
-                'id'          => '1',
+                'id'          => 1,
                 'description' => 'Active',
             ],
         ]);

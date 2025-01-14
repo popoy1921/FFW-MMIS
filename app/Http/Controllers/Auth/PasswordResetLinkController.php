@@ -32,7 +32,7 @@ class PasswordResetLinkController extends Controller
 
         if (User::where('email', $request->email)->exists() === false) {
             return back()->withInput($request->only('email'))
-                ->withErrors(['email' => 'No account found with that email/username. Please check and try again.']);
+                ->withErrors(['email' => 'No account found with that email. Please check and try again.']);
         }
 
         // We will send the password reset link to this user. Once we have attempted

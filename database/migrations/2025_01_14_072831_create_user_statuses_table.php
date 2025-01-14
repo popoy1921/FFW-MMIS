@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lu_user_statuses', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id');
             $table->string('description');
-            $table->timestamps();
         });
     }
 
