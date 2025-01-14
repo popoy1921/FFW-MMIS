@@ -37,14 +37,14 @@
     <ul id="navbar-for-federation" class="navbar-nav ml-auto">
 
         <!-- Nav Item - Menus (Visible only on large screens) -->
-        <li class="nav-item d-none d-lg-inline" id="nav-local-unions">
-            <a class="nav-link " href="#">
-                <span class="mr-2">Local Unions</span>
-            </a>
-        </li>
         <li class="nav-item d-none d-lg-inline {{ $top_menu === 'trade_federation' ? 'active' : '' }}" id="nav-local-unions">
             <a class="nav-link " href="{{ route('federation-point-person.profile') }}">
                 <span class="mr-2">Trade Federation Details</span>
+            </a>
+        </li>
+        <li class="nav-item d-none d-lg-inline" id="nav-local-unions">
+            <a class="nav-link " href="#">
+                <span class="mr-2">Local Unions</span>
             </a>
         </li>
         
@@ -58,11 +58,11 @@
             <!-- Dropdown - Menus -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="menuDropdown">
-                <a class="dropdown-item" href="#">
-                    <span>Local Unions</span>
-                </a>
                 <a class="dropdown-item {{ $top_menu === 'trade_federation' ? 'active' : '' }}" href="{{ route('federation-point-person.profile') }}">
                     <span>Trade Federations Details</span>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span>Local Unions</span>
                 </a>
             </div>
         </li>
@@ -73,7 +73,7 @@
 
         <!-- Nav Item - Menus (Visible only on large screens) -->
         <li class="nav-item d-none d-lg-inline {{ $top_menu === 'local_union' ? 'active' : '' }}" id="nav-local-unions">
-            <a class="nav-link " href="{{ route('admin.local_unions') }}">
+            <a class="nav-link " href="{{ route('admin.local-unions') }}">
                 <span class="mr-2">Local Unions</span>
             </a>
         </li>
@@ -98,7 +98,7 @@
             <!-- Dropdown - Menus -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="menuDropdown">
-                <a class="dropdown-item {{ $top_menu === 'local_union' ? 'active' : '' }}" href="{{ route('admin.local_unions') }}">
+                <a class="dropdown-item {{ $top_menu === 'local_union' ? 'active' : '' }}" href="{{ route('admin.local-unions') }}">
                     <span>Local Unions</span>
                 </a>
                 <a class="dropdown-item" href="#">
