@@ -2,7 +2,7 @@
 
     <a class="navbar-brand mr-0 mr-md-2 company-logo" href="{{ route('union-point-person.profile')}}">
         <img src="{{ asset('images/company-logo.png') }}" />
-        <span class="d-none d-sm-inline-block">MMIS</span>
+        <span class="d-inline-block">MMIS</span>
     </a>
 
     @if ((int)auth()->user()->role_id === 4)
