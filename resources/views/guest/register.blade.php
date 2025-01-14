@@ -16,8 +16,8 @@
         
         <!-- Role ID -->
         <div class="mt-4">
-            <label>Role ID:</label>
-            <x-text-input id="role_id" class="block mt-1 w-full" type="text" name="role_id" :value="old('email')" required autocomplete="username" />
+            <label>Role ID</label>
+            <x-text-input id="role_id" class="block mt-1 w-full" type="text" name="role_id" required/>
         </div>
         <!-- Password -->
         <div class="mt-4">
