@@ -9,12 +9,6 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <div>
-            <x-input-label for="name" :value="__('Role ID')" />
-            <x-text-input id="role_id" class="block mt-1 w-full" type="text" name="role_id" :value="old('role_id')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
-        </div>
-
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
@@ -43,6 +37,40 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        
+        <!-- SHOPWIRED_API_KEY -->
+        <div class="mt-4">
+            <x-input-label for="api_key" value="API Key" />
+
+            <x-text-input id="api_key" class="block mt-1 w-full"
+                            type="password"
+                            name="api_key"/>
+
+            <x-input-error :messages="$errors->get('api_key')" class="mt-2" />
+        </div>
+
+        <!-- SHOPWIRED_API_SECRET -->
+        <div class="mt-4">
+            <x-input-label for="api_secret" value="API Secret" />
+
+            <x-text-input id="api_secret" class="block mt-1 w-full"
+                            type="password"
+                            name="api_secret"/>
+
+            <x-input-error :messages="$errors->get('api_secret')" class="mt-2" />
+        </div>
+
+        <!-- SHOPWIRED_WEBHOOK_SECRET -->
+        <div class="mt-4">
+            <x-input-label for="webhook_secret" value="Webhook Secret" />
+
+            <x-text-input id="webhook_secret" class="block mt-1 w-full"
+                            type="password"
+                            name="webhook_secret"/>
+
+            <x-input-error :messages="$errors->get('webhook_secret')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

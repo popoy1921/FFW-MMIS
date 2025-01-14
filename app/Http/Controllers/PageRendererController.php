@@ -15,7 +15,7 @@ class PageRendererController extends Controller
      */
     public function showSuperAdminBlankPage() : View
     {
-        return view('super-admin.blank');
+        return view('super-admin.users');
     }
     
     // ------------------- ADMIN -------------------
@@ -26,7 +26,10 @@ class PageRendererController extends Controller
      */
     public function showAdminBlankPage() : View
     {
-        return view('admin.blank');
+        $aPageDetails = array(
+            'top_menu' => 'local_union',
+        );
+        return view('admin.local-unions', $aPageDetails);
     }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------
@@ -37,7 +40,10 @@ class PageRendererController extends Controller
      */
     public function showFederationProfilePage() : View
     {
-        return view('federation-point-person.federation-profile', array('page' => 'federation_profile'));
+        $aPageDetails = array(
+            'top_menu' => 'trade_federation',
+        );
+        return view('federation-point-person.federation-profile', $aPageDetails);
     }
 
     // ------------------- UNION-POINT-PERSON -------------------

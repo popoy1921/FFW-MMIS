@@ -26,12 +26,12 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     // SUPER-ADMIN
     Route::middleware('checkUserRole:1')->group(function () {
-        Route::get('/super-admin', [PageRendererController::class, 'showSuperAdminBlankPage'])->name('super-admin');
+        Route::get('/super-admin', [PageRendererController::class, 'showSuperAdminBlankPage'])->name('super-admin.users');
     });
     
     // ADMIN
     Route::middleware('checkUserRole:2')->group(function () {
-        Route::get('/admin', [PageRendererController::class, 'showAdminBlankPage'])->name('admin');
+        Route::get('/admin', [PageRendererController::class, 'showAdminBlankPage'])->name('admin.local_unions');
     });
 
     // FEDERATION-POINT-PERSON
