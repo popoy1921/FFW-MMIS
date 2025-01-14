@@ -55,10 +55,10 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         if ((int)auth()->user()->role_id === 1) {
-            return redirect()->route('super-admin');
+            return redirect()->route('super-admin.users');
         }
         if ((int)auth()->user()->role_id === 2) {
-            return redirect()->route('admin');
+            return redirect()->route('admin.local_unions');
         }
         if ((int)auth()->user()->role_id === 3) {
             return redirect()->route('federation-point-person.profile');

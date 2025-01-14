@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lu_role_statuses', function (Blueprint $table) {
+        Schema::create('lu_user_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('description');
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lu_role_statuses');
+        Schema::dropIfExists('lu_user_statuses');
     }
 };
