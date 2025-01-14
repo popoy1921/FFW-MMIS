@@ -17,7 +17,7 @@
         </li>
         
         <!-- Nav Item - Menus (Visible only on small screens) -->
-        <li class="nav-item dropdown no-arrow d-sm-none " id="nav-menus">
+        <li class="nav-item dropdown no-arrow d-lg-none " id="nav-menus">
             <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2">Menus</span>
@@ -31,31 +31,6 @@
                 </a>
             </div>
         </li>
-
-        <div class="topbar-divider d-sm-block"></div>
-        
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow" id="nav-profile">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>
-                <img class="img-profile rounded-circle" src="{{ asset('images/default-user.jpg') }}">
-                <small class="fas fa-angle-down text-gray-600 ml-1"></small>
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Account Settings
-                </a>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cb-logout-modal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
-        </li>
-
     </ul>
     @elseif ((int)auth()->user()->role_id === 3)
     <!-- Topbar Navbar for Federation-Point-Person -->
@@ -74,7 +49,7 @@
         </li>
         
         <!-- Nav Item - Menus (Visible only on small screens) -->
-        <li class="nav-item dropdown no-arrow d-sm-none " id="nav-menus">
+        <li class="nav-item dropdown no-arrow d-lg-none " id="nav-menus">
             <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2">Menus</span>
@@ -91,31 +66,6 @@
                 </a>
             </div>
         </li>
-
-        <div class="topbar-divider d-sm-block"></div>
-        
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow" id="nav-profile">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>
-                <img class="img-profile rounded-circle" src="{{ asset('images/default-user.jpg') }}">
-                <small class="fas fa-angle-down text-gray-600 ml-1"></small>
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Account Settings
-                </a>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cb-logout-modal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
-        </li>
-
     </ul>
     @elseif ((int)auth()->user()->role_id === 2)
     <!-- Topbar Navbar for Admin -->
@@ -139,7 +89,7 @@
         </li>
         
         <!-- Nav Item - Menus (Visible only on small screens) -->
-        <li class="nav-item dropdown no-arrow d-sm-none " id="nav-menus">
+        <li class="nav-item dropdown no-arrow d-lg-none " id="nav-menus">
             <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2">Menus</span>
@@ -159,31 +109,6 @@
                 </a>
             </div>
         </li>
-
-        <div class="topbar-divider d-sm-block"></div>
-        
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow" id="nav-profile">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>
-                <img class="img-profile rounded-circle" src="{{ asset('images/default-user.jpg') }}">
-                <small class="fas fa-angle-down text-gray-600 ml-1"></small>
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Account Settings
-                </a>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cb-logout-modal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
-        </li>
-
     </ul>
     @elseif ((int)auth()->user()->role_id === 1)
     <!-- Topbar Navbar for Super-Admin -->
@@ -197,7 +122,7 @@
         </li>
         
         <!-- Nav Item - Menus (Visible only on small screens) -->
-        <li class="nav-item dropdown no-arrow d-sm-none " id="nav-menus">
+        <li class="nav-item dropdown no-arrow d-lg-none " id="nav-menus">
             <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2">Menus</span>
@@ -211,9 +136,11 @@
                 </a>
             </div>
         </li>
+    </ul>
+    @endif
 
-        <div class="topbar-divider d-sm-block"></div>
-        
+    <ul class="navbar-nav ml-0">
+        <div class="topbar-divider d-sm-block"></div>        
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow" id="nav-profile">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -235,8 +162,6 @@
                 </a>
             </div>
         </li>
-
     </ul>
-    @endif
 
 </nav>

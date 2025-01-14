@@ -22,7 +22,7 @@
     </div>
 
     <!-- Menus (Visible only on small screens) -->
-    <div class="dropdown no-arrow mb-4 col-sm-12 d-block d-sm-none">
+    <div class="dropdown no-arrow mb-4 col-sm-12 d-block d-lg-none">
         <button class="btn btn-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span>Menus</span>
             <i class="fas fa-angle-down text-gray-600 ml-1"></i>
