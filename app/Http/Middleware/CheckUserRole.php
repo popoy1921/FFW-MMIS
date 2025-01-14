@@ -26,7 +26,7 @@ class CheckUserRole
 
         // Check if the user has the required role
         if (Auth::user()->role_id !== (int)$role) {
-            return redirect()->route('unauthorized'); // Redirect to an unauthorized page
+            return redirect()->route('login'); // Redirect to an unauthorized page
         }
 
         return $next($request); // Allow the request to proceed

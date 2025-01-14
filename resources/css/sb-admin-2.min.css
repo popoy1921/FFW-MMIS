@@ -10974,6 +10974,7 @@ a.text-dark:hover {
 
 html {
 	position: relative;
+	height: 100%;
 	min-height: 100%
 }
 
@@ -10990,7 +10991,7 @@ a:focus {
 }
 
 #wrapper #content-wrapper {
-	background-color: #f8f9fc;
+	background-color: #fff;
 	width: 100%;
 	overflow-x: hidden
 }
@@ -11099,8 +11100,8 @@ a:focus {
 }
 
 .bg-gradient-primary {
-	background-color: #464091;
-	background-image: linear-gradient(180deg, #5a4f97 10%, #433d8e 100%);
+	background-color: #5a4f97;
+	/* background-image: linear-gradient(180deg, #5a4f97 10%, #433d8e 100%); */
 	background-size: cover
 }
 
