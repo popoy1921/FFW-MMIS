@@ -117,7 +117,7 @@
         <!-- Nav Item - Menus (Visible only on large screens) -->
         <li class="nav-item d-none d-lg-inline active" id="nav-local-unions">
             <a class="nav-link " href="{{ route('super-admin.users') }}">
-                <span class="mr-2">Local Unions</span>
+                <span class="mr-2">Users</span>
             </a>
         </li>
         
