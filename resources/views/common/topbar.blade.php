@@ -84,7 +84,7 @@
         </li>
         <li class="nav-item d-none d-lg-inline" id="nav-local-unions">
             <a class="nav-link " href="#">
-                <span class="mr-2">Trade Federations</span>
+                <span class="mr-2">Users</span>
             </a>
         </li>
         
