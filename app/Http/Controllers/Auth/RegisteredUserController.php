@@ -58,7 +58,7 @@ class RegisteredUserController extends Controller
             return redirect()->route('super-admin.users');
         }
         if ((int)auth()->user()->role_id === 2) {
-            return redirect()->route('admin.local_unions');
+            return redirect()->route('admin.local-unions');
         }
         if ((int)auth()->user()->role_id === 3) {
             return redirect()->route('federation-point-person.profile');

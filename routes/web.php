@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     
     // ADMIN
     Route::middleware('checkUserRole:2')->group(function () {
-        Route::get('/admin', [PageRendererController::class, 'showAdminBlankPage'])->name('admin.local_unions');
+        Route::get('/admin', [PageRendererController::class, 'showAdminBlankPage'])->name('admin.local-unions');
     });
 
     // FEDERATION-POINT-PERSON
