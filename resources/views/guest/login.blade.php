@@ -3,6 +3,11 @@
         <div class="text-center mb-3">
             <img src="{{ asset('images/company-logo.png') }}" class="company-logo">
         </div>
+        @if(session('success'))
+            <div class="alert alert-success text-center ">
+                {{ session('success') }}
+            </div>
+        @endif
         @if ($errors->any())
             <div class="alert alert-danger text-center" role="alert">
                 @foreach ($errors->all() as $error)
@@ -10,7 +15,7 @@
                 @endforeach
             </div>
         @endif
-        <form class="user public-form" method="POST" action="{{ route('login') }}">
+        <form class="user public-form" method="POST" action="{{ route('login.post') }}">
             @csrf
 
             <div class="form-group row">
@@ -31,7 +36,7 @@
         </form>
         <hr>
         <div class="text-center">
-            <a href="#">Forgot Password?</a>
+            <a href="{{ route('password.request') }}">Forgot Password?</a>
         </div>
     </div>
 </x-guest-layout>

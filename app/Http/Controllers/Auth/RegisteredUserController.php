@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -33,7 +34,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()->symbols(), 'confirmed'],
         ]);
 
         $user = User::create([
@@ -54,10 +55,10 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         if ((int)auth()->user()->role_id === 1) {
-            return redirect()->route('super-admin');
+            return redirect()->route('super-admin.users');
         }
         if ((int)auth()->user()->role_id === 2) {
-            return redirect()->route('admin');
+            return redirect()->route('admin.local-unions');
         }
         if ((int)auth()->user()->role_id === 3) {
             return redirect()->route('federation-point-person.profile');

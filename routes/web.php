@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -31,7 +26,7 @@ Route::middleware('auth')->group(function () {
     
     // ADMIN
     Route::middleware('checkUserRole:2')->group(function () {
-        Route::get('/admin', [PageRendererController::class, 'showAdminBlankPage'])->name('admin.local_unions');
+        Route::get('/admin', [PageRendererController::class, 'showAdminBlankPage'])->name('admin.local-unions');
     });
 
     // FEDERATION-POINT-PERSON

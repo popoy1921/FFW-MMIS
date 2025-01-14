@@ -10,7 +10,7 @@
 <div class="row flex-xl-nowrap">
     <!-- Menus (Visible only on large screens) -->
     <div class="list-group d-none d-lg-inline col-lg-2 col-sm-12" id="local-union-details-list">
-        <a class="list-group-item list-group-item-action {{ $page === 'union_profile' ? 'active' : '' }}" href="local-union-details.php">Union Profile</a>
+        <a class="list-group-item list-group-item-action {{ $page === 'union_profile' ? 'active' : '' }}" href=" {{ route('union-point-person.profile') }} ">Union Profile</a>
         <a class="list-group-item list-group-item-action" href="#">Company Profile</a>
         <a class="list-group-item list-group-item-action" href="#">Product Mapping</a>
         <a class="list-group-item list-group-item-action" href="#">Workplace Mapping</a>
@@ -22,13 +22,13 @@
     </div>
 
     <!-- Menus (Visible only on small screens) -->
-    <div class="dropdown no-arrow mb-4 col-sm-12 d-block d-sm-none">
+    <div class="dropdown no-arrow mb-4 col-sm-12 d-block d-lg-none">
         <button class="btn btn-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span>Menus</span>
             <i class="fas fa-angle-down text-gray-600 ml-1"></i>
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
-            <a class="dropdown-item active" href="local-union-details.php">Union Profile</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item active" href="{{ route('union-point-person.profile') }}">Union Profile</a>
             <a class="dropdown-item" href="#">Company Profile</a>
             <a class="dropdown-item" href="#">Product Mapping</a>
             <a class="dropdown-item" href="#">Workplace Mapping</a>
