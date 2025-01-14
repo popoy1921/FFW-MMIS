@@ -24,7 +24,6 @@
         If you did not request a password reset, please ignore this email. <br />
         This link will expire in 1 hour.
     </p>
-    <br />
     <p>
         Thank you,<br />
         FFW-MMIS
