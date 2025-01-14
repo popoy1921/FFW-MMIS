@@ -27,8 +27,8 @@
             <span>Menus</span>
             <i class="fas fa-angle-down text-gray-600 ml-1"></i>
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
-            <a class="dropdown-item active" href="local-union-details.php">Union Profile</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item active" href="{{ route('union-point-person.profile') }}">Union Profile</a>
             <a class="dropdown-item" href="#">Company Profile</a>
             <a class="dropdown-item" href="#">Product Mapping</a>
             <a class="dropdown-item" href="#">Workplace Mapping</a>
