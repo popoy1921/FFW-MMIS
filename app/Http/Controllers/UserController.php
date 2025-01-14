@@ -6,10 +6,16 @@ use App\Http\Services\UserRoleService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PageRendererController extends Controller
+class UserController extends Controller
 {
     private UserRoleService $oUserRoleService;
-
+    
+    /**
+     * __construct
+     *
+     * @param  mixed $oUserRoleService
+     * @return void
+     */
     public function __construct(UserRoleService $oUserRoleService)
     {
         $this->oUserRoleService = $oUserRoleService;
@@ -37,7 +43,6 @@ class PageRendererController extends Controller
         $aUserRoles = $this->oUserRoleService->getAll();
         $aPageDetails = array(
             'role' => $aUserRoles->firstwhere('id', auth()->user()->role_id)->description,
-            'guid' => auth()->user()->guid,
         );
         return view('user.account-settings', $aPageDetails);
     }

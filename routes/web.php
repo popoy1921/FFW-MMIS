@@ -19,6 +19,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // USER
+    Route::get('/accout-settings', [PageRendererController::class, 'showAccountSettingsPage'])->name('user.account-settings');
+
     // SUPER-ADMIN
     Route::middleware('checkUserRole:1')->group(function () {
         Route::get('/super-admin', [PageRendererController::class, 'showSuperAdminBlankPage'])->name('super-admin.users');
@@ -38,10 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware('checkUserRole:4')->group(function () {
         Route::get('/union-point-person/union-profile', [PageRendererController::class, 'showUnionProfilePage'])->name('union-point-person.profile');
     });
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::get('/unauthorized', function () {
