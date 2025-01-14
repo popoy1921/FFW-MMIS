@@ -4,7 +4,7 @@
     </p>
     <p>
         We received a request to reset your password.<br />
-        To reset your password, please click the link below:
+        To reset your password, please click the button below:
     </p>
     <p>
         <a style="background-color: #464091; 
@@ -22,6 +22,15 @@
     <br />
     <p>
         If you did not request a password reset, please ignore this email.
+    </p>
+    <p>
         This link will expire in 1 hour.
+    </p>
+    <br />
+    <p>
+        Thank you,
+    </p>
+    <p>
+        FFW-MMIS
     </p>
 </div>

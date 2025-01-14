@@ -15,7 +15,7 @@ class UsersSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'guid'                  => (string) Str::uuid(),
-                'email'                 => 'superadmin.user@mailinator.com',
+                'email'                 => 'superadm.user@mailinator.com',
                 'password'              => Hash::make('S@mple123'),
                 'fname'                 => 'Super Admin User',
                 'mname'                 => '1',
@@ -28,7 +28,7 @@ class UsersSeeder extends Seeder
             ],
             [
                 'guid'                  => (string) Str::uuid(),
-                'email'                 => 'admin.user@mailinator.com',
+                'email'                 => 'adm.user@mailinator.com',
                 'password'              => Hash::make('S@mple123'),
                 'fname'                 => 'Admin User',
                 'mname'                 => '1',
