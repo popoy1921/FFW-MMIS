@@ -28,7 +28,7 @@ class NewPasswordController extends Controller
             return redirect()->route('password.email')->withErrors(['email' => "This password reset link has expired or is invalid. Please request a new one."]);
         }
 
-        return view('auth.reset-password', ['request' => $request]);
+        return view('guest.reset-password', ['request' => $request]);
     }
 
     /**
@@ -71,7 +71,7 @@ class NewPasswordController extends Controller
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         session()->flash('success', 'Your password has been successfully reset.');
-
+        
         return $status == Password::PASSWORD_RESET
                     ? redirect()->route('login')->with('status', __($status))
                     : back()->withInput($request->only('email'))
