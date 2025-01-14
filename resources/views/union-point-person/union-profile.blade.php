@@ -10,7 +10,7 @@
 <div class="row flex-xl-nowrap">
     <!-- Menus (Visible only on large screens) -->
     <div class="list-group d-none d-lg-inline col-lg-2 col-sm-12" id="local-union-details-list">
-        <a class="list-group-item list-group-item-action {{ $page === 'union_profile' ? 'active' : '' }}" href=" {{ union-point-person.profile }} ">Union Profile</a>
+        <a class="list-group-item list-group-item-action {{ $page === 'union_profile' ? 'active' : '' }}" href=" {{ 'union-point-person.profile' }} ">Union Profile</a>
         <a class="list-group-item list-group-item-action" href="#">Company Profile</a>
         <a class="list-group-item list-group-item-action" href="#">Product Mapping</a>
         <a class="list-group-item list-group-item-action" href="#">Workplace Mapping</a>
