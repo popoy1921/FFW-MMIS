@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
                     return redirect()->route('super-admin.users');
                 }
                 if (auth()->user()->role_id === 2) {
-                    return redirect()->route('admin.local-unions');
+                    return redirect()->route('admin.local_unions');
                 }
                 if (auth()->user()->role_id === 3) {
                     return redirect()->route('federation-point-person.profile');
