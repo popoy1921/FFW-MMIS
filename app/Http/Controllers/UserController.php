@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\UserRoleService;
+use App\Http\Requests\UserUpdatePasswordRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Services\UserService;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    private UserRoleService $oUserRoleService;
+    private UserService $oUserService;
     
     /**
      * __construct
@@ -16,84 +19,39 @@ class UserController extends Controller
      * @param  mixed $oUserRoleService
      * @return void
      */
-    public function __construct(UserRoleService $oUserRoleService)
+    public function __construct(UserService $oUserService)
     {
-        $this->oUserRoleService = $oUserRoleService;
-    }
-
-    // ------------------- GUEST -------------------
-    /**
-     * showUnionProfilePage
-     *
-     * @return View
-     */
-    public function showForgotPasswordPage() : View
-    {
-        return view('guest.forgot-password');
-    }
-
-    // ------------------- USER -------------------
-    /**
-     * showUnionProfilePage
-     *
-     * @return View
-     */
-    public function showAccountSettingsPage() : View
-    {
-        $aUserRoles = $this->oUserRoleService->getAll();
-        $aPageDetails = array(
-            'role' => $aUserRoles->firstwhere('id', auth()->user()->role_id)->description,
-        );
-        return view('user.account-settings', $aPageDetails);
-    }
-
-    // ------------------- SUPER-ADMIN -------------------
-    /**
-     * showSuperAdminBlankPage
-     *
-     * @return View
-     */
-    public function showSuperAdminBlankPage() : View
-    {
-        return view('super-admin.users');
+        $this->oUserService = $oUserService;
     }
     
-    // ------------------- ADMIN -------------------
     /**
-     * showAdminBlankPage
+     * update User record
      *
-     * @return View
+     * @param  UserUpdateRequest $oRequest
+     * @return RedirectResponse
      */
-    public function showAdminBlankPage() : View
+    public function updateUser(UserUpdateRequest $oRequest) : RedirectResponse
     {
-        $aPageDetails = array(
-            'top_menu' => 'local_union',
-        );
-        return view('admin.local-unions', $aPageDetails);
-    }
-    
-    // ------------------- FEDERATION-POINT-PERSON -------------------
-    /**
-     * showFederationProfilePage
-     *
-     * @return View
-     */
-    public function showFederationProfilePage() : View
-    {
-        $aPageDetails = array(
-            'top_menu' => 'trade_federation',
-        );
-        return view('federation-point-person.federation-profile', $aPageDetails);
+        $oUser = $oRequest->all();
+        $this->oUserService->update($oUser);
+        
+        session()->flash('user-update', 'Your profile has been successfully updated.');
+        return redirect()->route('user.account-settings');
     }
 
-    // ------------------- UNION-POINT-PERSON -------------------
     /**
-     * showUnionProfilePage
+     * update User record
      *
-     * @return View
+     * @param  UserUpdatePasswordRequest $oRequest
+     * @return RedirectResponse
      */
-    public function showUnionProfilePage() : View
+    public function updateUserPassword(UserUpdatePasswordRequest $oRequest) : RedirectResponse
     {
-        return view('union-point-person.union-profile', array('page' => 'union_profile'));
+        $aUpdatePassword = $oRequest->all();
+        $aUpdatePassword['guid'] = auth()->user()->guid;
+        $this->oUserService->updatePassword($aUpdatePassword);
+
+        session()->flash('password-reset', 'Your password has been successfully updated.');
+        return redirect()->route('user.account-settings');
     }
 }

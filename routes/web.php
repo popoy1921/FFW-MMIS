@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageRendererController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     // USER
     Route::get('/accout-settings', [PageRendererController::class, 'showAccountSettingsPage'])->name('user.account-settings');
+    Route::patch('/user/update', [UserController::class, 'updateUser'])->name('user.update');
+    Route::patch('/user/updatePassword', [UserController::class, 'updateUserPassword'])->name('user.update-password');
 
     // SUPER-ADMIN
     Route::middleware('checkUserRole:1')->group(function () {

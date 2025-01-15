@@ -39,11 +39,6 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Page level custom scripts -->
-    <script>
-        $('#nav-local-unions').addClass('active');
-    </script>
-
 </body>
 
 </html>

@@ -81,3 +81,7 @@ img.company-logo {
 .card-title {
     color: black;
 }
+
+.toggle-password-button {
+    cursor: pointer;
+}
