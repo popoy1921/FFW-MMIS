@@ -33,21 +33,31 @@
 
                 <!-- Password -->
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label" for="password">Password</label>
-                    <div class="col-sm-9">
-                        <x-text-input id="password" class="form-control form-control-user" type="password" name="password" required autocomplete="new-password" />
+                    <label for="password" class='col-sm-3 col-form-label'>Password</label>
+                    <div class="input-group mb-3 col-sm-9">
+                        <input name="password" id="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="Password" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text toggle-password-button" onclick="loginTogglePassword('password')"><i id="password"class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Confirm Password -->
                 <div class="form-group row">
-                    <label for="password_confirmation" class="col-sm-3 col-form-label">Confirm Password</label>
-                    <div class="col-sm-9">
-                        <x-text-input id="password_confirmation" class="form-control form-control-user"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                    <label for="password_confirmation" class='col-sm-3 col-form-label'>Confirm Password</label>
+                    <div class="input-group mb-4 col-sm-9">
+                        <input name="password_confirmation" id="password_confirmation" type="password" class="form-control" placeholder="Confirm Password" aria-label="Confirm Password" aria-describedby="Confirm Password" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text toggle-password-button" onclick="loginTogglePassword('password_confirmation')"><i id="password_confirmation"class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                        </div>
                     </div>
+                    @if(session('confirmation_error'))
+                    <div class="invalid-feedback d-block">
+                        {{ session('confirmation_error') }}
+                    </div>
+                    @endif
                 </div>
+
                 <button class="btn btn-primary btn-user btn-block">
                     Submit
                 </button>

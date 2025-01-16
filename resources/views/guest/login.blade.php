@@ -26,8 +26,11 @@
             </div>
             <div class="form-group row">
                 <label for="password" class="col-sm-3 col-form-label">Password</label>
-                <div class="col-sm-9">
-                    <input id="password" class="form-control form-control-user" type="password" name="password" required autocomplete="current-password" />
+                <div class="col-sm-9 input-group mb-3">
+                    <input name="password" id="password" type="password" class="form-control form-control-user" placeholder="Password" required autocomplete="current-password">
+                    <div class="input-group-append">
+                        <span class="input-group-text toggle-password-button" onclick="loginTogglePassword('password')"><i id="password"class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                    </div>
                 </div>
             </div>
             <button class="btn btn-primary btn-user btn-block">
