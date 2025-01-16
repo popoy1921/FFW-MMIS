@@ -32,6 +32,12 @@ class User extends Authenticatable
         'local_union_id',
     ];
 
+    // Define the relationship to the Status model
+    public function userRole()
+    {
+        return $this->belongsTo(UserRole::class, 'role_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

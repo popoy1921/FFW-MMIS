@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\UserRoleService;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -34,9 +35,9 @@ class PageRendererController extends Controller
      */
     public function showAccountSettingsPage() : View
     {
-        $aUserRoles = $this->oUserRoleService->getAll();
+        $oUser = User::with('userRole')->where('guid', auth()->user()->guid)->first();
         $aPageDetails = array(
-            'role' => $aUserRoles->firstwhere('id', auth()->user()->role_id)->description,
+            'role' => $oUser->userRole->description,
             'guid' => auth()->user()->guid,
         );
         return view('user.account-settings', $aPageDetails);

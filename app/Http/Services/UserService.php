@@ -32,11 +32,6 @@ class UserService
         }
         $oUser->save();
 
-        // if ($oUser->email !== $aUser['email']) {
-        //     Mail::to($aUser['email'])->send(new ConfirmEmailUpdate());
-        //     return array('update_password' => true);
-        // }
-
         return array();
     }
             
