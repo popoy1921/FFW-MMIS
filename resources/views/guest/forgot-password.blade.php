@@ -23,7 +23,7 @@
         <form class="user public-form" method="POST" action="{{ route('password.email') }}">
             @csrf
             <div class="form-group row">
-                <x-input-label for="email" :value="__('Email')" class="col-sm-3 col-form-label"/>
+                <label for="email" class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
                     <x-text-input id="email" class="form-control form-control-user" type="email" name="email" :value="old('email')" required autofocus />
                 </div>
