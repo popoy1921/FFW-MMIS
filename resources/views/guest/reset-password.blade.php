@@ -40,6 +40,9 @@
                             <span class="input-group-text toggle-password-button" onclick="loginTogglePassword('password')"><i id="password"class="fa fa-eye-slash" aria-hidden="true"></i></span>
                         </div>
                     </div>
+                    <small id="passwordHelpBlock" class="form-text text-muted col-sm-12 text-justify">
+                        At least 8 characters, including at least 1 number, both lower and upper case letters, and special characters.
+                    </small>
                 </div>
 
                 <!-- Confirm Password -->

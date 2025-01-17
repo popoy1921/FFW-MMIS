@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <small id="passwordHelpBlock" class="form-text text-muted">
-                            At least 8 characters, including at least 1 number and both lower and upper case letters.
+                            At least 8 characters, including at least 1 number, both lower and upper case letters, and special characters.
                         </small>
                         @if($errors->has('password'))
                         <div class="invalid-feedback d-block">
