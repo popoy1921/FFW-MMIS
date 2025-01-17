@@ -32,7 +32,7 @@
                         <div class="form-group col-md-6">
                             <label for="mname">Middle Name</label>
                             <input name="mname" type="text" value="{{ old('mname', auth()->user()->mname) }}" 
-                                class="form-control {{ $errors->has('mname') === true ? 'is-invalid' : '' }}" autofocus />
+                                class="form-control {{ $errors->has('mname') === true ? 'is-invalid' : '' }}" placeholder="Middle Name" autofocus />
                             @if($errors->has('mname'))
                             <div class="invalid-feedback d-block">
                                 @foreach($errors->get('mname') as $error)
@@ -49,7 +49,7 @@
                         <div class="form-group col-md-6">
                             <label for="lname">Last Name <span class="text-danger">*</label>
                             <input name="lname" type="text" value="{{ old('lname', auth()->user()->lname) }}" 
-                                class="form-control  {{ $errors->has('lname') === true ? 'is-invalid' : '' }}" required autofocus />
+                                class="form-control  {{ $errors->has('lname') === true ? 'is-invalid' : '' }}" placeholder="Last Name" required autofocus />
                             @if($errors->has('lname'))
                             <div class="invalid-feedback d-block">
                                 @foreach($errors->get('lname') as $error)
@@ -64,7 +64,7 @@
                         <div class="form-group col-md-6">
                             <label for="email">Email <span class="text-danger">*</label>
                             <input name="email" type="text" value="{{ old('email', auth()->user()->email) }}"
-                                class="form-control {{ $errors->has('email') === true ? 'is-invalid' : '' }}" required autofocus />
+                                class="form-control {{ $errors->has('email') === true ? 'is-invalid' : '' }}" placeholder="Email" required autofocus />
                             @if($errors->has('email'))
                             <div class="invalid-feedback d-block">
                                 @foreach($errors->get('email') as $error)
