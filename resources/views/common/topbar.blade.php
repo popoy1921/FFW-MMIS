@@ -142,7 +142,7 @@
     <ul class="navbar-nav ml-0">
         <div class="topbar-divider d-sm-block"></div>        
         <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow" id="nav-profile">
+        <li class="nav-item dropdown no-arrow {{ $top_menu === 'account_settings' ? 'active' : '' }}"" id="nav-profile">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>

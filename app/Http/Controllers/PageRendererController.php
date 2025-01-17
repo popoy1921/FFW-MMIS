@@ -37,8 +37,9 @@ class PageRendererController extends Controller
     {
         $oUser = User::with('userRole')->where('guid', auth()->user()->guid)->first();
         $aPageDetails = array(
-            'role' => $oUser->userRole->description,
-            'guid' => auth()->user()->guid,
+            'top_menu'  => 'account_settings',
+            'role'      => $oUser->userRole->description,
+            'guid'      => auth()->user()->guid,
         );
         return view('user.account-settings', $aPageDetails);
     }
