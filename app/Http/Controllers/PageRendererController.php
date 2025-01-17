@@ -53,7 +53,7 @@ class PageRendererController extends Controller
     public function showSuperAdminBlankPage() : View
     {
         $aPageDetails = array(
-            'top_menu' => '',
+            'top_menu'  => 'users',
         );
         return view('super-admin.users', $aPageDetails);
     }
@@ -95,8 +95,8 @@ class PageRendererController extends Controller
     public function showUnionProfilePage() : View
     {
         $aPageDetails = array(
-            'top_menu' => '',
-            'page' => 'union_profile'
+            'top_menu'  => 'local_union',
+            'page'      => 'union_profile',
         );
         return view('union-point-person.union-profile', $aPageDetails);
     }

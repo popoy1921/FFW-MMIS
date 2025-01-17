@@ -10,7 +10,7 @@
     <ul id="navbar-for-union" class="navbar-nav ml-auto">
 
         <!-- Nav Item - Menus (Visible only on large screens) -->
-        <li class="nav-item d-none d-lg-inline active" id="nav-local-unions">
+        <li class="nav-item d-none d-lg-inline {{ $top_menu === 'local_union' ? 'active' : '' }}" id="nav-local-unions">
             <a class="nav-link" href="{{ route('union-point-person.profile')}}">
                 <span class="mr-2">Local Union Details</span>
             </a>
@@ -26,7 +26,7 @@
             <!-- Dropdown - Menus -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="menuDropdown">
-                <a class="dropdown-item active" href="{{ route('union-point-person.profile')}}">
+                <a class="dropdown-item {{ $top_menu === 'local_union' ? 'active' : '' }}" href="{{ route('union-point-person.profile')}}">
                     <span>Local Union Details</span>
                 </a>
             </div>
@@ -115,7 +115,7 @@
     <ul id="navbar-for-super-admin" class="navbar-nav ml-auto">
 
         <!-- Nav Item - Menus (Visible only on large screens) -->
-        <li class="nav-item d-none d-lg-inline active" id="nav-local-unions">
+        <li class="nav-item d-none d-lg-inline {{ $top_menu === 'users' ? 'active' : '' }}" id="nav-local-unions">
             <a class="nav-link " href="{{ route('super-admin.users') }}">
                 <span class="mr-2">Users</span>
             </a>
@@ -131,7 +131,7 @@
             <!-- Dropdown - Menus -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="menuDropdown">
-                <a class="dropdown-item active" href="{{ route('super-admin.users') }}">
+                <a class="dropdown-item {{ $top_menu === 'users' ? 'active' : '' }}" href="{{ route('super-admin.users') }}">
                     <span>Users</span>
                 </a>
             </div>
@@ -142,7 +142,7 @@
     <ul class="navbar-nav ml-0">
         <div class="topbar-divider d-sm-block"></div>        
         <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow {{ $top_menu === 'account_settings' ? 'active' : '' }}"" id="nav-profile">
+        <li class="nav-item dropdown no-arrow {{ $top_menu === 'account_settings' ? 'active' : '' }}" id="nav-profile">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>
