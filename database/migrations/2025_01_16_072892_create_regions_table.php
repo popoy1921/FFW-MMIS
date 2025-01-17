@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lu_reqions', function (Blueprint $table) {
+        Schema::create('lu_regions', function (Blueprint $table) {
             $table->id();
             $table->string('description');
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lu_reqions');
+        Schema::dropIfExists('lu_regions');
     }
 };
