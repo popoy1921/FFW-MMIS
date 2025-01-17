@@ -33,8 +33,8 @@
 
                 <!-- Password -->
                 <div class="form-group row">
-                    <label for="password" class='col-sm-3 col-form-label'>Password</label>
-                    <div class="input-group mb-3 col-sm-9">
+                    <label for="password" class='col-sm-3 col-form-label text-nowrap'>New Password</label>
+                    <div class="input-group col-sm-9">
                         <input name="password" id="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="Password" required>
                         <div class="input-group-append">
                             <span class="input-group-text toggle-password-button" onclick="loginTogglePassword('password')"><i id="password"class="fa fa-eye-slash" aria-hidden="true"></i></span>
@@ -47,7 +47,7 @@
 
                 <!-- Confirm Password -->
                 <div class="form-group row">
-                    <label for="password_confirmation" class='col-sm-3 col-form-label'>Confirm Password</label>
+                    <label for="password_confirmation" class='col-sm-3 col-form-label text-nowrap'>Confirm New<br />Password</label>
                     <div class="input-group mb-4 col-sm-9">
                         <input name="password_confirmation" id="password_confirmation" type="password" class="form-control" placeholder="Confirm Password" aria-label="Confirm Password" aria-describedby="Confirm Password" required>
                         <div class="input-group-append">
@@ -67,7 +67,7 @@
             </form>
             <hr>
             <div class="text-center">
-                <a href="login.php">Already have an account? Login!</a>
+                <a href="{{ route('login') }}">Already have an account? Login!</a>
             </div>
         </div>
     </div>
