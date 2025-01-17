@@ -25,7 +25,7 @@
             <div class="form-group row">
                 <label for="email" class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
-                    <x-text-input id="email" class="form-control form-control-user" type="email" name="email" :value="old('email')" required autofocus />
+                    <input id="email" class="form-control form-control-user" type="email" name="email" placeholder="Email" :value="old('email')" required autofocus />
                 </div>
             </div>
             <button class="btn btn-primary btn-user btn-block">
