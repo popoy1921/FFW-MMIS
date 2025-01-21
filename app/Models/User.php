@@ -32,10 +32,28 @@ class User extends Authenticatable
         'local_union_id',
     ];
 
-    // Define the relationship to the Status model
+    // Define the relationship to the UserStatus model
+    public function userStatus()
+    {
+        return $this->belongsTo(UserStatus::class, 'status_id');
+    }
+
+    // Define the relationship to the UserRole model
     public function userRole()
     {
         return $this->belongsTo(UserRole::class, 'role_id');
+    }
+
+    // Define the relationship to the Federation model
+    public function federation()
+    {
+        return $this->belongsTo(Federation::class, 'federation_id');
+    }
+
+    // Define the relationship to the LocalUnion model
+    public function localUnion()
+    {
+        return $this->belongsTo(LocalUnion::class, 'local_union_id');
     }
 
     /**

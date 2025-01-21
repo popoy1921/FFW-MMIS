@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\UserRoleService;
+use App\Http\Services\UserService;
 use App\Models\User;
+use App\Models\UserRole;
+use App\Models\UserStatus;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PageRendererController extends Controller
 {
-    private UserRoleService $oUserRoleService;
-
-    public function __construct(UserRoleService $oUserRoleService)
+    private UserService $oUserService;
+    
+    public function __construct(UserService $UoserService)
     {
-        $this->oUserRoleService = $oUserRoleService;
+        $this->oUserService = $UoserService;
     }
 
     // ------------------- GUEST -------------------
@@ -35,7 +37,7 @@ class PageRendererController extends Controller
      */
     public function showAccountSettingsPage() : View
     {
-        $oUser = User::with('userRole')->where('guid', auth()->user()->guid)->first();
+        $oUser = $this->oUserService->getUsersProfileData();
         $aPageDetails = array(
             'top_menu'  => 'account_settings',
             'role'      => $oUser->userRole->description,
@@ -60,16 +62,35 @@ class PageRendererController extends Controller
     
     // ------------------- ADMIN -------------------
     /**
-     * showAdminBlankPage
+     * showAdminLocalUnionsPage
      *
      * @return View
      */
-    public function showAdminBlankPage() : View
+    public function showAdminLocalUnionsPage() : View
     {
         $aPageDetails = array(
             'top_menu' => 'local_union',
         );
         return view('admin.local-unions', $aPageDetails);
+    }
+
+    /**
+     * showAdminUsersPage
+     *
+     * @return View
+     */
+    public function showAdminUsersPage(Request $oRequest) : View
+    {
+        $oUsers = $this->oUserService->getUsersTableData($oRequest->all());
+        $aPageDetails = array(
+            'users'        => $oUsers,
+            'pagination'   => $this->oUserService->getPaginationDetails($oUsers),
+            'userStatuses' => UserStatus::orderBy('id', 'desc')->get(),
+            'userRoles'    => UserRole::all(),
+            'top_menu'     => 'users',
+            'filters'      => $oRequest->all(),
+        );
+        return view('admin.users', $aPageDetails);
     }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------

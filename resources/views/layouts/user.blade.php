@@ -38,7 +38,7 @@
 
     </div>
     <!-- End of Page Wrapper -->
-
+    @yield('javascript')
 </body>
 
 </html>

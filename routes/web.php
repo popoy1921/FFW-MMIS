@@ -32,11 +32,12 @@ Route::middleware('auth')->group(function () {
     
     // ADMIN
     Route::middleware('checkUserRole:2')->group(function () {
-        Route::get('/admin', [PageRendererController::class, 'showAdminBlankPage'])->name('admin.local-unions');
+        Route::get('/admin/local-unions', [PageRendererController::class, 'showAdminLocalUnionsPage'])->name('admin.local-unions');
+        Route::get('/admin/users', [PageRendererController::class, 'showAdminUsersPage'])->name('admin.users');
     });
 
     // FEDERATION-POINT-PERSON
-    Route::middleware('checkUserRole:3')->group(function () {
+    Route::middleware('checkUserRole:3')->group(function () {       
         Route::get('/federation-point-person', [PageRendererController::class, 'showFederationProfilePage'])->name('federation-point-person.profile');
     });
 

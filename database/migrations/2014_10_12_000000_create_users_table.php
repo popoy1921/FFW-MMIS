@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('photo');
             $table->integer('status_id');
             $table->integer('role_id');
-            $table->integer('trade_federation_id')->nullable();
+            $table->integer('federation_id')->nullable();
             $table->integer('local_union_id')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();

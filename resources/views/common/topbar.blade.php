@@ -82,8 +82,8 @@
                 <span class="mr-2">Trade Federations</span>
             </a>
         </li>
-        <li class="nav-item d-none d-lg-inline" id="nav-local-unions">
-            <a class="nav-link " href="#">
+        <li class="nav-item d-none d-lg-inline {{ $top_menu === 'users' ? 'active' : '' }}" id="nav-local-unions">
+            <a class="nav-link " href="{{ route('admin.users') }}">
                 <span class="mr-2">Users</span>
             </a>
         </li>
@@ -104,7 +104,7 @@
                 <a class="dropdown-item" href="#">
                     <span>Trade Federations</span>
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item {{ $top_menu === 'users' ? 'active' : '' }}" href="{{ route('admin.users') }}">
                     <span>Users</span>
                 </a>
             </div>
