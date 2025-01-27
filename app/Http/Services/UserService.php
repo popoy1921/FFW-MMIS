@@ -48,12 +48,6 @@ class UserService extends BaseService
      */
     public function setUserModelQueries(array $aFilter) : void
     {
-        $this->filterDataQuery($aFilter);
-        $this->sortDataQuery($aFilter);
-    }
-
-    private function filterDataQuery(array $aFilter) : void
-    {
         $aRelationShips = [
             'userStatus',
             'userRole',
@@ -61,6 +55,12 @@ class UserService extends BaseService
             'localUnion',
         ];
         $this->oUserModelBuilder = User::with($aRelationShips);
+        $this->filterDataQuery($aFilter);
+        $this->sortDataQuery($aFilter);
+    }
+
+    private function filterDataQuery(array $aFilter) : void
+    {
         if (isset($aFilter['fullname'])) {
             $this->oUserModelBuilder->where('fullname', 'like', '%' . $aFilter['fullname'] . '%');
         }
@@ -90,19 +90,34 @@ class UserService extends BaseService
         $aColumns = [
             'fullname',
             'email',
-            'federation.name',
-            'local_union.name',
-            'userStatus.description',
-            'userRole.description',
+            'federations.name.federation_id',
+            'local_unions.name.local_union_id',
+            'lu_user_statuses.description.status_id',
+            'lu_user_roles.description.role_id',
         ];
+        $iIndexForLookup = 2;
         if (isset($aFilter['order']) === false) {
-            $iColumn = $aColumns[0];
+            $iColumNumber = 0;
+            $sColumn = $aColumns[0];
             $sAsc = 'asc';
         } else {
-            $iColumn = $aColumns[$aFilter['order'][0]['column']];
+            $iColumNumber = $aFilter['order'][0]['column'];
+            $sColumn = $aColumns[$aFilter['order'][0]['column']];
             $sAsc = $aFilter['order'][0]['dir'];
         }
-        $this->oUserModelBuilder->orderBy($iColumn, $sAsc);
+                  
+        if ($iColumNumber < $iIndexForLookup) {
+            $this->oUserModelBuilder->orderBy($sColumn, $sAsc);
+        } else {
+            $sUserTableName = $this->oUserModelBuilder->getModel()->getTable();
+            $aColumnsValues = explode('.', $sColumn);
+            $sTableName = $aColumnsValues[0];        
+            $sUserFieldId = $sUserTableName . '.' . $aColumnsValues[2];
+            $sForiegnIdFieldName = $sTableName . '.id';
+            $this->oUserModelBuilder->leftJoin($sTableName, $sUserFieldId, '=', $sForiegnIdFieldName);
+            $sFieldName = $aColumnsValues[0] . '.' . $aColumnsValues[1];
+            $this->oUserModelBuilder->orderByRaw($sFieldName . ' '.  $sAsc);
+        }
     }
 
     
