@@ -44,58 +44,21 @@
                 @endif
             @endforeach
         </select>
+        <button id="users-filter-submit">Search</button>
     </div>
-    <table id="users-datatable" class="table table-bordered">
-        <tr>
-            <th>Full name</th>
-            <th>Email</th>
-            <th>Federation</th>
-            <th>Local Union</th>
-            <th>Status</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-        @foreach ($users as $user)
-        <tr>
-            <td>{{ $user->fullname }}</td>
-            <td>{{ $user->email }}</td>
-            <td>{{ $user->federation ? $user->federation->name : '' }}</td>
-            <td>{{ $user->localUnion ? $user->localUnion->name : '' }}</td>
-            <td>{{ $user->userStatus->description }}</td>
-            <td>{{ $user->userRole->description }}</td>
-            <td>7</td>
-        </tr>
-        @endforeach
+    <table id="users-datatable" class="table table-bordered" reference="{{ route('api.user.list') }}">
+        <thead>
+            <tr>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Federation</th>
+                <th>Local Union</th>
+                <th>Status</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
     </table>
-</div>
-
-<!-- Pagination -->
-<div>
-    <ul class="pagination" id="pagination">
-        @php 
-            $first_page   = $pagination['first_page'];
-            $last_page    = $pagination['last_page'];
-            $is_last_max  = $pagination['is_last_max'];
-            $is_first_min = $pagination['is_first_min'];
-            $current_page = $pagination['current_page'];
-            $iPageNumber  = $first_page
-        @endphp
-        <li class="page-item {{ $is_first_min === 1 ? 'disabled' : ''}}" data-page="{{ $first_page }}">
-            <a class="page-link" href="#">Previous</a>
-        </li>
-        @for (
-            $iPageNumber = $first_page;
-            $iPageNumber <= $last_page; 
-            $iPageNumber++
-        )
-            <li class="page-item {{ $iPageNumber === $current_page ? 'active' : '' }}" data-page="{{ $iPageNumber }}">
-                <a class="page-link">{{ $iPageNumber }}</a>
-            </li>
-        @endfor
-        <li class="page-item {{ $is_first_min === 1 ? 'disabled' : ''}}" data-page="{{ $last_page }}">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
 </div>
 @endsection
 

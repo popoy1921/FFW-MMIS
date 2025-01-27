@@ -5,8 +5,10 @@ namespace App\Http\Services;
 use App\Mail\ConfirmEmailUpdate;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as FormattedCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -14,13 +16,43 @@ use Illuminate\Support\Facades\Mail;
  */
 class UserService extends BaseService
 {    
+    private Builder $oUserModelBuilder;
+    
     /**
-     * getUsersTableData
+     * getFormattedTableData
      *
-     * @param array $aFilter
+     * @param  mixed $aFilter
      * @return array
      */
-    public function getUsersTableData(array $aFilter) : LengthAwarePaginator
+    public function getFormattedTableData(array $aFilter) : array
+    {
+        $this->setUserModelQueries($aFilter);
+        $iNumberOfFilteredRecords = $this->oUserModelBuilder->count();
+
+        $iNumberOfRecords = (int)$aFilter['length'];
+        $iPage = ((int)$aFilter['start'] / $iNumberOfRecords) + 1;
+        $oUserRecords = $this->getPaginatedRecords($this->oUserModelBuilder, $iPage, $iNumberOfRecords);
+        return array(
+            'draw'            => intval($aFilter['draw']),              // Return the draw counter
+            'recordsTotal'    => User::count(),                         // Total records without filtering
+            'recordsFiltered' => $iNumberOfFilteredRecords,             // Total records after filtering
+            'data'            => $this->formatTableData($oUserRecords), // Data for the current page
+        );
+    }
+
+    /**
+     * prepare model for get and count of filtered
+     *
+     * @param  array $aFilter
+     * @return void
+     */
+    public function setUserModelQueries(array $aFilter) : void
+    {
+        $this->filterDataQuery($aFilter);
+        $this->sortDataQuery($aFilter);
+    }
+
+    private function filterDataQuery(array $aFilter) : void
     {
         $aRelationShips = [
             'userStatus',
@@ -28,30 +60,72 @@ class UserService extends BaseService
             'federation',
             'localUnion',
         ];
-        $oUsers = User::with($aRelationShips);
+        $this->oUserModelBuilder = User::with($aRelationShips);
         if (isset($aFilter['fullname'])) {
-            $oUsers->where('fullname', 'like', '%' . $aFilter['fullname'] . '%');
+            $this->oUserModelBuilder->where('fullname', 'like', '%' . $aFilter['fullname'] . '%');
         }
         if (isset($aFilter['email'])) {
-            $oUsers->where('email', 'like', '%' . $aFilter['email'] . '%');
+            $this->oUserModelBuilder->where('email', 'like', '%' . $aFilter['email'] . '%');
         }
         if (isset($aFilter['federation'])) {
-            $oUsers->whereHas('federation', function($query) use ($aFilter) {
+            $this->oUserModelBuilder->whereHas('federation', function($query) use ($aFilter) {
                 $query->where('name', 'like', '%' . $aFilter['federation'] . '%');
             });
         }
         if (isset($aFilter['local_union'])) {
-            $oUsers->whereHas('localUnion', function($query) use ($aFilter) {
+            $this->oUserModelBuilder->whereHas('localUnion', function($query) use ($aFilter) {
                 $query->where('name', 'like', '%' . $aFilter['local_union'] . '%');
             });
         }
         if (isset($aFilter['role_id'])) {
-            $oUsers->where('role_id', $aFilter['role_id']);
+            $this->oUserModelBuilder->where('role_id', $aFilter['role_id']);
         }
         if (isset($aFilter['status_id'])) {
-            $oUsers->where('status_id', $aFilter['status_id']);
+            $this->oUserModelBuilder->where('status_id', $aFilter['status_id']);
         }
-        return $this->getPaginatedRecords($oUsers);
+    }
+
+    private function sortDataQuery(array $aFilter) : void
+    {
+        $aColumns = [
+            'fullname',
+            'email',
+            'federation.name',
+            'local_union.name',
+            'userStatus.description',
+            'userRole.description',
+        ];
+        if (isset($aFilter['order']) === false) {
+            $iColumn = $aColumns[0];
+            $sAsc = 'asc';
+        } else {
+            $iColumn = $aColumns[$aFilter['order'][0]['column']];
+            $sAsc = $aFilter['order'][0]['dir'];
+        }
+        $this->oUserModelBuilder->orderBy($iColumn, $sAsc);
+    }
+
+    
+    /**
+     * Update format of the users data for page rendering when using API
+     *
+     * @param  mixed $oUsers
+     * @return FormattedCollection
+     */
+    private function formatTableData(LengthAwarePaginator $oUsers) : FormattedCollection
+    {
+        $aFormattedUsers = $oUsers->map(function ($oUser) {
+            return [
+                'fullname'    => $oUser->fullname,
+                'email'       => $oUser->email,
+                'federation'  => $oUser->federation ? $oUser->federation->name : '',
+                'local_union' => $oUser->localUnion ? $oUser->localUnion->name : '',
+                'status'      => $oUser->userStatus->description,
+                'role'        => $oUser->userRole->description,
+                'actions'     => 'ACTION',
+            ];
+        });
+        return $aFormattedUsers;
     }
         
     /**

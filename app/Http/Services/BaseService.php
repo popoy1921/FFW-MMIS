@@ -22,9 +22,9 @@ class BaseService
      *
      * @return LengthAwarePaginator
      */
-    public function getPaginatedRecords(Builder $oBuilder) : LengthAwarePaginator
+    public function getPaginatedRecords(Builder $oBuilder, int $iPage, int $iNumberOfRecords) : LengthAwarePaginator
     {
-        return $oBuilder->paginate(config('pagination.records_per_page'));
+        return $oBuilder->paginate($iNumberOfRecords, ['*'], 'page', $iPage);;
     }
 
     /**

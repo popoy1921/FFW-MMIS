@@ -23,6 +23,11 @@ class UserController extends Controller
     {
         $this->oUserService = $oUserService;
     }
+
+    public function getList(Request $oRequest)
+    {
+        return response()->json($this->oUserService->getFormattedTableData($oRequest->all()));
+    }
     
     /**
      * update User record

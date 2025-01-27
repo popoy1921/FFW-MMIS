@@ -81,10 +81,7 @@ class PageRendererController extends Controller
      */
     public function showAdminUsersPage(Request $oRequest) : View
     {
-        $oUsers = $this->oUserService->getUsersTableData($oRequest->all());
         $aPageDetails = array(
-            'users'        => $oUsers,
-            'pagination'   => $this->oUserService->getPaginationDetails($oUsers),
             'userStatuses' => UserStatus::orderBy('id', 'desc')->get(),
             'userRoles'    => UserRole::all(),
             'top_menu'     => 'users',
