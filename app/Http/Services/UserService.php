@@ -9,7 +9,6 @@ use Illuminate\Support\Collection as FormattedCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * Class that would handle any logic for User Role
