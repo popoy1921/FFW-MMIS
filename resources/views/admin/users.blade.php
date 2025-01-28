@@ -7,58 +7,80 @@
 </div>
 
 <!-- Content  -->
-<div class="row flex-xl-nowrap">
-    <div id="users-filter-form">
-        <label for="fullname">Full Name:</label><br />
-        <input name="fullname" type="text" value="{{ isset($filters['fullname']) ? $filters['fullname'] : '' }}">
-        <br />
-        <label for="email">Email:</label><br />
-        <input name="email" type="text" value="{{ isset($filters['email']) ? $filters['email'] : '' }}">
-        <br />
-        <label for="Federation">Federation:</label><br />
-        <input name="federation" type="text" value="{{ isset($filters['federation']) ? $filters['federation'] : '' }}">
-        <br />
-        <label for="Local Union">Local Union:</label><br />
-        <input name="local_union" type="text" value="{{ isset($filters['local_union']) ? $filters['local_union'] : '' }}">
-        <br /><br />
-        <label for="role_id">Role:</label><br />
-        <select name="role_id">
-            <option value=''>Any</option>
-            @foreach($userRoles as $userRole)
-                @if (isset($filters['role_id']) && (int)$filters['role_id'] === (int)$userRole->id)
-                <option value="{{ $userRole->id }}" selected>{{ $userRole->description }}</option>
-                @else
-                <option value="{{ $userRole->id }}">{{ $userRole->description }}</option>
-                @endif
-            @endforeach
-        </select>
-        <br /><br />
-        <label for="status_id">Status:</label><br />
-        <select name="status_id">
-            <option value=''>Any</option>
-            @foreach($userStatuses as $userStatus)
-            @if (isset($filters['status_id']) && (int)$filters['status_id'] === (int)$userStatus->id)
-                <option value="{{ $userStatus->id }}" selected>{{ $userStatus->description }}</option>
-                @else
-                <option value="{{ $userStatus->id }}">{{ $userStatus->description }}</option>
-                @endif
-            @endforeach
-        </select>
-        <button id="users-filter-submit">Search</button>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="cb-search-container">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="fullname">Full Name</label>
+                    <input name="fullname" type="text" class="form-control" value="{{ isset($filters['fullname']) ? $filters['fullname'] : '' }}">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="email">Email Address</label>
+                    <input name="email" type="text" class="form-control" value="{{ isset($filters['email']) ? $filters['email'] : '' }}">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="federation">Trade/Sectoral Federation</label>
+                    <input name="federation" type="text" class="form-control" value="{{ isset($filters['federation']) ? $filters['federation'] : '' }}">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="local_union">Local Union</label>
+                    <input name="local_union" class="form-control" type="text" value="{{ isset($filters['local_union']) ? $filters['local_union'] : '' }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="role_id">Role</label>
+                    <select name="role_id" class="form-control">
+                        <option value=''>Any</option>
+                        @foreach($userRoles as $userRole)
+                            @if (isset($filters['role_id']) && (int)$filters['role_id'] === (int)$userRole->id)
+                            <option value="{{ $userRole->id }}" selected>{{ $userRole->description }}</option>
+                            @else
+                            <option value="{{ $userRole->id }}">{{ $userRole->description }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="status_id">Status</label>
+                    <select name="status_id" class="form-control">
+                        <option value=''>Any</option>
+                        @foreach($userStatuses as $userStatus)
+                            @if (isset($filters['status_id']) && (int)$filters['status_id'] === (int)$userStatus->id)
+                            <option value="{{ $userStatus->id }}" selected>{{ $userStatus->description }}</option>
+                            @else
+                            <option value="{{ $userStatus->id }}">{{ $userStatus->description }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-3 mt-auto">
+                    <div class="btn-group w-100" role="group">
+                        <button id="users-filter-submit" class="btn btn-primary w-50">Search</button>
+                        <button type="button" class="btn btn-secondary w-50" onclick="window.location.reload();">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <table id="users-datatable" class="table table-bordered" reference="{{ route('api.user.list') }}">
-        <thead>
-            <tr>
-                <th>Full name</th>
-                <th>Email</th>
-                <th>Federation</th>
-                <th>Local Union</th>
-                <th>Status</th>
-                <th>Role</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-    </table>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="users-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.user.list') }}">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email Address</th>
+                        <th>Trade/Sectoral Federation</th>
+                        <th>Local Union</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>                                    
+            </table>
+        </div>
+    </div>
 </div>
 @endsection
 

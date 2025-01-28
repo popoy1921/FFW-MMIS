@@ -25,8 +25,8 @@ $(document).ready(function() {
             { data : 'email', name : 'email'},
             { data : 'federation', name : 'federation'},
             { data : 'local_union', name : 'local_union'},
-            { data : 'status', name : 'status'},
             { data : 'role', name : 'role'},
+            { data : 'status', name : 'status'},
             { data : 'actions', name : 'actions'},
         ],
         columnDefs: [

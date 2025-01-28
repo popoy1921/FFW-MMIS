@@ -73,7 +73,7 @@ class UsersSeeder extends Seeder
                 'guid'                  => (string) Str::uuid(),
                 'email'                 => 'union1.user@mailinator.com',
                 'password'              => Hash::make('S@mple123'),
-                'fname'                 => 'Union User',
+                'fname'                 => 'Union one',
                 'mname'                 => 'Sy',
                 'lname'                 => 'Sy',
                 'fullname'              => 'Federation User Sy Sy',

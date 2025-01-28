@@ -81,6 +81,11 @@ class UserService extends BaseService
         }
         if (isset($aFilter['status_id'])) {
             $this->oUserModelBuilder->where('status_id', $aFilter['status_id']);
+        }        
+        if (isset($aFilter['role_limit'])) {
+            $this->oUserModelBuilder->whereHas('userRole', function($query) use ($aFilter) {
+                $query->where('id', '>=', $aFilter['role_limit']);
+            });
         }
     }
 
@@ -136,7 +141,7 @@ class UserService extends BaseService
                 'local_union' => $oUser->localUnion ? $oUser->localUnion->name : '',
                 'status'      => $oUser->userStatus->description,
                 'role'        => $oUser->userRole->description,
-                'actions'     => 'ACTION',
+                'actions'     => '<a class="btn btn-primary" href="#">View Details</a>',
             ];
         });
         return $aFormattedUsers;
@@ -144,10 +149,8 @@ class UserService extends BaseService
         
     /**
      * getUsersProfileData
-     *
-     * @return Collection
      */
-    public function getUsersProfileData() : Collection
+    public function getUsersProfileData()
     {
         return User::with('userRole')->where('guid', auth()->user()->guid)->first();
     }

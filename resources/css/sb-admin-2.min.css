@@ -240,7 +240,8 @@ th {
 
 label {
 	display: inline-block;
-	margin-bottom: .5rem
+	margin-bottom: .5rem;
+	font-weight: bold
 }
 
 button {
@@ -1776,7 +1777,7 @@ pre code {
 .table {
 	width: 100%;
 	margin-bottom: 1rem;
-	color: #858796
+	color: #000000
 }
 
 .table td,
@@ -1826,7 +1827,7 @@ pre code {
 }
 
 .table-hover tbody tr:hover {
-	color: #858796;
+	color: #464091;
 	background-color: rgba(0, 0, 0, .075)
 }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\UserService;
-use App\Models\User;
 use App\Models\UserRole;
 use App\Models\UserStatus;
 use Illuminate\Http\Request;
@@ -83,7 +82,7 @@ class PageRendererController extends Controller
     {
         $aPageDetails = array(
             'userStatuses' => UserStatus::orderBy('id', 'desc')->get(),
-            'userRoles'    => UserRole::all(),
+            'userRoles'    => UserRole::where('id', '>=', 2)->get(),
             'top_menu'     => 'users',
             'filters'      => $oRequest->all(),
         );

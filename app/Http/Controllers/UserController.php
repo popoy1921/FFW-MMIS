@@ -26,7 +26,14 @@ class UserController extends Controller
 
     public function getList(Request $oRequest)
     {
-        return response()->json($this->oUserService->getFormattedTableData($oRequest->all()));
+        $aFilter = $oRequest->all();
+        // if ((int)auth()->user()->role_id === 2) {
+        //     $iRole = 2;
+        // } else {
+        //     $iRole = 0;
+        // }
+        $aFilter['role_limit'] = 2;
+        return response()->json($this->oUserService->getFormattedTableData($aFilter));
     }
     
     /**
