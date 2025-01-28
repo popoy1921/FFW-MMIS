@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\UserService;
+use App\Models\User;
 use App\Models\UserRole;
 use App\Models\UserStatus;
 use Illuminate\Http\Request;
@@ -87,6 +88,22 @@ class PageRendererController extends Controller
             'filters'      => $oRequest->all(),
         );
         return view('admin.users', $aPageDetails);
+    }
+
+    /**
+     * showAdminUserDetialsPage
+     *
+     * @return View
+     */
+    public function showAdminUserDetialsPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'user'         => User::with(['userRole', 'userStatus', 'federation', 'localUnion'])->where('guid', '=', $aData['guid'])->first(),
+            'top_menu'     => 'users',
+            'filters'      => $oRequest->all(),
+        );
+        return view('admin.user-details', $aPageDetails);
     }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------

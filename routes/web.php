@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('checkUserRole:2')->group(function () {
         Route::get('/admin/local-unions', [PageRendererController::class, 'showAdminLocalUnionsPage'])->name('admin.local-unions');
         Route::get('/admin/users', [PageRendererController::class, 'showAdminUsersPage'])->name('admin.users');
+        Route::get('/admin/user-details', [PageRendererController::class, 'showAdminUserDetialsPage'])->name('admin.user-details');
     });
 
     // FEDERATION-POINT-PERSON

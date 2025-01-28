@@ -141,7 +141,7 @@ class UserService extends BaseService
                 'local_union' => $oUser->localUnion ? $oUser->localUnion->name : '',
                 'status'      => $oUser->userStatus->description,
                 'role'        => $oUser->userRole->description,
-                'actions'     => '<a class="btn btn-primary" href="#">View Details</a>',
+                'actions'     => '<a class="btn btn-primary" href="'. route('admin.user-details') . '?guid=' . $oUser->guid . '">View Details</a>',
             ];
         });
         return $aFormattedUsers;
