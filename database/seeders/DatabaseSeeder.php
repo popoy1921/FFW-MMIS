@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(FederationCategoriesSeeder::class);
         $this->call(FederationsSeeder::class);
+        $this->call(FederationStatusesSeeder::class);
         $this->call(IndustriesSeeder::class);
         $this->call(LocalUnionsSeeder::class);
         $this->call(RegionsSeeder::class);

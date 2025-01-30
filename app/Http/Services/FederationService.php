@@ -2,18 +2,20 @@
 
 namespace App\Http\Services;
 
-use App\Models\User;
+use App\Mail\ConfirmEmailUpdate;
+use App\Models\Federation;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as FormattedCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class that would handle any logic for User
+ * Class that would handle any logic for Federation
  */
-class UserService extends BaseService
+class FederationService extends BaseService
 {    
-    private Builder $oUserModelBuilder;
+    private Builder $oFederationModelBuilder;
     
     /**
      * getFormattedTableData
@@ -24,16 +26,18 @@ class UserService extends BaseService
     public function getFormattedTableData(array $aFilter) : array
     {
         $this->setUserModelQueries($aFilter);
-        $iNumberOfFilteredRecords = $this->oUserModelBuilder->count();
+        // $iNumberOfFilteredRecords = $this->oFederationModelBuilder->count();
 
         $iNumberOfRecords = (int)$aFilter['length'];
         $iPage = ((int)$aFilter['start'] / $iNumberOfRecords) + 1;
-        $oUserRecords = $this->getPaginatedRecords($this->oUserModelBuilder, $iPage, $iNumberOfRecords);
+        $oFederationRecords = $this->getPaginatedRecords($this->oFederationModelBuilder, $iPage, $iNumberOfRecords);
+        dd($oFederationRecords);
         return array(
-            'draw'            => intval($aFilter['draw']),              // Return the draw counter
-            'recordsTotal'    => User::count(),                         // Total records without filtering
-            'recordsFiltered' => $iNumberOfFilteredRecords,             // Total records after filtering
-            'data'            => $this->formatTableData($oUserRecords), // Data for the current page
+            // 'draw'            => intval($aFilter['draw']),              // Return the draw counter
+            // 'recordsTotal'    => User::count(),                         // Total records without filtering
+            // 'recordsFiltered' => $iNumberOfFilteredRecords,             // Total records after filtering
+            // 'data'            => $this->formatTableData($oUserRecords), // Data for the current page
+            $oFederationRecords
         );
     }
 
@@ -46,12 +50,12 @@ class UserService extends BaseService
     public function setUserModelQueries(array $aFilter) : void
     {
         $aRelationShips = [
-            'userStatus',
-            'userRole',
-            'federation',
-            'localUnion',
+            'federationCategory',
+            'localUnions',
+            'federationStatus',
         ];
-        $this->oUserModelBuilder = User::with($aRelationShips);
+        $this->oFederationModelBuilder = Federation::with($aRelationShips);
+        return;
         $this->filterDataQuery($aFilter);
         $this->sortDataQuery($aFilter);
     }
@@ -59,29 +63,29 @@ class UserService extends BaseService
     private function filterDataQuery(array $aFilter) : void
     {
         if (isset($aFilter['fullname'])) {
-            $this->oUserModelBuilder->where('fullname', 'like', '%' . $aFilter['fullname'] . '%');
+            $this->oFederationModelBuilder->where('fullname', 'like', '%' . $aFilter['fullname'] . '%');
         }
         if (isset($aFilter['email'])) {
-            $this->oUserModelBuilder->where('email', 'like', '%' . $aFilter['email'] . '%');
+            $this->oFederationModelBuilder->where('email', 'like', '%' . $aFilter['email'] . '%');
         }
         if (isset($aFilter['federation'])) {
-            $this->oUserModelBuilder->whereHas('federation', function($query) use ($aFilter) {
+            $this->oFederationModelBuilder->whereHas('federation', function($query) use ($aFilter) {
                 $query->where('name', 'like', '%' . $aFilter['federation'] . '%');
             });
         }
         if (isset($aFilter['local_union'])) {
-            $this->oUserModelBuilder->whereHas('localUnion', function($query) use ($aFilter) {
+            $this->oFederationModelBuilder->whereHas('localUnion', function($query) use ($aFilter) {
                 $query->where('name', 'like', '%' . $aFilter['local_union'] . '%');
             });
         }
         if (isset($aFilter['role_id'])) {
-            $this->oUserModelBuilder->where('role_id', $aFilter['role_id']);
+            $this->oFederationModelBuilder->where('role_id', $aFilter['role_id']);
         }
         if (isset($aFilter['status_id'])) {
-            $this->oUserModelBuilder->where('status_id', $aFilter['status_id']);
+            $this->oFederationModelBuilder->where('status_id', $aFilter['status_id']);
         }        
         if (isset($aFilter['role_limit'])) {
-            $this->oUserModelBuilder->whereHas('userRole', function($query) use ($aFilter) {
+            $this->oFederationModelBuilder->whereHas('userRole', function($query) use ($aFilter) {
                 $query->where('id', '>=', $aFilter['role_limit']);
             });
         }
@@ -109,16 +113,16 @@ class UserService extends BaseService
         }
                   
         if ($iColumNumber < $iIndexForLookup) {
-            $this->oUserModelBuilder->orderBy($sColumn, $sAsc);
+            $this->oFederationModelBuilder->orderBy($sColumn, $sAsc);
         } else {
-            $sUserTableName = $this->oUserModelBuilder->getModel()->getTable();
+            $sUserTableName = $this->oFederationModelBuilder->getModel()->getTable();
             $aColumnsValues = explode('.', $sColumn);
             $sTableName = $aColumnsValues[0];        
             $sUserFieldId = $sUserTableName . '.' . $aColumnsValues[2];
             $sForiegnIdFieldName = $sTableName . '.id';
-            $this->oUserModelBuilder->leftJoin($sTableName, $sUserFieldId, '=', $sForiegnIdFieldName);
+            $this->oFederationModelBuilder->leftJoin($sTableName, $sUserFieldId, '=', $sForiegnIdFieldName);
             $sFieldName = $aColumnsValues[0] . '.' . $aColumnsValues[1];
-            $this->oUserModelBuilder->orderByRaw($sFieldName . ' '.  $sAsc);
+            $this->oFederationModelBuilder->orderByRaw($sFieldName . ' '.  $sAsc);
         }
     }
 

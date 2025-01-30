@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LocalUnion extends Model
+class FederationStatus extends Model
 {
     use HasFactory;
     
@@ -15,11 +15,5 @@ class LocalUnion extends Model
     *
     * @var string
     */
-    protected $table = 'local_unions';
-
-    // Define the relationship to the Federation model
-    public function federation()
-    {
-        return $this->belongsTo(Federation::class, 'federation_id');
-    }
+    protected $table = 'lu_federation_statuses';
 }

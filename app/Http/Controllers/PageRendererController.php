@@ -105,6 +105,21 @@ class PageRendererController extends Controller
         );
         return view('admin.user-details', $aPageDetails);
     }
+
+    /**
+     * showAdminFederationsPage
+     *
+     * @return View
+     */
+    public function showAdminTradeFederationsPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'top_menu'     => 'trade_federations',
+            'filters'      => $oRequest->all(),
+        );
+        return view('admin.trade-federations', $aPageDetails);
+    }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------
     /**

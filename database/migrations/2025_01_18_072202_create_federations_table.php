@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('federations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('category_id');
+            $table->integer('status_id');
         });
     }
 

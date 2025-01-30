@@ -6,6 +6,7 @@ use App\Http\Requests\UserUpdatePasswordRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Services\UserService;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -23,8 +24,14 @@ class UserController extends Controller
     {
         $this->oUserService = $oUserService;
     }
-
-    public function getList(Request $oRequest)
+    
+    /**
+     * getList
+     *
+     * @param  mixed $oRequest
+     * @return JsonResponse
+     */
+    public function getList(Request $oRequest) : JsonResponse
     {
         $aFilter = $oRequest->all();
         // if ((int)auth()->user()->role_id === 2) {

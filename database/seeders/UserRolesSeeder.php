@@ -10,14 +10,22 @@ class UserRolesSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('lu_user_statuses')->insert([
-            [
-                'id'          => 0,
-                'description' => 'Inactive',
-            ],
+        DB::table('lu_user_roles')->insert([
             [
                 'id'          => 1,
-                'description' => 'Active',
+                'description' => 'Super Admin',
+            ],
+            [
+                'id'          => 2,
+                'description' => 'Admin',
+            ],
+            [
+                'id'          => 3,
+                'description' => 'Trade Federation',
+            ],
+            [
+                'id'          => 4,
+                'description' => 'Local Union',
             ],
         ]);
     }

@@ -16,4 +16,22 @@ class Federation extends Model
     * @var string
     */
     protected $table = 'federations';
+
+    // Define the relationship to the FederationCategory model
+    public function federationCategory()
+    {
+        return $this->belongsTo(FederationCategory::class, 'category_id');
+    }
+
+    // Define the relationship to the LocalUnion model
+    public function localUnions()
+    {
+        return $this->hasMany(LocalUnion::class);
+    }
+
+    // Define the relationship to the FederationCategory model
+    public function federationStatus()
+    {
+        return $this->belongsTo(FederationStatus::class, 'status_id');
+    }
 }

@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('local_unions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('federation_id');
+        Schema::create('lu_federation_statuses', function (Blueprint $table) {
+            $table->integer('id');
+            $table->string('description');
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('local_unions');
+        Schema::dropIfExists('lu_federation_statuses');
     }
 };
