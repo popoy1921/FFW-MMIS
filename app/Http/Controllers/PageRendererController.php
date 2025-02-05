@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\UserService;
+use App\Models\Federation;
+use App\Models\FederationCategory;
+use App\Models\FederationStatus;
+use App\Models\Region;
 use App\Models\User;
 use App\Models\UserRole;
 use App\Models\UserStatus;
@@ -113,10 +117,14 @@ class PageRendererController extends Controller
      */
     public function showAdminTradeFederationsPage(Request $oRequest) : View
     {
-        $aData = $oRequest->all();
         $aPageDetails = array(
-            'top_menu'     => 'trade_federations',
-            'filters'      => $oRequest->all(),
+            'federationCategories'  => FederationCategory::orderBy('description', 'asc')->get(),
+            'federations'           => Federation::orderBy('name', 'asc')->get(),
+            'top_menu'              => 'trade_federations',
+            'filters'               => $oRequest->all(),
+            'regions'               => Region::all(),
+            'federationsStatuses'   => FederationStatus::orderBy('id', 'desc')->get(),
+            'filters'               => $oRequest->all(),
         );
         return view('admin.trade-federations', $aPageDetails);
     }

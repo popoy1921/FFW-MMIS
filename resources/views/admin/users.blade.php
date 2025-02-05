@@ -32,7 +32,7 @@
                 <div class="form-group col-md-3">
                     <label for="role_id">Role</label>
                     <select name="role_id" class="form-control">
-                        <option value=''>Any</option>
+                        <option value=''>- Any -</option>
                         @foreach($userRoles as $userRole)
                             @if (isset($filters['role_id']) && (int)$filters['role_id'] === (int)$userRole->id)
                             <option value="{{ $userRole->id }}" selected>{{ $userRole->description }}</option>
@@ -45,7 +45,7 @@
                 <div class="form-group col-md-3">
                     <label for="status_id">Status</label>
                     <select name="status_id" class="form-control">
-                        <option value=''>Any</option>
+                        <option value=''>- Any -</option>
                         @foreach($userStatuses as $userStatus)
                             @if (isset($filters['status_id']) && (int)$filters['status_id'] === (int)$userStatus->id)
                             <option value="{{ $userStatus->id }}" selected>{{ $userStatus->description }}</option>

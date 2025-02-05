@@ -46,5 +46,28 @@ class BaseService
             'current_page' => $iCurrentPage,
         );
     }
+    
+    /**
+     * is Joined
+     *
+     * @param  Builder $oBuilder
+     * @param  string  $sTable
+     * @return bool
+     */
+    public static function isJoined(Builder $oBuilder, string $sTable) : bool
+    {  
+        $aJoins = $oBuilder->getQuery()->joins;  
+        if ($aJoins === null) {  
+            return false;  
+        }  
+
+        foreach ($aJoins as $join) {  
+            if ($join->table === $sTable) {  
+                return true;  
+            }  
+        }  
+
+        return false;  
+    }
 }
 

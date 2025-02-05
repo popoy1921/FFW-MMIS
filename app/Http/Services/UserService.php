@@ -99,16 +99,16 @@ class UserService extends BaseService
         ];
         $iIndexForLookup = 2;
         if (isset($aFilter['order']) === false) {
-            $iColumNumber = 0;
+            $iColumnNumber = 0;
             $sColumn = $aColumns[0];
             $sAsc = 'asc';
         } else {
-            $iColumNumber = $aFilter['order'][0]['column'];
+            $iColumnNumber = $aFilter['order'][0]['column'];
             $sColumn = $aColumns[$aFilter['order'][0]['column']];
             $sAsc = $aFilter['order'][0]['dir'];
         }
                   
-        if ($iColumNumber < $iIndexForLookup) {
+        if ($iColumnNumber < $iIndexForLookup) {
             $this->oUserModelBuilder->orderBy($sColumn, $sAsc);
         } else {
             $sUserTableName = $this->oUserModelBuilder->getModel()->getTable();

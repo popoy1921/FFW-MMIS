@@ -24,6 +24,12 @@ class Federation extends Model
     }
 
     // Define the relationship to the LocalUnion model
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    // Define the relationship to the LocalUnion model
     public function localUnions()
     {
         return $this->hasMany(LocalUnion::class);

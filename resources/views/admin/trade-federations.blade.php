@@ -3,7 +3,7 @@
 @section('content')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 page-header">Users</h1>
+    <h1 class="h3 mb-0 page-header">Trade Federations</h1>
 </div>
 
 <!-- Content  -->
@@ -12,21 +12,54 @@
         <div class="cb-search-container">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="fullname">Trade Federation Name</label>
-                    <input name="fullname" type="text" class="form-control" value="{{ isset($filters['fullname']) ? $filters['fullname'] : '' }}">
+                    <label for="category_id">Trade Federation Name</label>
+                    <select name="category_id" class="form-control">
+                        <option value=''>- Any -</option>
+                        @foreach($federationCategories as $federationCategory)
+                            @if (isset($filters['category_id']) && (int)$filters['category_id'] === (int)$federationCategory->id)
+                            <option value="{{ $federationCategory->id }}" selected>{{ $federationCategory->description }}</option>
+                            @else
+                            <option value="{{ $federationCategory->id }}">{{ $federationCategory->description }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="email">Category</label>
-                    <input name="email" type="text" class="form-control" value="{{ isset($filters['email']) ? $filters['email'] : '' }}">
+                    <label for="id">Trade Federation Name</label>
+                    <select name="id" class="form-control">
+                        <option value=''>- Any -</option>
+                        @foreach($federations as $federation)
+                            @if (isset($filters['id']) && (int)$filters['id'] === (int)$federation->id)
+                            <option value="{{ $federation->id }}" selected>{{ $federation->name }}</option>
+                            @else
+                            <option value="{{ $federation->id }}">{{ $federation->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="federation">Region</label>
-                    <input name="federation" type="text" class="form-control" value="{{ isset($filters['federation']) ? $filters['federation'] : '' }}">
+                    <label for="region_id">Region</label>
+                    <select name="region_id" class="form-control multi-select" multiple="multiple">
+                        @foreach($regions as $region)
+                            @if (isset($filters['region_id']) && (int)$filters['region_id'] === (int)$region->id)
+                            <option value="{{ $region->id }}" selected>{{ $region->description }}</option>
+                            @else
+                            <option value="{{ $region->id }}">{{ $region->description }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="role_id">Role</label>
-                    <select name="role_id" class="form-control">
-                        <option value=''>Any</option>                        
+                    <label for="status_id">Status</label>
+                    <select name="status_id" class="form-control">
+                        <option value=''>- Any -</option>
+                        @foreach($federationsStatuses as $federationsStatus)
+                            @if (isset($filters['status_id']) && (int)$filters['status_id'] === (int)$federationsStatus->id)
+                            <option value="{{ $federationsStatus->id }}" selected>{{ $federationsStatus->description }}</option>
+                            @else
+                            <option value="{{ $federationsStatus->id }}">{{ $federationsStatus->description }}</option>
+                            @endif
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -41,17 +74,16 @@
         </div>
     </div>
     <div class="card-body">
+        <button class="btn btn-primary">Add Trade Federation</button> 
         <div class="table-responsive">
             <table id="trade-federations-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.federation.list') }}">
                 <thead>
                     <tr>
-                        <th>Full Name</th>
-                        <th>Email Address</th>
-                        <th>Trade/Sectoral Federation</th>
-                        <th>Local Union</th>
-                        <th>Role</th>
+                        <th>Category</th>
+                        <th>Trade Federation Name</th>
+                        <th>Regions</th>
+                        <th>Total Number of Local Unions</th>
                         <th>Status</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>                                    
             </table>

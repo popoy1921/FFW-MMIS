@@ -26,18 +26,16 @@ class FederationService extends BaseService
     public function getFormattedTableData(array $aFilter) : array
     {
         $this->setUserModelQueries($aFilter);
-        // $iNumberOfFilteredRecords = $this->oFederationModelBuilder->count();
+        $iNumberOfFilteredRecords = $this->oFederationModelBuilder->count();
 
         $iNumberOfRecords = (int)$aFilter['length'];
         $iPage = ((int)$aFilter['start'] / $iNumberOfRecords) + 1;
         $oFederationRecords = $this->getPaginatedRecords($this->oFederationModelBuilder, $iPage, $iNumberOfRecords);
-        dd($oFederationRecords);
         return array(
-            // 'draw'            => intval($aFilter['draw']),              // Return the draw counter
-            // 'recordsTotal'    => User::count(),                         // Total records without filtering
-            // 'recordsFiltered' => $iNumberOfFilteredRecords,             // Total records after filtering
-            // 'data'            => $this->formatTableData($oUserRecords), // Data for the current page
-            $oFederationRecords
+            'draw'            => intval($aFilter['draw']),                    // Return the draw counter
+            'recordsTotal'    => Federation::count(),                         // Total records without filtering
+            'recordsFiltered' => $iNumberOfFilteredRecords,                   // Total records after filtering
+            'data'            => $this->formatTableData($oFederationRecords), // Data for the current page
         );
     }
 
@@ -51,102 +49,150 @@ class FederationService extends BaseService
     {
         $aRelationShips = [
             'federationCategory',
+            'region',
             'localUnions',
             'federationStatus',
         ];
         $this->oFederationModelBuilder = Federation::with($aRelationShips);
-        return;
         $this->filterDataQuery($aFilter);
         $this->sortDataQuery($aFilter);
+        return;
     }
-
+    
+    /**
+     * filter Data Query
+     *
+     * @param  array $aFilter
+     * @return void
+     */
     private function filterDataQuery(array $aFilter) : void
     {
-        if (isset($aFilter['fullname'])) {
-            $this->oFederationModelBuilder->where('fullname', 'like', '%' . $aFilter['fullname'] . '%');
+        // Remove all empty string filters
+        $aFilter = array_filter($aFilter, function($mValue) {
+            if ($mValue === '') {
+                return false;
+            }
+            if (is_array($mValue) === true && count($mValue) === 0) {
+                return false;
+            }
+            return true;
+        });
+
+        if (isset($aFilter['category_id'])) {
+            $this->oFederationModelBuilder->where('category_id', '=', $aFilter['category_id']);
         }
-        if (isset($aFilter['email'])) {
-            $this->oFederationModelBuilder->where('email', 'like', '%' . $aFilter['email'] . '%');
+        if (isset($aFilter['id'])) {
+            $this->oFederationModelBuilder->where('federations.id', '=', $aFilter['id']);
         }
-        if (isset($aFilter['federation'])) {
-            $this->oFederationModelBuilder->whereHas('federation', function($query) use ($aFilter) {
-                $query->where('name', 'like', '%' . $aFilter['federation'] . '%');
-            });
-        }
-        if (isset($aFilter['local_union'])) {
-            $this->oFederationModelBuilder->whereHas('localUnion', function($query) use ($aFilter) {
-                $query->where('name', 'like', '%' . $aFilter['local_union'] . '%');
-            });
-        }
-        if (isset($aFilter['role_id'])) {
-            $this->oFederationModelBuilder->where('role_id', $aFilter['role_id']);
+        if (isset($aFilter['region_id'])) {
+            $this->oFederationModelBuilder->whereIn('region_id', $aFilter['region_id']);
         }
         if (isset($aFilter['status_id'])) {
-            $this->oFederationModelBuilder->where('status_id', $aFilter['status_id']);
-        }        
-        if (isset($aFilter['role_limit'])) {
-            $this->oFederationModelBuilder->whereHas('userRole', function($query) use ($aFilter) {
-                $query->where('id', '>=', $aFilter['role_limit']);
-            });
+            $this->oFederationModelBuilder->where('status_id', '=', $aFilter['status_id']);
         }
     }
 
     private function sortDataQuery(array $aFilter) : void
     {
+        // tablename.field_on_foreign_table_for_sort.field_in_main_table
         $aColumns = [
-            'fullname',
-            'email',
-            'federations.name.federation_id',
-            'local_unions.name.local_union_id',
-            'lu_user_statuses.description.status_id',
-            'lu_user_roles.description.role_id',
+            'lu_federation_categories.description.category_id',
+            'name',
+            'lu_regions.description.region_id',
+            '', // skip "Total Number of Local Unions"
+            'lu_federation_statuses.description.status_id',
         ];
-        $iIndexForLookup = 2;
-        if (isset($aFilter['order']) === false) {
-            $iColumNumber = 0;
-            $sColumn = $aColumns[0];
-            $sAsc = 'asc';
-        } else {
-            $iColumNumber = $aFilter['order'][0]['column'];
-            $sColumn = $aColumns[$aFilter['order'][0]['column']];
-            $sAsc = $aFilter['order'][0]['dir'];
+
+        $iColumnNumber = 0;
+        $sDirection = 'asc';
+
+        // Default sorting OR Sort Category, Name
+        if (isset($aFilter['order']) === false || (int)$aFilter['order'][0]['column'] === 0) {
+            if (isset($aFilter['order']) === true) {
+                $sDirection = $aFilter['order'][0]['dir'];
+            }
+            $this->performSortFromOtherTable(explode('.', $aColumns[0]), $sDirection);
+            $this->oFederationModelBuilder->orderBy('name', 'asc');
+            return;
         }
-                  
-        if ($iColumNumber < $iIndexForLookup) {
-            $this->oFederationModelBuilder->orderBy($sColumn, $sAsc);
+
+        // Perform sorting
+        $this->performSortFromOtherTable(explode('.', $aColumns[0]), $sDirection);
+        if (isset($aFilter['order']) === true) {
+            $iColumnNumber = $aFilter['order'][0]['column'];
+            $sColumn = $aColumns[$iColumnNumber];
+            $sDirection = $aFilter['order'][0]['dir'];
+        }
+        
+        $aColumns = explode('.', $sColumn);
+        if (count($aColumns) === 1) {
+            $this->oFederationModelBuilder->orderBy($sColumn, $sDirection);
         } else {
-            $sUserTableName = $this->oFederationModelBuilder->getModel()->getTable();
-            $aColumnsValues = explode('.', $sColumn);
-            $sTableName = $aColumnsValues[0];        
-            $sUserFieldId = $sUserTableName . '.' . $aColumnsValues[2];
-            $sForiegnIdFieldName = $sTableName . '.id';
-            $this->oFederationModelBuilder->leftJoin($sTableName, $sUserFieldId, '=', $sForiegnIdFieldName);
-            $sFieldName = $aColumnsValues[0] . '.' . $aColumnsValues[1];
-            $this->oFederationModelBuilder->orderByRaw($sFieldName . ' '.  $sAsc);
+            $this->performSortFromOtherTable($aColumns, $sDirection);
         }
     }
-
+    
+    /**
+     * perform Sort From Other Table
+     *
+     * @param  array $aColumns
+     * @param  string $sDirection
+     * @return void
+     */
+    private function performSortFromOtherTable(array $aColumns, string $sDirection)
+    {
+        $sUserTableName = $this->oFederationModelBuilder->getModel()->getTable();
+        $aColumnsValues = $aColumns;
+        $sTableName = $aColumnsValues[0];        
+        $sUserFieldId = $sUserTableName . '.' . $aColumnsValues[2];
+        $sForiegnIdFieldName = $sTableName . '.id';
+        $sFieldName = $aColumnsValues[0] . '.' . $aColumnsValues[1];
+        if ($this->isJoined($this->oFederationModelBuilder, $sTableName) === false) {
+            $this->oFederationModelBuilder->leftJoin($sTableName, $sUserFieldId, '=', $sForiegnIdFieldName);
+        }
+        $this->oFederationModelBuilder->orderByRaw($sFieldName . ' '.  $sDirection);
+    }
     
     /**
      * Update format of the users data for page rendering when using API
      *
-     * @param  mixed $oUsers
-     * @return FormattedCollection
+     * @param  LengthAwarePaginator $oFederation
+     * @return array
      */
-    private function formatTableData(LengthAwarePaginator $oUsers) : FormattedCollection
+    private function formatTableData(LengthAwarePaginator $oFederations) : array
     {
-        $aFormattedUsers = $oUsers->map(function ($oUser) {
-            return [
-                'fullname'    => $oUser->fullname,
-                'email'       => $oUser->email,
-                'federation'  => $oUser->federation ? $oUser->federation->name : '',
-                'local_union' => $oUser->localUnion ? $oUser->localUnion->name : '',
-                'status'      => $oUser->userStatus->description,
-                'role'        => $oUser->userRole->description,
-                'actions'     => '<a class="btn btn-primary" href="'. route('admin.user-details') . '?guid=' . $oUser->guid . '">View Details</a>',
-            ];
-        });
-        return $aFormattedUsers;
+        $aFormattedFederations = array();
+        $sCurrentCategory = '';
+        foreach ($oFederations as $oFederation) {
+            $sFederationNameOnloop = $oFederation->federationCategory->description;
+            if ($sCurrentCategory !== $sFederationNameOnloop) {
+                $sCurrentCategory = $sFederationNameOnloop;
+                $iIndex = count($aFormattedFederations);
+                $aFormattedFederations[$iIndex]['federation_category'] = $sFederationNameOnloop;
+                $aFormattedFederations[$iIndex]['records']      = array();
+                $aFormattedFederations[$iIndex]['name']         = '';
+                $aFormattedFederations[$iIndex]['region']       = '';
+                $aFormattedFederations[$iIndex]['local_unions'] = '';
+                $aFormattedFederations[$iIndex]['status']       = '';
+                $aFormattedFederations[$iIndex]['actions']      = '';
+            }
+
+            // Child Records
+            $sViewDetailsButton = '<a class="btn btn-primary" href="#">View Details</a> ';
+            $sUpdateStatusButton = '<button class="btn btn-primary">Update Status</button> ';
+            $sViewRegionDistributionButton = '<a class="btn btn-primary" href="#">View Region Distribution</a> ';
+            $aFederationRecord = array(
+                'federation_category'   => $oFederation->federationCategory->description,
+                'name'                  => $oFederation->name,
+                'region'                => $oFederation->region->description,
+                'local_unions'          => count($oFederation->localUnions),
+                'status'                => $oFederation->federationStatus->description,
+                'actions'               => $sViewDetailsButton . $sUpdateStatusButton . $sViewRegionDistributionButton,
+            );
+            array_push($aFormattedFederations[$iIndex]['records'], $aFederationRecord);
+        }
+        
+        return $aFormattedFederations;
     }
         
     /**
@@ -155,39 +201,5 @@ class FederationService extends BaseService
     public function getUsersProfileData()
     {
         return User::with('userRole')->where('guid', auth()->user()->guid)->first();
-    }
-    
-    /**
-     * update the user record specifically name fields and sending email update confirmation 
-     *
-     * @return array
-     */
-    public function update(array $aUser) : array
-    {
-        $oUser = User::firstwhere('guid', $aUser['guid']);
-        $oUser->fname = trim($aUser['fname']);
-        $oUser->mname = trim($aUser['mname']);
-        $oUser->lname = trim($aUser['lname']);
-        $oUser->email = trim($aUser['email']);
-        if(is_null($aUser['mname']) === true) {
-            $oUser->fullname = $oUser->fname . ' ' . $oUser->lname; 
-        } else {
-            $oUser->fullname = $oUser->fname . ' ' . $oUser->mname . ' ' . $oUser->lname;
-        }
-        $oUser->save();
-
-        return array();
-    }
-            
-    /**
-     * update password for a user record 
-     *
-     * @return void
-     */
-    public function updatePassword(array $aUpdatePassword) : void
-    {
-        $oUser = User::firstwhere('guid', $aUpdatePassword['guid']);
-        $oUser->password = Hash::make($aUpdatePassword['password']);
-        $oUser->save();
     }
 }
