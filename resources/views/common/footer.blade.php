@@ -12,13 +12,12 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-@include('common.modal')
+@include('common.logout-modal')
 <!-- Bootstrap core JavaScript-->
 @vite('resources/js/app.js')
 
 <!-- Custom scripts for all pages-->
 @vite('resources/js/sb-admin-2.min.js')
-@vite('resources/js/common.js')
 
 <!-- Page level plugins -->
 <!-- Installed in NPM now part of app.js -->

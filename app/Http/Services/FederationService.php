@@ -53,7 +53,7 @@ class FederationService extends BaseService
             'localUnions',
             'federationStatus',
         ];
-        $this->oFederationModelBuilder = Federation::with($aRelationShips);
+        $this->oFederationModelBuilder = Federation::with($aRelationShips)->select('federations.*');
         $this->filterDataQuery($aFilter);
         $this->sortDataQuery($aFilter);
         return;
@@ -179,7 +179,15 @@ class FederationService extends BaseService
 
             // Child Records
             $sViewDetailsButton = '<a class="btn btn-primary" href="#">View Details</a> ';
-            $sUpdateStatusButton = '<button class="btn btn-primary">Update Status</button> ';
+            if ((int)$oFederation->status_id === 1) {
+                $sUpdateStatusButton = '<a class="btn btn-primary update-status deactivate" href="#" data-toggle="modal" data-target="#cb-deactivate-federation-modal" data-id="'. $oFederation->id .'">'
+                . 'Update Status'
+                . '</a> ';
+            } else {
+                $sUpdateStatusButton = '<a class="btn btn-primary update-status activate" href="#" data-toggle="modal" data-target="#cb-activate-federation-modal" data-id="'. $oFederation->id .'">'
+                . 'Update Status'
+                . '</a> ';
+            }
             $sViewRegionDistributionButton = '<a class="btn btn-primary" href="#">View Region Distribution</a> ';
             $aFederationRecord = array(
                 'federation_category'   => $oFederation->federationCategory->description,
@@ -194,12 +202,19 @@ class FederationService extends BaseService
         
         return $aFormattedFederations;
     }
-        
+
     /**
-     * getUsersProfileData
+     * update Status
+     *
+     * @param  array $aFederation
+     * @return Federation
      */
-    public function getUsersProfileData()
+    public function updateStatus(array $aFederation) : Federation 
     {
-        return User::with('userRole')->where('guid', auth()->user()->guid)->first();
+        $oFederation = Federation::firstwhere('id', $aFederation['id']);
+        $oFederation->status_id = $aFederation['status_id'];
+        $oFederation->save();
+
+        return $oFederation;
     }
 }

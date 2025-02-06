@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Federation extends Model
 {
     use HasFactory;
+
+    // Disable automatic timestamps
+    public $timestamps = false;
     
     /**
     * table name in database

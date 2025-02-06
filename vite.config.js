@@ -14,7 +14,6 @@ export default defineConfig({
                 
                 'resources/scss/app.scss',
 
-                'resources/js/common.js',
                 'resources/js/datatables-demo.js',
                 'resources/js/sb-admin-2.js',
                 'resources/js/sb-admin-2.min.js',

@@ -67,6 +67,7 @@ $(document).ready(function() {
         ]
     });
 
+    // Used to create child row for collapsable records in datatable
     function getChildRow(sRowId, oFederation) {
         var oChildRow = $('<tr>').addClass('child').addClass('child' + sRowId);
         oChildRow.append($('<td>'));                          // Space for category field
@@ -78,13 +79,15 @@ $(document).ready(function() {
         return oChildRow;
     }
     
-    $('#users-filter-submit').on('click', function() {
-        console.log({
-            category_id : $('select[name="category_id"]').val(),
-            id          : $('select[name="id"]').val(),
-            region_id   : $('select[name="region_id"]').val(),
-            status_id   : $('select[name="status_id"]').val(),
-        });
-        oUserDataTable.draw();
+    // Update modal for update status form
+    $('#trade-federations-datatable').on('click', '.update-status', function() {
+        var sUpdateFormSelector;
+        var updateStatusButton = $(this);
+        if(updateStatusButton.hasClass('deactivate') === true) {
+            sUpdateFormSelector = "#deactivate-federation-form";
+        } else {
+            sUpdateFormSelector = "#activate-federation-form";
+        }
+        $(sUpdateFormSelector).find('input[name="id"]').val(updateStatusButton.data('id'));
     });
 });

@@ -73,6 +73,11 @@
             </div>
         </div>
     </div>
+    @if(session('federation-updatStatus'))
+        <div class="alert alert-success text-center d-inline">
+            {{ session('federation-updatStatus') }}
+        </div>
+    @endif
     <div class="card-body">
         <button class="btn btn-primary">Add Trade Federation</button> 
         <div class="table-responsive">
@@ -93,5 +98,7 @@
 @endsection
 
 @section('javascript')
+@include('admin.activate-federation-modal')
+@include('admin.deactivate-federation-modal')
 @vite('resources/js/admin/trade-federations.js')
 @endsection
