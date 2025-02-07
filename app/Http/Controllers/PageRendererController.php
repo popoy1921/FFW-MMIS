@@ -118,15 +118,27 @@ class PageRendererController extends Controller
     public function showAdminTradeFederationsPage(Request $oRequest) : View
     {
         $aPageDetails = array(
+            'top_menu'              => 'trade_federations',
             'federationCategories'  => FederationCategory::orderBy('description', 'asc')->get(),
             'federations'           => Federation::orderBy('name', 'asc')->get(),
-            'top_menu'              => 'trade_federations',
             'filters'               => $oRequest->all(),
             'regions'               => Region::all(),
-            'federationsStatuses'   => FederationStatus::orderBy('id', 'desc')->get(),
+            'federationStatuses'   => FederationStatus::orderBy('id', 'desc')->get(),
             'filters'               => $oRequest->all(),
         );
         return view('admin.trade-federations', $aPageDetails);
+    }
+
+    public function showAdminTradeFederationDetailsPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'top_menu'              => 'trade_federations',
+            'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
+            'federationCategories'  => FederationCategory::orderBy('description', 'asc')->get(),
+            'federationStatuses'    => FederationStatus::orderBy('id', 'desc')->get(),
+        );
+        return view('admin.trade-federation-details', $aPageDetails);
     }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------

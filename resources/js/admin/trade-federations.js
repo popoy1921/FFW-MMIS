@@ -88,6 +88,6 @@ $(document).ready(function() {
         } else {
             sUpdateFormSelector = "#activate-federation-form";
         }
-        $(sUpdateFormSelector).find('input[name="id"]').val(updateStatusButton.data('id'));
+        $(sUpdateFormSelector).find('input[name="guid"]').val(updateStatusButton.data('guid'));
     });
 });

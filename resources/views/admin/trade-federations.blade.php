@@ -12,7 +12,7 @@
         <div class="cb-search-container">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="category_id">Trade Federation Name</label>
+                    <label for="category_id">Category</label>
                     <select name="category_id" class="form-control">
                         <option value=''>- Any -</option>
                         @foreach($federationCategories as $federationCategory)
@@ -53,11 +53,11 @@
                     <label for="status_id">Status</label>
                     <select name="status_id" class="form-control">
                         <option value=''>- Any -</option>
-                        @foreach($federationsStatuses as $federationsStatus)
-                            @if (isset($filters['status_id']) && (int)$filters['status_id'] === (int)$federationsStatus->id)
-                            <option value="{{ $federationsStatus->id }}" selected>{{ $federationsStatus->description }}</option>
+                        @foreach($federationStatuses as $federationStatus)
+                            @if (isset($filters['status_id']) && (int)$filters['status_id'] === (int)$federationStatus->id)
+                            <option value="{{ $federationStatus->id }}" selected>{{ $federationStatus->description }}</option>
                             @else
-                            <option value="{{ $federationsStatus->id }}">{{ $federationsStatus->description }}</option>
+                            <option value="{{ $federationStatus->id }}">{{ $federationStatus->description }}</option>
                             @endif
                         @endforeach
                     </select>
@@ -73,20 +73,22 @@
             </div>
         </div>
     </div>
-    @if(session('federation-updatStatus'))
+    @if(session('federation-update-status'))
         <div class="alert alert-success text-center d-inline">
-            {{ session('federation-updatStatus') }}
+            {{ session('federation-update-status') }}
         </div>
     @endif
     <div class="card-body">
-        <button class="btn btn-primary">Add Trade Federation</button> 
+        <div class="text-right">
+            <a class="btn btn-primary">Add Trade Federation</a>    
+        </div>
         <div class="table-responsive">
             <table id="trade-federations-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.federation.list') }}">
                 <thead>
                     <tr>
                         <th>Category</th>
                         <th>Trade Federation Name</th>
-                        <th>Regions</th>
+                        <th>Region</th>
                         <th>Total Number of Local Unions</th>
                         <th>Status</th>
                     </tr>

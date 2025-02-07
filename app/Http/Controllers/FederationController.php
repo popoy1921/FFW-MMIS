@@ -40,7 +40,16 @@ class FederationController extends Controller
         $sProcess = (int)$aFederation['status_id'] === 0 ? 'deactivated' : 'activated';
 
         // session()->flash('federation-updatStatus', $oFederation->name . ' has been successfully ' . $sProcess . '.');
-        session()->flash('federation-updatStatus', 'Trade Federation status updated successfully!');
+        session()->flash('federation-update-status', 'Trade Federation status updated successfully!');
         return redirect()->route('admin.trade-federations');
+    }
+
+    public function updateFederation(Request $oRequest) : RedirectResponse
+    {
+        $aUpdateDetails = $oRequest->all();
+        $this->oFederationService->updateDetails($aUpdateDetails);
+
+        session()->flash('federation-update', 'Trade Federation details updated successfully!');
+        return redirect()->back();
     }
 }

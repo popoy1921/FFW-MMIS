@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Federation extends Model
 {
@@ -42,5 +43,15 @@ class Federation extends Model
     public function federationStatus()
     {
         return $this->belongsTo(FederationStatus::class, 'status_id');
+    }
+
+    // Automatically generate a UUID when creating a new instance
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->guid = (string) Str::uuid();
+        });
     }
 }

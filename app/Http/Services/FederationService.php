@@ -178,13 +178,13 @@ class FederationService extends BaseService
             }
 
             // Child Records
-            $sViewDetailsButton = '<a class="btn btn-primary" href="#">View Details</a> ';
+            $sViewDetailsButton = '<a class="btn btn-primary" href="' . route('admin.trade-federation-details'). '?guid=' . $oFederation->guid .'">View Details</a> ';
             if ((int)$oFederation->status_id === 1) {
-                $sUpdateStatusButton = '<a class="btn btn-primary update-status deactivate" href="#" data-toggle="modal" data-target="#cb-deactivate-federation-modal" data-id="'. $oFederation->id .'">'
+                $sUpdateStatusButton = '<a class="btn btn-primary update-status deactivate" href="#" data-toggle="modal" data-target="#cb-deactivate-federation-modal" data-guid="'. $oFederation->guid .'">'
                 . 'Update Status'
                 . '</a> ';
             } else {
-                $sUpdateStatusButton = '<a class="btn btn-primary update-status activate" href="#" data-toggle="modal" data-target="#cb-activate-federation-modal" data-id="'. $oFederation->id .'">'
+                $sUpdateStatusButton = '<a class="btn btn-primary update-status activate" href="#" data-toggle="modal" data-target="#cb-activate-federation-modal" data-guid="'. $oFederation->guid .'">'
                 . 'Update Status'
                 . '</a> ';
             }
@@ -211,8 +211,25 @@ class FederationService extends BaseService
      */
     public function updateStatus(array $aFederation) : Federation 
     {
-        $oFederation = Federation::firstwhere('id', $aFederation['id']);
+        $oFederation = Federation::firstwhere('guid', $aFederation['guid']);
         $oFederation->status_id = $aFederation['status_id'];
+        $oFederation->save();
+
+        return $oFederation;
+    }
+
+    /**
+     * update Status
+     *
+     * @param  array $aFederation
+     * @return Federation
+     */
+    public function updateDetails(array $aFederation) : Federation 
+    {
+        $oFederation = Federation::firstwhere('guid', $aFederation['guid']);
+        $oFederation->name = $aFederation['name'];
+        $oFederation->status_id = $aFederation['status_id'];
+        $oFederation->category_id = $aFederation['category_id'];
         $oFederation->save();
 
         return $oFederation;

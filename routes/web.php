@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\FederationController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageRendererController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +37,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/user-details', [PageRendererController::class, 'showAdminUserDetialsPage'])->name('admin.user-details');
         Route::get('/admin/federations', [PageRendererController::class, 'showAdminTradeFederationsPage'])->name('admin.trade-federations');
         Route::patch('/admin/federations/updatestatus', [FederationController::class, 'updateStatus'])->name('admin.trade-federations.update-status');
+        Route::get('/admin/federation-details', [PageRendererController::class, 'showAdminTradeFederationDetailsPage'])->name('admin.trade-federation-details');
+        Route::patch('/user/update', [FederationController::class, 'updateFederation'])->name('admin.trade-federation-update');
     });
 
     // FEDERATION-POINT-PERSON
