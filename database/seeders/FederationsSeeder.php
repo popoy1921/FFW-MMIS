@@ -83,6 +83,62 @@ class FederationsSeeder extends Seeder
                 'region_id'     => 8,
                 'status_id'     => 1,
             ],
+            [ 
+                'name'          => 'Farmers',
+                'guid'          => (string) Str::uuid(),
+                'category_id'   => 2,
+                'region_id'     => 8,
+                'status_id'     => 1,
+            ],
+            [ 
+                'name'          => 'Fisherfolks',
+                'guid'          => (string) Str::uuid(),
+                'category_id'   => 2,
+                'region_id'     => 8,
+                'status_id'     => 1,
+            ],
+            [ 
+                'name'          => 'Vendors',
+                'guid'          => (string) Str::uuid(),
+                'category_id'   => 2,
+                'region_id'     => 8,
+                'status_id'     => 1,
+            ],
+            [ 
+                'name'          => 'Cooperatives',
+                'guid'          => (string) Str::uuid(),
+                'category_id'   => 2,
+                'region_id'     => 8,
+                'status_id'     => 1,
+            ],
+            [ 
+                'name'          => 'Transport',
+                'guid'          => (string) Str::uuid(),
+                'category_id'   => 2,
+                'region_id'     => 8,
+                'status_id'     => 1,
+            ],
+            [ 
+                'name'          => 'Indigenous Peoples',
+                'guid'          => (string) Str::uuid(),
+                'category_id'   => 2,
+                'region_id'     => 8,
+                'status_id'     => 1,
+            ],
+            [ 
+                'name'          => 'Migrant Workers',
+                'guid'          => (string) Str::uuid(),
+                'category_id'   => 2,
+                'region_id'     => 8,
+                'status_id'     => 1,
+            ],
+            [ 
+                'name'          => 'Others',
+                'guid'          => (string) Str::uuid(),
+                'category_id'   => 2,
+                'region_id'     => 8,
+                'status_id'     => 1,
+            ],
         ]);
     }
 }
