@@ -178,17 +178,17 @@ class FederationService extends BaseService
             }
 
             // Child Records
-            $sViewDetailsButton = '<a class="btn btn-primary" href="' . route('admin.trade-federation-details'). '?guid=' . $oFederation->guid .'">View Details</a> ';
+            $sViewDetailsButton = '<a class="btn btn-sm btn-primary" title="View Details" href="' . route('admin.trade-federation-details'). '?guid=' . $oFederation->guid .'"><i class="fa fa-search" aria-hidden="true"></i></a> ';
             if ((int)$oFederation->status_id === 1) {
-                $sUpdateStatusButton = '<a class="btn btn-primary update-status deactivate" href="#" data-toggle="modal" data-target="#cb-deactivate-federation-modal" data-guid="'. $oFederation->guid .'">'
-                . 'Update Status'
+                $sUpdateStatusButton = '<a class="btn btn-sm btn-success update-status deactivate" title="Update Status" href="#" data-toggle="modal" data-target="#cb-deactivate-federation-modal" data-guid="'. $oFederation->guid .'">'
+                . '<i class="fa fa-pencil" aria-hidden="true"></i>'
                 . '</a> ';
             } else {
-                $sUpdateStatusButton = '<a class="btn btn-primary update-status activate" href="#" data-toggle="modal" data-target="#cb-activate-federation-modal" data-guid="'. $oFederation->guid .'">'
-                . 'Update Status'
+                $sUpdateStatusButton = '<a class="btn btn-sm btn-success update-status activate" title="Update Status" href="#" data-toggle="modal" data-target="#cb-activate-federation-modal" data-guid="'. $oFederation->guid .'">'
+                . '<i class="fa fa-pencil" aria-hidden="true"></i>'
                 . '</a> ';
             }
-            $sViewRegionDistributionButton = '<a class="btn btn-primary" href="#">View Region Distribution</a> ';
+            $sViewRegionDistributionButton = '<a class="btn btn-sm btn-warning" title="View Region Distribution" href="#"><i class="fa fa-map" aria-hidden="true"></i></a> ';
             $aFederationRecord = array(
                 'federation_category'   => $oFederation->federationCategory->description,
                 'name'                  => $oFederation->name,

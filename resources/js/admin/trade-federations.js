@@ -59,11 +59,11 @@ $(document).ready(function() {
             { orderable: true, targets: [0, 1, 2, 4] }, // Enable sorting for all rows except action
             { orderable: false, targets: [3, 5] },
             { width: '15%', targets: 0 },
-            { width: '20%', targets: 1 },
-            { width: '20%', targets: 2 },
+            { width: '25%', targets: 1 },
+            { width: '25%', targets: 2 },
             { width: '15%', targets: 3 },
             { width: '10%', targets: 4 },
-            { width: '25%', targets: 5 },
+            { width: '15%', targets: 5 },
         ]
     });
 

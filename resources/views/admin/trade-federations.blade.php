@@ -91,6 +91,7 @@
                         <th>Region</th>
                         <th>Total Number of Local Unions</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>                                    
             </table>
