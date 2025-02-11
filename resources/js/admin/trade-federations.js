@@ -97,12 +97,6 @@ $(document).ready(function() {
     });
 
     $('#federation-filter-submit').on('click', function() {
-        console.log({
-            category_id : $('select[name="category_id"]').val(),
-            id          : $('select[name="id"]').val(),
-            region_id   : $('select[name="region_id"]').val(),
-            status_id   : $('select[name="status_id"]').val(),
-        });
         oUserDataTable.draw();
     });
 });
