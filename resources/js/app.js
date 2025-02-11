@@ -35,6 +35,13 @@ $(document).ready(function() {
             $('i#' + sInputId).addClass( "fa-eye" );
         }
     }
+
+    // fade out timed alerts
+    setTimeout(function() {
+        $('.timed-alert').fadeOut(1000, function() {
+            $(this).addClass('d-none');
+        });
+    }, 3000);
     
     window.loginTogglePassword = loginTogglePassword;
 });

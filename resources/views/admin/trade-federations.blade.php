@@ -74,7 +74,7 @@
         </div>
     </div>
     @if(session('federation-update-status'))
-        <div class="alert alert-success text-center d-inline">
+        <div class="alert alert-success timed-alert text-center w-25 mx-auto mt-3">
             {{ session('federation-update-status') }}
         </div>
     @endif

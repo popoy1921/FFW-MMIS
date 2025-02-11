@@ -5777,14 +5777,14 @@ a.badge-dark:focus {
 
 .list-group-item-action {
 	width: 100%;
-	color: #6e707e;
+	color: black;
 	text-align: inherit
 }
 
 .list-group-item-action:focus,
 .list-group-item-action:hover {
 	z-index: 1;
-	color: #6e707e;
+	color: #2d2762;
 	text-decoration: none;
 	background-color: #f8f9fc
 }
@@ -5795,6 +5795,7 @@ a.badge-dark:focus {
 }
 
 .list-group-item {
+	font-weight: bold;
 	position: relative;
 	display: block;
 	padding: .75rem 1.25rem;
