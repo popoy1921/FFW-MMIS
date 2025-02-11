@@ -66,7 +66,7 @@
             <div class="form-row">
                 <div class="form-group col-md-3 mt-auto">
                     <div class="btn-group w-100" role="group">
-                        <button id="users-filter-submit" class="btn btn-primary w-50">Search</button>
+                        <button id="federation-filter-submit" class="btn btn-primary w-50">Search</button>
                         <button type="button" class="btn btn-secondary w-50" onclick="window.location.reload();">Reset</button>
                     </div>
                 </div>

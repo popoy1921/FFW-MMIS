@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let oUserTable = $('#trade-federations-datatable');
     let sAjaxLink = oUserTable.attr('reference');
+    let oDataOnPage;
     console.log(sAjaxLink)
 
     let oUserDataTable = $('#trade-federations-datatable').DataTable({
@@ -55,6 +56,10 @@ $(document).ready(function() {
                 }
             });
         },
+        drawCallback : function () {
+            var oPrimaryRows = $('.sorting_1').closest('tr');
+            oPrimaryRows.trigger('click');
+        },
         columnDefs: [
             { orderable: true, targets: [0, 1, 2, 4] }, // Enable sorting for all rows except action
             { orderable: false, targets: [3, 5] },
@@ -89,5 +94,15 @@ $(document).ready(function() {
             sUpdateFormSelector = "#activate-federation-form";
         }
         $(sUpdateFormSelector).find('input[name="guid"]').val(updateStatusButton.data('guid'));
+    });
+
+    $('#federation-filter-submit').on('click', function() {
+        console.log({
+            category_id : $('select[name="category_id"]').val(),
+            id          : $('select[name="id"]').val(),
+            region_id   : $('select[name="region_id"]').val(),
+            status_id   : $('select[name="status_id"]').val(),
+        });
+        oUserDataTable.draw();
     });
 });
