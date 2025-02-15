@@ -38,6 +38,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/federations', [PageRendererController::class, 'showAdminTradeFederationsPage'])->name('admin.trade-federations');
         Route::patch('/admin/federations/updatestatus', [FederationController::class, 'updateStatus'])->name('admin.trade-federations.update-status');
         Route::get('/admin/federation-details', [PageRendererController::class, 'showAdminTradeFederationDetailsPage'])->name('admin.trade-federation-details');
+        Route::get('/admin/federation-region-destributions', [PageRendererController::class, 'showAdminTradeFederationRegionDestributionsPage'])->name('admin.trade-federation-region-destributions');
+        Route::get('/admin/federation-officers', [PageRendererController::class, 'showAdminTradeFederationOfficersPage'])->name('admin.trade-federation-officers');
+        Route::get('/admin/federation-cba-provisions', [PageRendererController::class, 'showAdminTradeFederationCBAProvisionsPage'])->name('admin.trade-federation-cba-provisions');
+        Route::get('/admin/federation-point-persons', [PageRendererController::class, 'showAdminTradeFederationPointPersonsPage'])->name('admin.trade-federation-point-persons');
         Route::patch('/federations/update', [FederationController::class, 'updateFederation'])->name('admin.trade-federation-update');
     });
 

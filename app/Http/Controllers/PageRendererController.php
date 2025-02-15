@@ -134,11 +134,56 @@ class PageRendererController extends Controller
         $aData = $oRequest->all();
         $aPageDetails = array(
             'top_menu'              => 'trade_federations',
+            'side_menu'             => 'details',
             'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
             'federationCategories'  => FederationCategory::orderBy('description', 'asc')->get(),
             'federationStatuses'    => FederationStatus::orderBy('id', 'desc')->get(),
         );
-        return view('admin.trade-federation-details', $aPageDetails);
+        return view('admin.trade-federation-details.details', $aPageDetails);
+    }
+
+    public function showAdminTradeFederationRegionDestributionsPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'top_menu'              => 'trade_federations',
+            'side_menu'             => 'region_destributions',
+            'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
+        );
+        return view('admin.trade-federation-details.region-destributions', $aPageDetails);
+    }
+
+    public function showAdminTradeFederationOfficersPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'top_menu'              => 'trade_federations',
+            'side_menu'             => 'officers',
+            'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
+        );
+        return view('admin.trade-federation-details.officers', $aPageDetails);
+    }
+
+    public function showAdminTradeFederationCBAProvisionsPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'top_menu'              => 'trade_federations',
+            'side_menu'             => 'cba_provisions',
+            'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
+        );
+        return view('admin.trade-federation-details.cba-provisions', $aPageDetails);
+    }
+
+    public function showAdminTradeFederationPointPersonsPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'top_menu'              => 'trade_federations',
+            'side_menu'             => 'point_persons',
+            'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
+        );
+        return view('admin.trade-federation-details.point_persons', $aPageDetails);
     }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------

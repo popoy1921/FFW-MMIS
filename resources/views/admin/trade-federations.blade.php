@@ -101,7 +101,7 @@
 @endsection
 
 @section('javascript')
-@include('admin.activate-federation-modal')
-@include('admin.deactivate-federation-modal')
-@vite('resources/js/admin/trade-federations.js')
+    @include('admin.activate-federation-modal')
+    @include('admin.deactivate-federation-modal')
+    @vite('resources/js/admin/trade-federations.js')
 @endsection
