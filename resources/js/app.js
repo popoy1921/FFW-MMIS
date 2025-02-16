@@ -14,6 +14,7 @@ window.Alpine = Alpine;
 Alpine.start();
 
 $(document).ready(function() {
+    // show multi-select 
     $('.multi-select[multiple="multiple"]').selectpicker({
         title: "- Any -",
         liveSearch: true,
@@ -35,6 +36,8 @@ $(document).ready(function() {
             $('i#' + sInputId).addClass( "fa-eye" );
         }
     }
+    
+    window.loginTogglePassword = loginTogglePassword;
 
     // fade out timed alerts
     setTimeout(function() {
@@ -42,6 +45,42 @@ $(document).ready(function() {
             $(this).addClass('d-none');
         });
     }, 3000);
-    
-    window.loginTogglePassword = loginTogglePassword;
+
+    // Form that would not refresh when submit
+    $('.ajax-update-form').on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+        
+        var oForm = $(this);
+        resetFormErrors(oForm);
+        $.ajax({
+            url:  oForm.attr('action'),
+            type: oForm.attr('method'),
+            data: oForm.serialize(),
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                $('#responseContainer').html(response);
+            },
+            error: function(oXHRResponse) {
+                let oErrors = oXHRResponse.responseJSON.errors;
+                Object.keys(oErrors).forEach(sKey => {
+                    console.log('input[name="' + sKey + '"]');
+                    var oInput = oForm.find('input[name="' + sKey + '"]');
+                    console.log(oForm);
+                    console.log(oInput);
+                    oInput.addClass('is-invalid');
+                    var oFormGroup = oInput.closest('.form-group');
+                    var oErrorDiv = $('<div></div>').addClass(['invalid-feedback', 'd-block']).append(oErrors[sKey]);
+                    oFormGroup.append(oErrorDiv);
+                });
+            }
+        });
+    });
+
+    function resetFormErrors(oForm)
+    {
+        oForm.find('.invalid-feedback').remove();
+        oForm.find('input').removeClass('is-invalid');
+    }
 });

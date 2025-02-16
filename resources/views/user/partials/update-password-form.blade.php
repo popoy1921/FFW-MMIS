@@ -9,7 +9,7 @@
                         {{ session('password-reset') }}
                     </div>
                 @endif
-                <form method="POST" action="{{ route('user.update-password') }}">
+                <form method="POST" class="ajax-update-form" action="{{ route('user.update-password') }}">
                     @csrf
                     @method('patch')
                     <div class="form-group">

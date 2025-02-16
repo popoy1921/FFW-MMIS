@@ -51,7 +51,7 @@ class UserUpdatePasswordRequest extends FormRequest
             foreach ($errors as $sKey => $error) {
                 if (strpos($error, 'confirmation') !== false) {
                     $oValidator->errors()->forget('password');
-                    session()->flash('confirmation_error', 'The new password and confirmation password do not match.');
+                    $oValidator->errors()->add('password_confirmation', 'The new password and confirmation password do not match.');
                 } else {
                     $bHasPasswordError = true;
                 }

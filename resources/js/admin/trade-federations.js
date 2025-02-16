@@ -69,7 +69,7 @@ $(document).ready(function() {
             { width: '15%', targets: 3 },
             { width: '10%', targets: 4 },
             { width: '15%', targets: 5 },
-        ]
+        ],
     });
 
     // Used to create child row for collapsable records in datatable

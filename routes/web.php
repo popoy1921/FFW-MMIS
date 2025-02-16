@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/federation-point-persons', [PageRendererController::class, 'showAdminTradeFederationPointPersonsPage'])->name('admin.trade-federation-point-persons');
         Route::patch('/federations/update', [FederationController::class, 'updateFederation'])->name('admin.trade-federation-update');
     });
-
+ 
     // FEDERATION-POINT-PERSON
     Route::middleware('checkUserRole:3')->group(function () {       
         Route::get('/federation-point-person', [PageRendererController::class, 'showFederationProfilePage'])->name('federation-point-person.profile');

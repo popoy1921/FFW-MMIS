@@ -9,7 +9,7 @@
                         {{ session('user-update') }}
                     </div>
                 @endif
-                <form method="POST" action="{{ route('user.update') }}">
+                <form method="POST" class="ajax-update-form" action="{{ route('user.update') }}">
                     @csrf
                     @method('patch')
                     <input name="guid" type="hidden" value="{{ $guid }}" required autofocus />
