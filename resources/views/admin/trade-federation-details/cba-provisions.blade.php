@@ -1,8 +1,11 @@
 @extends('admin.trade-federation-details.layout')
 
 @section('card-content')
-<div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold card-title">Table of Key CBA Provisions </h6>
+<div class="card-header py-3 d-flex justify-content-between">
+    <h6 class="d-inline my-auto m-0 font-weight-bold card-title">Table of Key CBA Provisions</h6>
+    <div class="d-inline text-right">
+        <a class="btn btn-secondary" href="{{ route('admin.trade-federations') }}">Back</a>
+    </div>
 </div>
 <div class="card-body">
     @if(session('federation-update'))
