@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('federation_id');
+            $table->integer('region_id');
         });
     }
 

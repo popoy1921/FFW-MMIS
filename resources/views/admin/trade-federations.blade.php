@@ -38,18 +38,6 @@
                     </select>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="region_id">Region</label>
-                    <select name="region_id" class="form-control multi-select" multiple="multiple">
-                        @foreach($regions as $region)
-                            @if (isset($filters['region_id']) && (int)$filters['region_id'] === (int)$region->id)
-                            <option value="{{ $region->id }}" selected>{{ $region->description }}</option>
-                            @else
-                            <option value="{{ $region->id }}">{{ $region->description }}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
                     <label for="status_id">Status</label>
                     <select name="status_id" class="form-control">
                         <option value=''>- Any -</option>
@@ -62,8 +50,6 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
-            <div class="form-row">
                 <div class="form-group col-md-3 mt-auto">
                     <div class="btn-group w-100" role="group">
                         <button id="federation-filter-submit" class="btn btn-primary w-50">Search</button>
@@ -88,7 +74,6 @@
                     <tr>
                         <th>Category</th>
                         <th>Trade Federation Name</th>
-                        <th>Region</th>
                         <th>Total Number of Local Unions</th>
                         <th>Status</th>
                         <th>Actions</th>

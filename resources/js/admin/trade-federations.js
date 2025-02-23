@@ -17,14 +17,12 @@ $(document).ready(function() {
             data : function (oData) {
                 oData.category_id = $('select[name="category_id"]').val();
                 oData.id          = $('select[name="id"]').val();
-                oData.region_id   = $('select[name="region_id"]').val();
                 oData.status_id   = $('select[name="status_id"]').val();
             },
         },
         columns: [
             { data : 'federation_category', name : 'federation_category', render: function(sData, sType, oRow) {return '<i class="fas fa-plus"></i> ' + sData}},
             { data : 'name', name : 'name'},
-            { data : 'region', name : 'region'},
             { data : 'local_unions', name : 'local_unions'},
             { data : 'status', name : 'status'},
             { data : 'actions', name : 'actions'},
@@ -61,14 +59,13 @@ $(document).ready(function() {
             oPrimaryRows.trigger('click');
         },
         columnDefs: [
-            { orderable: true, targets: [0, 1, 2, 4] }, // Enable sorting for all rows except action
-            { orderable: false, targets: [3, 5] },
-            { width: '15%', targets: 0 },
-            { width: '25%', targets: 1 },
-            { width: '25%', targets: 2 },
+            { orderable: true, targets: [0, 1, 3] }, // Enable sorting for all rows except action
+            { orderable: false, targets: [2, 4] },
+            { width: '25%', targets: 0 },
+            { width: '35%', targets: 1 },
+            { width: '15%', targets: 2 },
             { width: '15%', targets: 3 },
-            { width: '10%', targets: 4 },
-            { width: '15%', targets: 5 },
+            { width: '20%', targets: 4 },
         ],
     });
 
@@ -77,7 +74,6 @@ $(document).ready(function() {
         var oChildRow = $('<tr>').addClass('child').addClass('child' + sRowId);
         oChildRow.append($('<td>'));                          // Space for category field
         oChildRow.append($('<td>').html(oFederation.name));
-        oChildRow.append($('<td>').html(oFederation.region));
         oChildRow.append($('<td>').html(oFederation.local_unions));
         oChildRow.append($('<td>').html(oFederation.status));
         oChildRow.append($('<td>').html(oFederation.actions));

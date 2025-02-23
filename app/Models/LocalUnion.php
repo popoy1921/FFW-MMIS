@@ -22,4 +22,10 @@ class LocalUnion extends Model
     {
         return $this->belongsTo(Federation::class, 'federation_id');
     }
+
+    // Define the relationship to the LocalUnion model
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
 }

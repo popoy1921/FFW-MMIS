@@ -26,13 +26,7 @@ class Federation extends Model
     {
         return $this->belongsTo(FederationCategory::class, 'category_id');
     }
-
-    // Define the relationship to the LocalUnion model
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
+    
     // Define the relationship to the LocalUnion model
     public function localUnions()
     {

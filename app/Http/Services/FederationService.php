@@ -49,7 +49,6 @@ class FederationService extends BaseService
     {
         $aRelationShips = [
             'federationCategory',
-            'region',
             'localUnions',
             'federationStatus',
         ];
@@ -84,9 +83,6 @@ class FederationService extends BaseService
         if (isset($aFilter['id'])) {
             $this->oFederationModelBuilder->where('federations.id', '=', $aFilter['id']);
         }
-        if (isset($aFilter['region_id'])) {
-            $this->oFederationModelBuilder->whereIn('region_id', $aFilter['region_id']);
-        }
         if (isset($aFilter['status_id'])) {
             $this->oFederationModelBuilder->where('status_id', '=', $aFilter['status_id']);
         }
@@ -98,7 +94,6 @@ class FederationService extends BaseService
         $aColumns = [
             'lu_federation_categories.description.category_id',
             'name',
-            'lu_regions.description.region_id',
             '', // skip "Total Number of Local Unions"
             'lu_federation_statuses.description.status_id',
         ];
@@ -171,7 +166,6 @@ class FederationService extends BaseService
                 $aFormattedFederations[$iIndex]['federation_category'] = $sFederationNameOnloop;
                 $aFormattedFederations[$iIndex]['records']      = array();
                 $aFormattedFederations[$iIndex]['name']         = '';
-                $aFormattedFederations[$iIndex]['region']       = '';
                 $aFormattedFederations[$iIndex]['local_unions'] = '';
                 $aFormattedFederations[$iIndex]['status']       = '';
                 $aFormattedFederations[$iIndex]['actions']      = '';
@@ -192,7 +186,6 @@ class FederationService extends BaseService
             $aFederationRecord = array(
                 'federation_category'   => $oFederation->federationCategory->description,
                 'name'                  => $oFederation->name,
-                'region'                => $oFederation->region->description,
                 'local_unions'          => count($oFederation->localUnions),
                 'status'                => $oFederation->federationStatus->description,
                 'actions'               => $sViewDetailsButton . $sUpdateStatusButton . $sViewRegionDistributionButton,

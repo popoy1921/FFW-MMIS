@@ -14,35 +14,48 @@ class LocalUnionsSeeder extends Seeder
             [ 
                 'name'          => 'TF 1 LU 1',
                 'federation_id' => 1,
+                'region_id'     => 1,
             ],
             [ 
                 'name'          => 'TF 1 LU 2',
                 'federation_id' => 1,
+                'region_id'     => 2,
             ],
             [ 
                 'name'          => 'TF 2 LU 1',
                 'federation_id' => 2,
+                'region_id'     => 1,
             ],
             [ 
                 'name'          => 'TF 2 LU 2',
                 'federation_id' => 2,
+                'region_id'     => 2,
             ],
             [ 
                 'name'          => 'SF 1 LU 1',
                 'federation_id' => 3,
+                'region_id'     => 3,
             ],
             [ 
                 'name'          => 'SF 1 LU 2',
                 'federation_id' => 3,
+                'region_id'     => 3,
             ],
             
             [ 
                 'name'          => 'SF 2 LU 1',
                 'federation_id' => 4,
+                'region_id'     => 4,
             ],
             [ 
                 'name'          => 'SF 2 LU 2',
                 'federation_id' => 4,
+                'region_id'     => 4,
+            ],
+            [ 
+                'name'          => 'SF 2 LU 2',
+                'federation_id' => 4,
+                'region_id'     => 5,
             ],
         ]);
     }

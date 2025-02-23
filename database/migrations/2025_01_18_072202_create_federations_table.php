@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('guid')->unique();
             $table->string('name');
             $table->integer('category_id');
-            $table->integer('region_id');
             $table->integer('status_id');
         });
     }
