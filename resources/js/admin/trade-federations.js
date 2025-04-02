@@ -1,9 +1,8 @@
 $(document).ready(function() {
     let oUserTable = $('#trade-federations-datatable');
     let sAjaxLink = oUserTable.attr('reference');
-    let oDataOnPage;
-    console.log(sAjaxLink)
 
+    // Define Trade fedarations table
     let oUserDataTable = $('#trade-federations-datatable').DataTable({
         responsive : true,
         autoWidth  : false,
@@ -82,17 +81,54 @@ $(document).ready(function() {
     
     // Update modal for update status form
     $('#trade-federations-datatable').on('click', '.update-status', function() {
-        var sUpdateFormSelector;
+        var sUpdateFormSelector, sModalContent;
         var updateStatusButton = $(this);
+        updateStatusButton.addClass('remove-button');
         if(updateStatusButton.hasClass('deactivate') === true) {
-            sUpdateFormSelector = "#deactivate-federation-form";
+            sUpdateFormSelector = "deactivate-federation-form";
+            sModalContent = 'Are you sure you want to deactivate this Trade Federation?';
         } else {
-            sUpdateFormSelector = "#activate-federation-form";
+            sUpdateFormSelector = "activate-federation-form";
+            sModalContent = 'Are you sure you want to activate this Trade Federation?';
         }
-        $(sUpdateFormSelector).find('input[name="guid"]').val(updateStatusButton.data('guid'));
+        let oUpdateForm = $('#' + sUpdateFormSelector);
+        oUpdateForm.addClass('trade-federation-status-updating');
+        oUpdateForm.find('input[name="guid"]').val(updateStatusButton.attr('guid'));
+        callModal(sUpdateFormSelector,
+            {
+            title          : 'Trade Federation Update',
+            content        : sModalContent,
+            confirm_button : 'Update',
+            cancel_button  : 'Cancel',
+            success_msg    : 'You have successfully updated the status.'
+            },
+            postFederationsStatusUpdate
+        );
     });
 
+    // Trigger Filter
     $('#federation-filter-submit').on('click', function() {
         oUserDataTable.draw();
     });
 });
+
+// Update button and status on the table
+function postFederationsStatusUpdate()
+{
+    var oUpdatingForm = $('.trade-federation-status-updating');
+    var sGuid = oUpdatingForm.find('input[name="guid"]').val();
+    var sButtonTemplateClass = '.update-status.activate.template';
+    var sUpdatedStatus = 'Inactive';
+    if (oUpdatingForm.attr('id') === 'activate-federation-form') {
+        sButtonTemplateClass = '.update-status.deactivate.template';
+        sUpdatedStatus = 'Active';
+    }
+    // update button
+    var oNewButton = $(sButtonTemplateClass).clone().removeClass('template').attr('guid', sGuid);
+    var oButtonForReplacement = $('.remove-button');
+    oButtonForReplacement.after(oNewButton);
+    oButtonForReplacement.remove();
+    // update status
+    oNewButton.closest('tr').find('td:eq(3)').html(sUpdatedStatus);
+    oUpdatingForm.removeClass('trade-federation-status-updating');
+}

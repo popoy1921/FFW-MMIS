@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('category_id');
             $table->integer('status_id');
+            $table->integer('newly_created')->default(1);
         });
     }
 

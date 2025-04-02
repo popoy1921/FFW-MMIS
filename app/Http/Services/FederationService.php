@@ -16,6 +16,23 @@ use Illuminate\Database\Eloquent\Builder;
 class FederationService extends BaseService
 {    
     private Builder $oFederationModelBuilder;
+
+    /**
+     * create a record for the federation and return the created recordd
+     * @param array $aFederation
+     * 
+     * @return Federation
+     */
+    public function createFederation(array $aFederation) : Federation
+    {
+        $oFederation = new Federation();
+        $oFederation->name = $aFederation['name'];
+        $oFederation->category_id = $aFederation['category_id'];
+        $oFederation->status_id = $aFederation['status_id'];
+        $oFederation->save();
+        
+        return $oFederation;
+    }
     
     /**
      * getFormattedTableData
@@ -88,6 +105,12 @@ class FederationService extends BaseService
         }
     }
 
+    /**
+     * prepare statement for sorting
+     * @param array $aFilter
+     * 
+     * @return void
+     */
     private function sortDataQuery(array $aFilter) : void
     {
         // tablename.field_on_foreign_table_for_sort.field_in_main_table
@@ -174,11 +197,11 @@ class FederationService extends BaseService
             // Child Records
             $sViewDetailsButton = '<a class="btn btn-sm btn-primary" title="View Details" href="' . route('admin.trade-federation-details'). '?guid=' . $oFederation->guid .'"><i class="fa fa-search" aria-hidden="true"></i></a> ';
             if ((int)$oFederation->status_id === 1) {
-                $sUpdateStatusButton = '<a class="btn btn-sm btn-success update-status deactivate" title="Update Status" href="#" data-toggle="modal" data-target="#cb-deactivate-federation-modal" data-guid="'. $oFederation->guid .'">'
+                $sUpdateStatusButton = '<a class="btn btn-sm btn-success update-status deactivate" title="Update Status" href="#" guid="'. $oFederation->guid .'">'
                 . '<i class="fa fa-pencil" aria-hidden="true"></i>'
                 . '</a> ';
             } else {
-                $sUpdateStatusButton = '<a class="btn btn-sm btn-success update-status activate" title="Update Status" href="#" data-toggle="modal" data-target="#cb-activate-federation-modal" data-guid="'. $oFederation->guid .'">'
+                $sUpdateStatusButton = '<a class="btn btn-sm btn-success update-status activate" title="Update Status" href="#" guid="'. $oFederation->guid .'">'
                 . '<i class="fa fa-pencil" aria-hidden="true"></i>'
                 . '</a> ';
             }

@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/user/userDetails', [UserController::class, 'getUserDetails'])->name('api.user.user-details');
 Route::get('/user/getList', [UserController::class, 'getList'])->name('api.user.list');
 Route::get('/federation/getList', [FederationController::class, 'getList'])->name('api.federation.list');

@@ -1,6 +1,12 @@
 @extends('admin.trade-federation-details.layout')
 
 @section('card-content')
+@if((int) $federation->newly_created === 1)
+    <span id="iztoast" 
+        data-title="Success"
+        data-message="You have Successfully Created a Trade Federation">
+@endif
+
 <div class="card-header py-3 d-flex justify-content-between">
     <h6 class="d-inline my-auto m-0 font-weight-bold card-title">Details</h6>
     <div class="d-inline text-right">
@@ -13,14 +19,14 @@
             {{ session('federation-update') }}
         </div>
     @endif
-    <form method="POST" action="{{ route('admin.trade-federation-update') }}">
+    <form id="trade-federation-details" method="POST" class="ajax-update-form" action="{{ route('admin.trade-federation-update') }}">
         @csrf
         @method('patch')
         <input type="hidden" name="guid" value="{{ $federation->guid }}">                
         <div class="form-group">
             <label for="name">Trade Federation Name <span class="text-danger">*</span></label>
             <input name="name" type="text" value="{{ old('name', $federation->name) }}" 
-                class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Trade Federation Name" required autofocus />
+                class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Trade Federation Name" required/>
             @if($errors->has('fname'))
             <div class="invalid-feedback d-block">
                 @foreach($errors->get('name') as $error)
@@ -58,7 +64,18 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <button type="submit" class="btn btn-primary btn-block">Save</button>
+                <button type="submit" class="btn btn-primary btn-block"
+                onclick="callModal('trade-federation-details',
+                    {
+                        title          : 'Trade Federation Update',
+                        content        : 'Are you sure you want to update the details of this Trade Federation?',
+                        confirm_button : 'Save',
+                        cancel_button  : 'Cancel',
+                        success_msg    : 'You have successfully updated the Trade Federation.'
+                    },
+                    postUpdateFederationDetails
+                    );">Save
+                </button>
             </div>
             <div class="form-group col-md-6">
                 <button type="button" class="btn btn-secondary btn-block" onclick="window.location.reload();">Cancel</button>
@@ -66,4 +83,8 @@
         </div>
     </form>
 </div>
+@endsection
+
+@section('javascript')
+    @vite('resources/js/admin/trade-federations-details.js')
 @endsection

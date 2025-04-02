@@ -66,7 +66,7 @@
     @endif
     <div class="card-body">
         <div class="text-right">
-            <a class="btn btn-primary">Add Trade Federation</a>    
+            <a class="btn btn-primary" href="{{ route('admin.add-federations') }}">Add Trade Federation</a>    
         </div>
         <div class="table-responsive">
             <table id="trade-federations-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.federation.list') }}">
@@ -83,10 +83,22 @@
         </div>
     </div>
 </div>
+
+<!-- Templates -->
+
+<a class="btn btn-sm btn-success update-status deactivate template" title="Update Status" href="#">
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+</a>
+
+<a class="btn btn-sm btn-success update-status activate template" title="Update Status" href="#">
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+</a>
+
+<!-- End of -Templates -->
 @endsection
 
 @section('javascript')
-    @include('admin.activate-federation-modal')
-    @include('admin.deactivate-federation-modal')
+    @include('admin.activate-federation-form')
+    @include('admin.deactivate-federation-form')
     @vite('resources/js/admin/trade-federations.js')
 @endsection

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\FederationService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class FederationController extends Controller
 {
@@ -21,7 +23,26 @@ class FederationController extends Controller
         $this->oFederationService = $oFederationService;
     }
 
-    public function getList(Request $oRequest)
+    /**
+     * create Federation record
+     * @param Request $oRequest
+     * 
+     * @return JsonResponse
+     */
+    public function createFederation(Request $oRequest) : JsonResponse
+    {
+        $aFederation = $oRequest->all();
+        $oCreatedFederation = $this->oFederationService->createFederation($aFederation);
+        return response()->json($oCreatedFederation);
+    }
+
+    /**
+     * get list of available Federations
+     * @param Request $oRequest
+     * 
+     * @return JsonResponse
+     */
+    public function getList(Request $oRequest) : JsonResponse
     {
         $aFilter = $oRequest->all();
         return response()->json($this->oFederationService->getFormattedTableData($aFilter));

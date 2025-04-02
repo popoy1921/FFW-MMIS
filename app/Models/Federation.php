@@ -21,6 +21,13 @@ class Federation extends Model
     */
     protected $table = 'federations';
 
+    protected $fillable = [
+        'name',
+        'category_id',
+        'status_id',
+        'newly_created'
+    ];
+
     // Define the relationship to the FederationCategory model
     public function federationCategory()
     {

@@ -96,3 +96,7 @@ img.company-logo {
     color: #000 !important;
     background: white !important;
 }
+
+.template {
+    display: none;
+}

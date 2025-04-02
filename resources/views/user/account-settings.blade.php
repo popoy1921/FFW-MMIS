@@ -12,3 +12,7 @@
     @include('user.partials.update-password-form')
 </div>
 @endsection
+
+@section('javascript')
+    @vite('resources/js/users.js')
+@endsection

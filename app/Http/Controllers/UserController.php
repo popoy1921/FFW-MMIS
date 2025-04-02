@@ -26,7 +26,18 @@ class UserController extends Controller
     }
     
     /**
-     * getList
+     * getUserDetails used for API
+     *
+     * @param  Request $oRequest
+     * @return JsonResponse
+     */
+    public function getUserDetails(Request $oRequest) : JsonResponse
+    {
+        return response()->json($this->oUserService->getUsersDetails($oRequest->all()['guid']));
+    }
+    
+    /**
+     * getList used for API
      *
      * @param  mixed $oRequest
      * @return JsonResponse

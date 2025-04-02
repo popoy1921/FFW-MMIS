@@ -6,6 +6,7 @@ import 'jquery-easing';
 import 'datatables';
 import 'datatables.net-bs4';
 import Alpine from 'alpinejs';
+import iziToast from 'izitoast';
 
 window.$ = window.jQuery = $;
 $.fn.selectpicker.Constructor.BootstrapVersion = '4';
@@ -39,48 +40,116 @@ $(document).ready(function() {
     
     window.loginTogglePassword = loginTogglePassword;
 
-    // fade out timed alerts
-    setTimeout(function() {
-        $('.timed-alert').fadeOut(1000, function() {
-            $(this).addClass('d-none');
-        });
-    }, 3000);
+    // initiate iztoast after redirection
+    function triggerInitialToast() {
+        let oToastTrigger = $('#iztoast');
+        let sTitle = oToastTrigger.data('title');
+        let sSuccessMsg = oToastTrigger.data('message');
+        if(oToastTrigger.length > 0) {
+            iziToast.success({
+                title: sTitle,
+                message: sSuccessMsg,
+                position: 'topCenter'
+            });
+        }
+    }
+    triggerInitialToast();
 
     // Form that would not refresh when submit
-    $('.ajax-update-form').on('submit', function(e) {
-        e.preventDefault(); // Prevent the default form submission
-        
-        var oForm = $(this);
-        resetFormErrors(oForm);
-        $.ajax({
-            url:  oForm.attr('action'),
-            type: oForm.attr('method'),
-            data: oForm.serialize(),
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                $('#responseContainer').html(response);
-            },
-            error: function(oXHRResponse) {
-                let oErrors = oXHRResponse.responseJSON.errors;
-                Object.keys(oErrors).forEach(sKey => {
-                    console.log('input[name="' + sKey + '"]');
-                    var oInput = oForm.find('input[name="' + sKey + '"]');
-                    console.log(oForm);
-                    console.log(oInput);
-                    oInput.addClass('is-invalid');
-                    var oFormGroup = oInput.closest('.form-group');
-                    var oErrorDiv = $('<div></div>').addClass(['invalid-feedback', 'd-block']).append(oErrors[sKey]);
-                    oFormGroup.append(oErrorDiv);
-                });
-            }
-        });
+    $('.ajax-update-form, .ajax-create-form').on('submit', function(e) {
+        e.preventDefault();
+    });
+});
+
+// show modal
+function callModal(sFormId, oMessages, fCallBack)
+{
+    /* oMessages should have this format
+    {
+        title          : 'Profile Update',
+        content        : 'Are you sure you want to update your profile?',
+        confirm_button : 'Save',
+        cancel_button  : 'Cancel',
+        success_msg    : ''
+    }
+    */
+
+    // check if all required fields are populated
+    let hasEmptyRequiredFields = false;
+    $('#' + sFormId).find('input[required]').each(function() {
+        if ($(this).val().trim() === '') {
+            hasEmptyRequiredFields = true;
+        }
     });
 
-    function resetFormErrors(oForm)
-    {
-        oForm.find('.invalid-feedback').remove();
-        oForm.find('input').removeClass('is-invalid');
+    if (hasEmptyRequiredFields === true) {
+        return;
     }
-});
+
+    // ready and show modal
+    $('#application-modal #cb-modal-title').html(oMessages.title);
+    $('#application-modal #cb-modal-body').html(oMessages.content);
+    $('#application-modal #cancel-button').html(oMessages.cancel_button);
+    $('#application-modal #confirm-button').html(oMessages.confirm_button);
+    $('#application-modal #confirm-button').off('click');
+    console.log(oMessages);
+    $('#application-modal #confirm-button').on('click', function() {
+        confirmSubmitForm(sFormId, oMessages.success_msg, fCallBack);
+    });
+    $('#application-modal').modal('show');
+}
+
+// execute submission by ajax and execute fCallBack
+function confirmSubmitForm(sFromId, sSuccessMsg, fCallBack)
+{
+    var oForm = $('#' + sFromId);
+    console.log(oForm);
+    resetFormErrors(oForm);
+    $.ajax({
+        url:  oForm.attr('action'),
+        type: oForm.attr('method'),
+        data: oForm.serialize(),
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        success: function(oResponse) {
+            if (oForm.hasClass('ajax-create-form') === true) {
+                var sRedirect = oForm.data('redirect');
+                window.location.href = sRedirect + "?guid=" + oResponse.guid;
+                return;
+            }
+            if (typeof fCallBack !== 'undefined') {
+                fCallBack();
+            }
+            iziToast.success({
+                title: 'Success',
+                message: sSuccessMsg,
+                position: 'topCenter'
+            });
+        },
+        error: function(oXHRResponse) {
+            let oErrors = oXHRResponse.responseJSON.errors;
+            Object.keys(oErrors).forEach(sKey => {
+                console.log('input[name="' + sKey + '"]');
+                var oInput = oForm.find('input[name="' + sKey + '"]');
+                oInput.addClass('is-invalid');
+                var oFormGroup = oInput.closest('.form-group');
+                var oErrorDiv = $('<div></div>').addClass(['invalid-feedback', 'd-block']).append(oErrors[sKey]);
+                oFormGroup.append(oErrorDiv);
+            });
+        },
+        complete: function() {
+            $('#application-modal').modal('hide');
+        }
+    });
+}
+
+// remove errors on fields
+function resetFormErrors(oForm)
+{
+    oForm.find('.invalid-feedback').remove();
+    oForm.find('input').removeClass('is-invalid');
+}
+
+window.confirmSubmitForm = confirmSubmitForm;
+window.callModal = callModal;

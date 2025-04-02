@@ -145,7 +145,7 @@
         <li class="nav-item dropdown no-arrow {{ $top_menu === 'account_settings' ? 'active' : '' }}" id="nav-profile">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>
+                <span id="online-user-name" class="mr-2 d-none d-lg-inline">{{ auth()->user()->fname }}</span>
                 <img class="img-profile rounded-circle" src="{{ asset('images/default-user.jpg') }}">
                 <small class="fas fa-angle-down text-gray-600 ml-1"></small>
             </a>

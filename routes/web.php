@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     // USER
-    Route::get('/accout-settings', [PageRendererController::class, 'showAccountSettingsPage'])->name('user.account-settings');
+    Route::get('/account-settings', [PageRendererController::class, 'showAccountSettingsPage'])->name('user.account-settings');
     Route::patch('/user/update', [UserController::class, 'updateUser'])->name('user.update');
     Route::patch('/user/updatePassword', [UserController::class, 'updateUserPassword'])->name('user.update-password');
 
@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/users', [PageRendererController::class, 'showAdminUsersPage'])->name('admin.users');
         Route::get('/admin/user-details', [PageRendererController::class, 'showAdminUserDetialsPage'])->name('admin.user-details');
         Route::get('/admin/federations', [PageRendererController::class, 'showAdminTradeFederationsPage'])->name('admin.trade-federations');
+        Route::get('/admin/addFederation', [PageRendererController::class, 'showCreateFederationpage'])->name('admin.add-federations');
+        Route::post('/admin/createFederation', [FederationController::class, 'createFederation'])->name('admin.create-federation');
         Route::patch('/admin/federations/updatestatus', [FederationController::class, 'updateStatus'])->name('admin.trade-federations.update-status');
         Route::get('/admin/federation-details', [PageRendererController::class, 'showAdminTradeFederationDetailsPage'])->name('admin.trade-federation-details');
         Route::get('/admin/federation-region-destributions', [PageRendererController::class, 'showAdminTradeFederationRegionDestributionsPage'])->name('admin.trade-federation-region-destributions');

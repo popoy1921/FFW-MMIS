@@ -152,6 +152,14 @@ class UserService extends BaseService
     {
         return User::with('userRole')->where('guid', auth()->user()->guid)->first();
     }
+
+    /**
+     * getUsersProfileData
+     */
+    public function getUsersDetails(string $sGuid)
+    {
+        return User::with('userRole')->where('guid', $sGuid)->first();
+    }
     
     /**
      * update the user record specifically name fields and sending email update confirmation 

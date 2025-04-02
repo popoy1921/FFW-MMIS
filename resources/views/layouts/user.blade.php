@@ -31,6 +31,7 @@
 
             <!-- Footer -->
 	        @include('common.footer')
+            @include('common.modal')
             <!-- End of Footer -->
 
         </div>

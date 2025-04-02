@@ -56,12 +56,14 @@ class PageRendererController extends Controller
      *
      * @return View
      */
-    public function showSuperAdminBlankPage() : View
+    public function showCreateFederationpage() : View
     {
         $aPageDetails = array(
-            'top_menu'  => 'users',
+            'top_menu'              => 'trade_federations',
+            'federationCategories'  => FederationCategory::orderBy('description', 'asc')->get(),
+            'federationStatuses'    => FederationStatus::orderBy('id', 'desc')->get(),
         );
-        return view('super-admin.users', $aPageDetails);
+        return view('admin.create-federation', $aPageDetails);
     }
     
     // ------------------- ADMIN -------------------
@@ -120,10 +122,8 @@ class PageRendererController extends Controller
         $aPageDetails = array(
             'top_menu'              => 'trade_federations',
             'federationCategories'  => FederationCategory::orderBy('description', 'asc')->get(),
+            'federationStatuses'    => FederationStatus::orderBy('id', 'desc')->get(),
             'federations'           => Federation::orderBy('name', 'asc')->get(),
-            'filters'               => $oRequest->all(),
-            'regions'               => Region::all(),
-            'federationStatuses'   => FederationStatus::orderBy('id', 'desc')->get(),
             'filters'               => $oRequest->all(),
         );
         return view('admin.trade-federations', $aPageDetails);
@@ -132,13 +132,19 @@ class PageRendererController extends Controller
     public function showAdminTradeFederationDetailsPage(Request $oRequest) : View
     {
         $aData = $oRequest->all();
+        $oFederation = Federation::where('guid', '=', $aData['guid'])->first();
         $aPageDetails = array(
             'top_menu'              => 'trade_federations',
             'side_menu'             => 'details',
-            'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
+            'federation'            => $oFederation,
             'federationCategories'  => FederationCategory::orderBy('description', 'asc')->get(),
             'federationStatuses'    => FederationStatus::orderBy('id', 'desc')->get(),
         );
+        if ((int)$oFederation->newly_created === 1) {
+            $oFederationUpdate = Federation::where('guid', '=', $aData['guid'])->first();
+            $oFederationUpdate->newly_created = 0;
+            $oFederationUpdate->save();
+        }
         return view('admin.trade-federation-details.details', $aPageDetails);
     }
 
