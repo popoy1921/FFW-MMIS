@@ -8,12 +8,53 @@
     </div>
 </div>
 <div class="card-body">
-    @if(session('federation-update'))
-        <div class="alert alert-success text-center">
-            {{ session('federation-update') }}
+    <!-- Filter -->
+    <div class="card-header py-3">
+        <div class="cb-search-container">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="fullname">Name</label>
+                    <input name="fullname" type="text" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="email">Email Address</label>
+                    <input name="email" type="text" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="email">Status</label>
+                    <select name="status_id" class="form-control">
+                        <option value='' selected>- Any -</option>
+                        @foreach($federationPointPersonStatuses as $federationPointPersonStatus)
+                            <option value="{{ $federationPointPersonStatus->id }}">{{ $federationPointPersonStatus->description }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-3 mt-auto">
+                    <div class="btn-group w-100" role="group">
+                        <button id="users-filter-submit" class="btn btn-primary w-50">Search</button>
+                        <button type="button" class="btn btn-secondary w-50" onclick="window.location.reload();">Reset</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    @endif
-    <form method="POST" action="{{ route('admin.trade-federation-update') }}">
-    </form>
+    </div>
+
+    <!-- Table -->
+    <div class="card-body">
+        <div class="text-right">
+            <a class="btn btn-primary" href="{{ route('admin.add-federations') }}">Add Point Person</a>    
+        </div>
+        <div class="table-responsive">
+            <table id="federation-point-person-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.federation.list') }}">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
 </div>
 @endsection

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Federation extends Model
+class FederationPointPerson extends Model
 {
     use HasFactory;
 
@@ -23,33 +23,15 @@ class Federation extends Model
 
     protected $fillable = [
         'name',
-        'category_id',
+        'guid',
+        'email',
         'status_id',
-        'newly_created'
     ];
 
     // Define the relationship to the FederationCategory model
-    public function federationCategory()
-    {
-        return $this->belongsTo(FederationCategory::class, 'category_id');
-    }
-    
-    // Define the relationship to the LocalUnion model
-    public function localUnions()
-    {
-        return $this->hasMany(LocalUnion::class);
-    }
-
-    // Define the relationship to the LocalUnion model
     public function pointPersonStatus()
     {
-        return $this->hasMany(FederationPointPerson::class);
-    }
-
-    // Define the relationship to the FederationCategory model
-    public function federationStatus()
-    {
-        return $this->belongsTo(FederationStatus::class, 'status_id');
+        return $this->belongsTo(FederationPointPersonStatus::class, 'status_id');
     }
 
     // Automatically generate a UUID when creating a new instance
