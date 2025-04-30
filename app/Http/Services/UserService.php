@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\Federation;
 use App\Models\User;
 use Illuminate\Support\Collection as FormattedCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -164,23 +165,38 @@ class UserService extends BaseService
     /**
      * update the user record specifically name fields and sending email update confirmation 
      *
-     * @return array
+     * @return String
      */
-    public function update(array $aUser) : array
+    public function createUpdate(array $aUser) : Federation|array
     {
-        $oUser = User::firstwhere('guid', $aUser['guid']);
-        $oUser->fname = trim($aUser['fname']);
-        $oUser->mname = trim($aUser['mname']);
-        $oUser->lname = trim($aUser['lname']);
-        $oUser->email = trim($aUser['email']);
+        $aUser['fname'] = trim($aUser['fname']);
+        $aUser['mname'] = trim($aUser['mname']);
+        $aUser['lname'] = trim($aUser['lname']);
+        $aUser['email'] = trim($aUser['email']);
         if(is_null($aUser['mname']) === true) {
-            $oUser->fullname = $oUser->fname . ' ' . $oUser->lname; 
+            $aUser['fullname'] = $aUser['fname'] . ' ' . $aUser['lname']; 
         } else {
-            $oUser->fullname = $oUser->fname . ' ' . $oUser->mname . ' ' . $oUser->lname;
+            $aUser['fullname'] = $aUser['fname'] . ' ' . $aUser['mname'] . ' ' . $aUser['lname'];
         }
-        $oUser->save();
+        if (isset($aUser['id']) === true) {
+            $iUserId = $aUser['id'];
+            unset($aUser['id']);
+        } else {
+            $iUserId = (User::firstwhere('guid', $aUser['guid'])->id);
+        }
 
-        return array();
+        if ((int)$iUserId == 0) {
+            $oUser = User::create($aUser);
+        } else {
+            $oUser = User::updateOrCreate(
+                ['id' => $iUserId],
+                $aUser,
+            );
+        }
+        if (isset($aUser['federation_id']) === false) {
+            return array();
+        }
+        return Federation::firstwhere('id', $aUser['federation_id']);
     }
             
     /**

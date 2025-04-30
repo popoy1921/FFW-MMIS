@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserUpdateRequest extends FormRequest
+class UserCreateUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,11 +15,16 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         $oUser = User::firstwhere('guid', $this->input('guid'));
+        $sSuffixUserId = '';
+        if ($oUser) {
+            $sSuffixUserId .= ',' . $oUser->id;
+        }
         return [
             'fname' => ['required', 'regex:/^[\p{L}\'\s-]+$/u', 'max:50'],
             'mname' => ['nullable', 'regex:/^[\p{L}\'\s-]*$/u', 'max:50'],
             'lname' => ['required', 'regex:/^[\p{L}\'\s-]+$/u', 'max:50'],
-            'email' => ['required', 'custom_email', 'unique:users,email,' . $oUser->id],
+            'email' => ['required', 'custom_email', 'unique:users,email' . $sSuffixUserId],
+            'role'  => ['nullable, integer, in:1,2,3,4'],
         ];
     }
 

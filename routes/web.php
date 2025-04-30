@@ -36,15 +36,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/users', [PageRendererController::class, 'showAdminUsersPage'])->name('admin.users');
         Route::get('/admin/user-details', [PageRendererController::class, 'showAdminUserDetialsPage'])->name('admin.user-details');
         Route::get('/admin/federations', [PageRendererController::class, 'showAdminTradeFederationsPage'])->name('admin.trade-federations');
-        Route::get('/admin/addFederation', [PageRendererController::class, 'showCreateFederationpage'])->name('admin.add-federations');
+        Route::get('/admin/add-federation', [PageRendererController::class, 'showAdminCreateFederationpage'])->name('admin.add-federations');
         Route::post('/admin/createFederation', [FederationController::class, 'createFederation'])->name('admin.create-federation');
         Route::patch('/admin/federations/updatestatus', [FederationController::class, 'updateStatus'])->name('admin.trade-federations.update-status');
         Route::get('/admin/federation-details', [PageRendererController::class, 'showAdminTradeFederationDetailsPage'])->name('admin.trade-federation-details');
         Route::get('/admin/federation-region-destributions', [PageRendererController::class, 'showAdminTradeFederationRegionDestributionsPage'])->name('admin.trade-federation-region-destributions');
         Route::get('/admin/federation-officers', [PageRendererController::class, 'showAdminTradeFederationOfficersPage'])->name('admin.trade-federation-officers');
         Route::get('/admin/federation-cba-provisions', [PageRendererController::class, 'showAdminTradeFederationCBAProvisionsPage'])->name('admin.trade-federation-cba-provisions');
-        Route::get('/admin/federation-point-persons', [PageRendererController::class, 'showAdminTradeFederationPointPersonsPage'])->name('admin.trade-federation-point-persons');
-        Route::patch('/federations/update', [FederationController::class, 'updateFederation'])->name('admin.trade-federation-update');
+
+        Route::get('/admin/federation-point-persons', [PageRendererController::class, 'showAdminTradeFederationPointPersonsPage'])->name('admin.federation-point-persons');
+        Route::get('/admin/add-federation-point-persons', [PageRendererController::class, 'showAdminCreateTradeFederationPointPersonsPage'])->name('admin.add-federation-point-persons');   
+        Route::post('/user/create', [UserController::class, 'createUser'])->name('user.create');
+
+        Route::post('/federations/update', [FederationController::class, 'updateFederation'])->name('admin.trade-federation-update');
     });
  
     // FEDERATION-POINT-PERSON

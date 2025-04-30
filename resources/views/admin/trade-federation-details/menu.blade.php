@@ -23,7 +23,7 @@
     @if ($side_menu === 'point_persons')
     <a data-name="details" class="list-group-item list-group-item-action active" href="#">MMIS Point Persons</a>
     @else
-    <a data-name="details" class="list-group-item list-group-item-action" href="{{ route('admin.trade-federation-point-persons') . '?guid=' . $federation->guid }}">MMIS Point Persons</a>
+    <a data-name="details" class="list-group-item list-group-item-action" href="{{ route('admin.federation-point-persons') . '?guid=' . $federation->guid }}">MMIS Point Persons</a>
     @endif
 </div>
 
@@ -57,7 +57,7 @@
         @if ($side_menu === 'point_persons')
         <a data-name="details" class="dropdown-item active" href="#">MMIS Point Persons</a>
         @else
-        <a data-name="details" class="dropdown-item" href="{{ route('admin.trade-federation-point-persons') . '?guid=' . $federation->guid }}">MMIS Point Persons</a>
+        <a data-name="details" class="dropdown-item" href="{{ route('admin.federation-point-persons') . '?guid=' . $federation->guid }}">MMIS Point Persons</a>
         @endif
     </div>
 </div>

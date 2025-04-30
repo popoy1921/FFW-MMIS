@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserUpdatePasswordRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserCreateUpdateRequest;
 use App\Http\Services\UserService;
+use App\Models\Federation;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -53,17 +54,33 @@ class UserController extends Controller
         $aFilter['role_limit'] = 2;
         return response()->json($this->oUserService->getFormattedTableData($aFilter));
     }
+
+    
+    
+    /**
+     * create User record
+     *
+     * @param  UserCreateUpdateRequest $oRequest
+     * @return JsonResponse
+     */
+    public function createUser(UserCreateUpdateRequest $oRequest) : JsonResponse
+    {
+        $oUser = $oRequest->all();
+        $oUser['federation_id'] = (Federation::where('guid', '=', $oUser['federation_guid'])->first())->id;
+        unset($oUser['federation_guid']);
+        return response()->json($this->oUserService->createUpdate($oUser));
+    }
     
     /**
      * update User record
      *
-     * @param  UserUpdateRequest $oRequest
+     * @param  UserCreateUpdateRequest $oRequest
      * @return RedirectResponse
      */
-    public function updateUser(UserUpdateRequest $oRequest) : RedirectResponse
+    public function updateUser(UserCreateUpdateRequest $oRequest) : RedirectResponse
     {
         $oUser = $oRequest->all();
-        $this->oUserService->update($oUser);
+        $this->oUserService->createUpdate($oUser);
         
         session()->flash('user-update', 'Your profile has been successfully updated.');
         return redirect()->route('user.account-settings');

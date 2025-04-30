@@ -57,7 +57,7 @@ class PageRendererController extends Controller
      *
      * @return View
      */
-    public function showCreateFederationpage() : View
+    public function showAdminCreateFederationpage() : View
     {
         $aPageDetails = array(
             'top_menu'              => 'trade_federations',
@@ -192,7 +192,20 @@ class PageRendererController extends Controller
             'federation'                    => Federation::where('guid', '=', $aData['guid'])->first(),
             'federationPointPersonStatuses' => FederationPointPersonStatus::all(),
         );
-        return view('admin.trade-federation-details.point_persons', $aPageDetails);
+        return view('admin.trade-federation-details.point-persons', $aPageDetails);
+    }
+
+    public function showAdminCreateTradeFederationPointPersonsPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'federation_guid'               => $aData['guid'],
+            'top_menu'                      => 'trade_federations',
+            'side_menu'                     => 'point_persons',
+            'federation'                    => Federation::where('guid', '=', $aData['guid'])->first(),
+            'federationPointPersonStatuses' => FederationPointPersonStatus::all(),
+        );
+        return view('admin.trade-federation-details.add-point-persons', $aPageDetails);
     }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------

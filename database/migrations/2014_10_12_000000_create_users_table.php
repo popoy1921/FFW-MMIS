@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('guid')->unique();
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('fname');
             $table->string('mname')->nullable();
             $table->string('lname');
-            $table->string('fullname');
-            $table->string('photo');
-            $table->integer('status_id');
+            $table->string('fullname')->nullable();
+            $table->string('photo')->nullable();
+            $table->integer('status_id')->default(0);
             $table->integer('role_id');
             $table->integer('federation_id')->nullable();
             $table->integer('local_union_id')->nullable();

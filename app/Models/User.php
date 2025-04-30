@@ -25,6 +25,7 @@ class User extends Authenticatable
         'fname',
         'mname',
         'lname',
+        'fullname',
         'photo',
         'status_id',
         'role_id',
