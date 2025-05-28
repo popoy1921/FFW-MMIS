@@ -73,7 +73,7 @@ class FederationsSeeder extends Seeder
                 'name'          => 'FFW Women’s Network',
                 'guid'          => (string) Str::uuid(),
                 'category_id'   => 2,
-                'status_id'     => 1,
+                'status_id'     => 0,
                 'newly_created' => 0,
             ],
             [ 
@@ -87,7 +87,7 @@ class FederationsSeeder extends Seeder
                 'name'          => 'Farmers',
                 'guid'          => (string) Str::uuid(),
                 'category_id'   => 2,
-                'status_id'     => 1,
+                'status_id'     => 0,
                 'newly_created' => 0,
             ],
             [ 

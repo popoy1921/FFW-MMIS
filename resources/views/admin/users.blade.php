@@ -85,5 +85,5 @@
 @endsection
 
 @section('javascript')
-@vite('resources/js/admin/users.js')
+    @vite('resources/js/admin/users.js')
 @endsection

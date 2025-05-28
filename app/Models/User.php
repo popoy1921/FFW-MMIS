@@ -29,7 +29,7 @@ class User extends Authenticatable
         'photo',
         'status_id',
         'role_id',
-        'trade_federation_id',
+        'federation_id',
         'local_union_id',
     ];
 

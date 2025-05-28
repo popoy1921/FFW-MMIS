@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/add-federation-point-persons', [PageRendererController::class, 'showAdminCreateTradeFederationPointPersonsPage'])->name('admin.add-federation-point-persons');   
         Route::post('/user/create', [UserController::class, 'createUser'])->name('user.create');
 
-        Route::post('/federations/update', [FederationController::class, 'updateFederation'])->name('admin.trade-federation-update');
+        Route::patch('/federations/update', [FederationController::class, 'updateFederation'])->name('admin.trade-federation-update');
     });
  
     // FEDERATION-POINT-PERSON

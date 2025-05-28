@@ -46,10 +46,10 @@ $(document).ready(function() {
                     });
                 }
 
-                if (oChildren.is(':visible')) {
-                    $(this).find('i ').removeClass('fa-minus').addClass('fa-plus');
-                } else {
+                if (oChildren.is(':visible') || oChildren.length < 1) {
                     $(this).find('i').removeClass('fa-plus').addClass('fa-minus');
+                } else {
+                    $(this).find('i ').removeClass('fa-minus').addClass('fa-plus');
                 }
             });
         },

@@ -12,12 +12,13 @@ $(document).ready(function() {
             url  : sAjaxLink,
             type : 'GET',
             data : function (oData) {
-                oData.fullname    = $('input[name="fullname"]').val();
-                oData.email       = $('input[name="email"]').val();
-                oData.federation  = $('input[name="federation"]').val();
-                oData.local_union = $('input[name="local_union"]').val();
-                oData.role_id     = $('select[name="role_id"]').val();
-                oData.status_id   = $('select[name="status_id"]').val();
+                oData.table                 = 'users';
+                oData.fullname              = $('input[name="fullname"]').val();
+                oData.email                 = $('input[name="email"]').val();
+                oData.federation            = $('input[name="federation"]').val();
+                oData.local_union           = $('input[name="local_union"]').val();
+                oData.role_id               = $('select[name="role_id"]').val();
+                oData.status_id             = $('select[name="status_id"]').val();
             },
         },
         columns: [

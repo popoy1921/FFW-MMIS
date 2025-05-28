@@ -15,7 +15,61 @@ use Illuminate\Database\Eloquent\Builder;
 class UserService extends BaseService
 {    
     private Builder $oUserModelBuilder;
+    private string  $sTable;
     
+    /**
+     * __construct
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $aRelationShips = [
+            'userStatus',
+            'userRole',
+            'federation',
+            'localUnion',
+        ];
+        $this->oUserModelBuilder = User::with($aRelationShips);
+    }
+    
+    /**
+     * set Defaults to get the initial count
+     *
+     * @param  mixed $aInputs
+     * @return void
+     */
+    public function setDefaults(array $aInputs) : void
+    {
+        $this->sTable = $aInputs['table'];
+        if (isset($aInputs['role_limit'])) {
+            $this->oUserModelBuilder->whereHas('userRole', function($query) use ($aInputs) {
+                $query->where('id', '>=', $aInputs['role_limit']);
+            });
+        }
+        if (isset($aInputs['default_role_id'])) {
+            $this->oUserModelBuilder->where('role_id', $aInputs['default_role_id']);
+            if ($aInputs['default_role_id'] === 3) {
+                $this->oUserModelBuilder->whereNotNull('local_union_id');
+            }
+        }
+        if (isset($aInputs['default_federation'])) {
+            $this->oUserModelBuilder->whereHas('federation', function($query) use ($aInputs) {
+                $query->where('name', 'like', '%' . $aInputs['default_federation'] . '%');
+            });
+        }
+    }
+
+    /**
+     * get Count of current filter data
+     *
+     * @return int
+     */
+    public function getCount() : int
+    {
+        return $this->oUserModelBuilder->count();
+    }
+
     /**
      * getFormattedTableData
      *
@@ -25,14 +79,16 @@ class UserService extends BaseService
     public function getFormattedTableData(array $aFilter) : array
     {
         $this->setUserModelQueries($aFilter);
-        $iNumberOfFilteredRecords = $this->oUserModelBuilder->count();
+        $iNumberOfFilteredRecords = $this->getCount();
 
         $iNumberOfRecords = (int)$aFilter['length'];
         $iPage = ((int)$aFilter['start'] / $iNumberOfRecords) + 1;
         $oUserRecords = $this->getPaginatedRecords($this->oUserModelBuilder, $iPage, $iNumberOfRecords);
+
         return array(
             'draw'            => intval($aFilter['draw']),              // Return the draw counter
-            'recordsTotal'    => User::count(),                         // Total records without filtering
+            // MOVED to another function and assigned using controller
+            //'recordsTotal'    => User::count(),                         // Total records without filtering
             'recordsFiltered' => $iNumberOfFilteredRecords,             // Total records after filtering
             'data'            => $this->formatTableData($oUserRecords), // Data for the current page
         );
@@ -46,13 +102,6 @@ class UserService extends BaseService
      */
     public function setUserModelQueries(array $aFilter) : void
     {
-        $aRelationShips = [
-            'userStatus',
-            'userRole',
-            'federation',
-            'localUnion',
-        ];
-        $this->oUserModelBuilder = User::with($aRelationShips);
         $this->filterDataQuery($aFilter);
         $this->sortDataQuery($aFilter);
     }
@@ -65,6 +114,12 @@ class UserService extends BaseService
         if (isset($aFilter['email'])) {
             $this->oUserModelBuilder->where('email', 'like', '%' . $aFilter['email'] . '%');
         }
+        if (isset($aFilter['role_id'])) {
+            $this->oUserModelBuilder->where('role_id', $aFilter['role_id']);
+        }
+        if (isset($aFilter['status_id'])) {
+            $this->oUserModelBuilder->where('status_id', $aFilter['status_id']);
+        }
         if (isset($aFilter['federation'])) {
             $this->oUserModelBuilder->whereHas('federation', function($query) use ($aFilter) {
                 $query->where('name', 'like', '%' . $aFilter['federation'] . '%');
@@ -73,17 +128,6 @@ class UserService extends BaseService
         if (isset($aFilter['local_union'])) {
             $this->oUserModelBuilder->whereHas('localUnion', function($query) use ($aFilter) {
                 $query->where('name', 'like', '%' . $aFilter['local_union'] . '%');
-            });
-        }
-        if (isset($aFilter['role_id'])) {
-            $this->oUserModelBuilder->where('role_id', $aFilter['role_id']);
-        }
-        if (isset($aFilter['status_id'])) {
-            $this->oUserModelBuilder->where('status_id', $aFilter['status_id']);
-        }        
-        if (isset($aFilter['role_limit'])) {
-            $this->oUserModelBuilder->whereHas('userRole', function($query) use ($aFilter) {
-                $query->where('id', '>=', $aFilter['role_limit']);
             });
         }
     }
@@ -95,9 +139,16 @@ class UserService extends BaseService
             'email',
             'federations.name.federation_id',
             'local_unions.name.local_union_id',
-            'lu_user_statuses.description.status_id',
             'lu_user_roles.description.role_id',
+            'lu_user_statuses.description.status_id',
         ];
+        if ($this->sTable === 'federation-point-person-datatable') {
+            $aColumns = [
+                'fullname',
+                'email',
+                'lu_user_statuses.description.status_id',
+            ];
+        }
         $iIndexForLookup = 2;
         if (isset($aFilter['order']) === false) {
             $iColumnNumber = 0;

@@ -46,16 +46,14 @@ class UserController extends Controller
     public function getList(Request $oRequest) : JsonResponse
     {
         $aFilter = $oRequest->all();
-        // if ((int)auth()->user()->role_id === 2) {
-        //     $iRole = 2;
-        // } else {
-        //     $iRole = 0;
-        // }
         $aFilter['role_limit'] = 2;
-        return response()->json($this->oUserService->getFormattedTableData($aFilter));
+        $this->oUserService->setDefaults($aFilter);
+        unset($aFilter['table']);
+        $iUnfiltertedCount = $this->oUserService->getCount();
+        $aUserList = $this->oUserService->getFormattedTableData($aFilter);
+        $aUserList['recordsTotal'] = $iUnfiltertedCount;
+        return response()->json($aUserList);
     }
-
-    
     
     /**
      * create User record

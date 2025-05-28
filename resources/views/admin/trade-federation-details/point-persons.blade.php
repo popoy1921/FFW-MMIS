@@ -11,6 +11,7 @@
     <!-- Filter -->
     <div class="card-header py-3">
         <div class="cb-search-container">
+            <input name="federation" type="hidden" value="{{$federation->name}}">
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="fullname">Name</label>
@@ -45,7 +46,7 @@
             <a class="btn btn-primary" href="{{ route('admin.add-federation-point-persons') }}?guid={{ $federation_guid }}">Add MMIS Point Person</a>    
         </div>
         <div class="table-responsive">
-            <table id="federation-point-person-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.federation.list') }}">
+            <table id="federation-point-person-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.user.list') }}">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -57,4 +58,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('javascript')
+    @vite('resources/js/admin/point-persons.js')
 @endsection
