@@ -190,7 +190,7 @@ class PageRendererController extends Controller
             'top_menu'                      => 'trade_federations',
             'side_menu'                     => 'point_persons',
             'federation'                    => Federation::where('guid', '=', $aData['guid'])->first(),
-            'federationPointPersonStatuses' => FederationPointPersonStatus::all(),
+            'userStatuses'                  => UserStatus::orderBy('id', 'desc')->get(),
         );
         return view('admin.trade-federation-details.point-persons', $aPageDetails);
     }
@@ -203,7 +203,7 @@ class PageRendererController extends Controller
             'top_menu'                      => 'trade_federations',
             'side_menu'                     => 'point_persons',
             'federation'                    => Federation::where('guid', '=', $aData['guid'])->first(),
-            'federationPointPersonStatuses' => FederationPointPersonStatus::all(),
+            'userStatuses'                  => UserStatus::orderBy('id', 'desc')->get(),
         );
         return view('admin.trade-federation-details.add-point-persons', $aPageDetails);
     }

@@ -15,7 +15,7 @@
             @csrf
             <input name="id" type="hidden" value="0"/>
             <input name="federation_guid" type="hidden" value="{{ $federation_guid }}"/>
-            <input name="role_id" type="hidden" value="2">
+            <input name="role_id" type="hidden" value="3">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="fname">First Name <span class="text-danger">*</span></label>
@@ -38,6 +38,26 @@
                     <label for="email">Email <span class="text-danger">*</label>
                     <input name="email" type="text"
                         class="form-control" placeholder="Email" required autofocus />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="status_id">Status <span class="text-danger">*</span></label>
+                    <select name="status_id" class="form-control {{ $errors->has('status_id') ? 'is-invalid' : '' }}">
+                        <option value="" selected>- Select -</option>
+                        @foreach($userStatuses as $userStatus)
+                            @if ( (int)old('status_id') === (int)$userStatus->id)
+                            <option value="{{ $userStatus->id }}" >{{ $userStatus->description }}</option>
+                            @else
+                            <option value="{{ $userStatus->id }}">{{ $userStatus->description }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="mname">Middle Name</label>
+                    <input name="mname" type="text"
+                        class="form-control" placeholder="Middle Name" autofocus />
                 </div>
             </div>
             <div class="form-row">

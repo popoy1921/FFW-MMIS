@@ -184,6 +184,17 @@ class UserService extends BaseService
     private function formatTableData(LengthAwarePaginator $oUsers) : FormattedCollection
     {
         $aFormattedUsers = $oUsers->map(function ($oUser) {
+            $sActions = '<a class="btn btn-sm btn-primary" title="View Details" href="'. route('admin.user-details') . '?guid=' . $oUser->guid . '"><i class="fa fa-search" aria-hidden="true"></i></a>';
+            if ((int)$oUser->status_id === 1) {
+                $sActions .= '<a class="btn btn-sm btn-success update-status deactivate" title="Update Status" href="#" guid="'. $oUser->id .'">'
+                . '<i class="fa fa-pencil" aria-hidden="true"></i>'
+                . '</a> ';
+            } else {
+                $sActions .= '<a class="btn btn-sm btn-success update-status activate" title="Update Status" href="#" guid="'. $oUser->id .'">'
+                . '<i class="fa fa-pencil" aria-hidden="true"></i>'
+                . '</a> ';
+            }
+
             return [
                 'fullname'    => $oUser->fullname,
                 'email'       => $oUser->email,
@@ -191,7 +202,7 @@ class UserService extends BaseService
                 'local_union' => $oUser->localUnion ? $oUser->localUnion->name : '',
                 'status'      => $oUser->userStatus->description,
                 'role'        => $oUser->userRole->description,
-                'actions'     => '<a class="btn btn-sm btn-primary" title="View Details" href="'. route('admin.user-details') . '?guid=' . $oUser->guid . '"><i class="fa fa-search" aria-hidden="true"></i></a>',
+                'actions'     => $sActions,
             ];
         });
         return $aFormattedUsers;
@@ -224,11 +235,15 @@ class UserService extends BaseService
         $aUser['mname'] = trim($aUser['mname']);
         $aUser['lname'] = trim($aUser['lname']);
         $aUser['email'] = trim($aUser['email']);
+
+        // Set full name
         if(is_null($aUser['mname']) === true) {
             $aUser['fullname'] = $aUser['fname'] . ' ' . $aUser['lname']; 
         } else {
             $aUser['fullname'] = $aUser['fname'] . ' ' . $aUser['mname'] . ' ' . $aUser['lname'];
         }
+
+        // Get id for update
         if (isset($aUser['id']) === true) {
             $iUserId = $aUser['id'];
             unset($aUser['id']);
@@ -236,6 +251,7 @@ class UserService extends BaseService
             $iUserId = (User::firstwhere('guid', $aUser['guid'])->id);
         }
 
+        // Execute Create or Update
         if ((int)$iUserId == 0) {
             $oUser = User::create($aUser);
         } else {

@@ -52,6 +52,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
             </table>
@@ -61,5 +62,7 @@
 @endsection
 
 @section('javascript')
-    @vite('resources/js/admin/point-persons.js')
+    @include('admin.activate-user-form')
+    @include('admin.deactivate-user-form')
+    @vite('resources/js/admin/trade-federations-point-person.js')
 @endsection
