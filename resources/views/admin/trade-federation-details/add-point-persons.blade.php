@@ -14,7 +14,6 @@
         <form id="create-user-form" method="POST" class="ajax-create-form" action="{{ route('user.create') }}" data-redirect="{{ route('admin.federation-point-persons') }}">
             @csrf
             <input name="id" type="hidden" value="0"/>
-            <input name="federation_guid" type="hidden" value="{{ $federation_guid }}"/>
             <input name="role_id" type="hidden" value="3">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -55,9 +54,17 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="mname">Middle Name</label>
-                    <input name="mname" type="text"
-                        class="form-control" placeholder="Middle Name" autofocus />
+                <label for="federation_guid">Federation <span class="text-danger">*</span></label>
+                    <select name="federation_guid" class="form-control {{ $errors->has('status_id') ? 'is-invalid' : '' }}">
+                        <option value="" selected>- Select -</option>
+                        @foreach($federations as $federation)
+                            @if ( (int)old('status_id') === (int)$userStatus->id)
+                            <option value="{{ $federation->guid }}" >{{ $federation->name }}</option>
+                            @else
+                            <option value="{{ $federation->guid }}">{{ $federation->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="form-row">

@@ -25,8 +25,8 @@
                     <label for="email">Status</label>
                     <select name="status_id" class="form-control">
                         <option value='' selected>- Any -</option>
-                        @foreach($federationPointPersonStatuses as $federationPointPersonStatus)
-                            <option value="{{ $federationPointPersonStatus->id }}">{{ $federationPointPersonStatus->description }}</option>
+                        @foreach($userStatuses as $userStatus)
+                            <option value="{{ $userStatus->id }}">{{ $userStatus->description }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Services\UserService;
 use App\Models\Federation;
 use App\Models\FederationCategory;
-use App\Models\FederationPointPersonStatus;
 use App\Models\FederationStatus;
 use App\Models\Region;
 use App\Models\User;
@@ -202,7 +201,7 @@ class PageRendererController extends Controller
             'federation_guid'               => $aData['guid'],
             'top_menu'                      => 'trade_federations',
             'side_menu'                     => 'point_persons',
-            'federation'                    => Federation::where('guid', '=', $aData['guid'])->first(),
+            'federations'                   => Federation::orderBy('id', 'desc')->get(),
             'userStatuses'                  => UserStatus::orderBy('id', 'desc')->get(),
         );
         return view('admin.trade-federation-details.add-point-persons', $aPageDetails);
