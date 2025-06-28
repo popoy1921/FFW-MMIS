@@ -184,17 +184,20 @@ class UserService extends BaseService
     private function formatTableData(LengthAwarePaginator $oUsers) : FormattedCollection
     {
         $aFormattedUsers = $oUsers->map(function ($oUser) {
-            $sActions = '<a class="btn btn-sm btn-primary" title="View Details" href="'. route('admin.user-details') . '?guid=' . $oUser->guid . '"><i class="fa fa-search" aria-hidden="true"></i></a>';
+            $sViewUserButton = '<a class="btn btn-sm btn-primary" title="View Details" href="'. route('admin.user-details') . '?guid=' . $oUser->guid . '"><i class="fa fa-search" aria-hidden="true"></i></a> ';
             if ((int)$oUser->status_id === 1) {
-                $sActions .= '<a class="btn btn-sm btn-success update-status deactivate" title="Update Status" href="#" guid="'. $oUser->id .'">'
+                $sStatusUpdateButton = '<a class="btn btn-sm btn-success update-status deactivate" title="Update Status" href="#" id="'. $oUser->id .'">'
                 . '<i class="fa fa-pencil" aria-hidden="true"></i>'
                 . '</a> ';
             } else {
-                $sActions .= '<a class="btn btn-sm btn-success update-status activate" title="Update Status" href="#" guid="'. $oUser->id .'">'
+                $sStatusUpdateButton = '<a class="btn btn-sm btn-success update-status activate" title="Update Status" href="#" id="'. $oUser->id .'">'
                 . '<i class="fa fa-pencil" aria-hidden="true"></i>'
                 . '</a> ';
             }
 
+            $sResendInvite = '<a class="btn btn-sm btn-warning" title="Resend Invite" href="#"><i class="fa fa-map" aria-hidden="true"></i></a> ';
+
+            $sActions = $sViewUserButton . $sStatusUpdateButton . $sResendInvite;
             return [
                 'fullname'    => $oUser->fullname,
                 'email'       => $oUser->email,
@@ -276,5 +279,17 @@ class UserService extends BaseService
         $oUser = User::firstwhere('guid', $aUpdatePassword['guid']);
         $oUser->password = Hash::make($aUpdatePassword['password']);
         $oUser->save();
+    }
+
+    /**
+     * update user status
+     *
+     * @return String
+     */
+    public function updateStatus(array $aUser) : bool
+    {
+        $oUser = User::firstwhere('id', $aUser['id']);
+        $oUser->status_id = $aUser['status_id'];
+        return $oUser->save();
     }
 }

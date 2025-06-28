@@ -56,6 +56,22 @@ class PageRendererController extends Controller
      *
      * @return View
      */
+    public function showSuperAdminBlankPage(Request $oRequest) : View
+    {
+        $aPageDetails = array(
+            'userStatuses' => UserStatus::orderBy('id', 'desc')->get(),
+            'userRoles'    => UserRole::where('id', '>=', 2)->get(),
+            'top_menu'     => 'users',
+            'filters'      => $oRequest->all(),
+        );
+        return view('admin.users', $aPageDetails);
+    }
+    
+    /**
+     * showSuperAdminBlankPage
+     *
+     * @return View
+     */
     public function showAdminCreateFederationpage() : View
     {
         $aPageDetails = array(

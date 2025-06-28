@@ -99,4 +99,16 @@ class UserController extends Controller
         session()->flash('password-reset', 'Your password has been successfully updated.');
         return redirect()->route('user.account-settings');
     }
+
+    /**
+     * update user status
+     *
+     * @param  Request $oRequest
+     * @return bool
+     */
+    public function updateStatus(Request $oRequest) : bool
+    {
+        $aUser = $oRequest->all();
+        return $this->oUserService->updateStatus($aUser);;
+    }
 }

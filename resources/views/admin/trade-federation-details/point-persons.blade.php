@@ -59,6 +59,18 @@
         </div>
     </div>
 </div>
+
+<!-- Templates -->
+
+<a class="btn btn-sm btn-success update-status deactivate template" title="Update Status" href="#">
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+</a>
+
+<a class="btn btn-sm btn-success update-status activate template" title="Update Status" href="#">
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+</a>
+
+<!-- End of -Templates -->
 @endsection
 
 @section('javascript')

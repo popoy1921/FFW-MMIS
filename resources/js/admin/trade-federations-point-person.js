@@ -33,20 +33,12 @@ $(document).ready(function() {
     
     // Submit filter for table
     $('#users-filter-submit').on('click', function() {
-        console.log([
-            $('input[name="fullname"]').val(),
-            $('input[name="email"]').val(),
-            $('input[name="federation"]').val(),
-            $('input[name="local_union"]').val(),
-            $('select[name="role_id"]').val(),
-            $('select[name="status_id"]').val(),
-        ]);
         oUserDataTable.draw();
     });
 
     // Update modal for update status form
     $('#federation-point-person-datatable').on('click', '.update-status', function() {
-        var sUpdateFormSelector, sModalContent;
+        var sUpdateFormSelector, sModalContent, sTitle;
         var updateStatusButton = $(this);
         updateStatusButton.addClass('remove-button');
         if(updateStatusButton.hasClass('deactivate') === true) {
@@ -59,17 +51,39 @@ $(document).ready(function() {
             sModalContent = 'Are you sure you want to change the status of this MMIS Point Person to Active?';
         }
         let oUpdateForm = $('#' + sUpdateFormSelector);
-        oUpdateForm.addClass('trade-user-status-updating');
+        oUpdateForm.addClass('federation-user-status-updating');
         oUpdateForm.find('input[name="id"]').val(updateStatusButton.attr('id'));
         callModal(sUpdateFormSelector,
             {
-            title          : sTitle,
-            content        : sModalContent,
-            confirm_button : 'Update',
-            cancel_button  : 'Cancel',
-            success_msg    : 'MMIS Point Person status updated successfully!'
+                title          : sTitle,
+                content        : sModalContent,
+                confirm_button : 'Update',
+                cancel_button  : 'Cancel',
+                success_msg    : 'MMIS Point Person status updated successfully!'
             },
-            postFederationsStatusUpdate
+            postFederationsPointPersonStatusUpdate
         );
     });
+
+    // Update button and status on the table
+    function postFederationsPointPersonStatusUpdate()
+    {
+        var oUpdatingForm = $('.federation-user-status-updating');
+        var sId = oUpdatingForm.find('input[name="id"]').val();
+        var sButtonTemplateClass = '.update-status.activate.template';
+        var sUpdatedStatus = 'Inactive';
+        if (oUpdatingForm.attr('id') === 'activate-user-form') {
+            sButtonTemplateClass = '.update-status.deactivate.template';
+            sUpdatedStatus = 'Active';
+        }
+        // update button
+        var oNewButton = $(sButtonTemplateClass).clone().removeClass('template').attr('id', sId);
+        var oButtonForReplacement = $('.remove-button');
+        oButtonForReplacement.after(oNewButton);
+        oButtonForReplacement.remove();
+        
+        // update status
+        oNewButton.closest('tr').find('td:eq(2)').html(sUpdatedStatus);
+        oUpdatingForm.removeClass('trade-federation-status-updating');
+    }
 });
