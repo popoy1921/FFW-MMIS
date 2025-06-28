@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
 
         // Update Statuses
         Route::patch('/federations/update', [FederationController::class, 'updateFederation'])->name('admin.trade-federation-update');
-        Route::patch('/user/update-status', [UserController::class, 'updateStatus'])->name('admin.federation-user-update');
+        Route::patch('/user/admin/user-update-status', [UserController::class, 'updateStatus'])->name('admin.federation-user-update');
     });
  
     // FEDERATION-POINT-PERSON
