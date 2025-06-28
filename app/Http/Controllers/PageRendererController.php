@@ -210,6 +210,21 @@ class PageRendererController extends Controller
         return view('admin.trade-federation-details.point-persons', $aPageDetails);
     }
 
+    public function showAdminTradeFederationPointPersonDetailPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $oUser = User::where('guid', '=', $aData['guid'])->first();
+        $aPageDetails = array(
+            'federation_guid'               => Federation::where('id', '=', $oUser->federation_id)->first()->guid,
+            'top_menu'                      => 'trade_federations',
+            'side_menu'                     => 'point_persons',
+            'user'                          => $oUser,
+            'federations'                   => Federation::orderBy('id', 'desc')->get(),
+            'userStatuses'                  => UserStatus::orderBy('id', 'desc')->get(),
+        );
+        return view('admin.trade-federation-details.point-person', $aPageDetails);
+    }
+
     public function showAdminCreateTradeFederationPointPersonsPage(Request $oRequest) : View
     {
         $aData = $oRequest->all();

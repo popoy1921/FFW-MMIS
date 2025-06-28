@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/federation-cba-provisions', [PageRendererController::class, 'showAdminTradeFederationCBAProvisionsPage'])->name('admin.trade-federation-cba-provisions');
 
         Route::get('/admin/federation-point-persons', [PageRendererController::class, 'showAdminTradeFederationPointPersonsPage'])->name('admin.federation-point-persons');
+        Route::get('/admin/federation-point-person-details', [PageRendererController::class, 'showAdminTradeFederationPointPersonDetailPage'])->name('admin.federation-point-person-details');
         Route::get('/admin/add-federation-point-persons', [PageRendererController::class, 'showAdminCreateTradeFederationPointPersonsPage'])->name('admin.add-federation-point-persons');   
         Route::post('/user/create', [UserController::class, 'updateStatus'])->name('user.create');
 

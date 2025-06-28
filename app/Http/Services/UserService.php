@@ -184,7 +184,7 @@ class UserService extends BaseService
     private function formatTableData(LengthAwarePaginator $oUsers) : FormattedCollection
     {
         $aFormattedUsers = $oUsers->map(function ($oUser) {
-            $sViewUserButton = '<a class="btn btn-sm btn-primary" title="View Details" href="'. route('admin.user-details') . '?guid=' . $oUser->guid . '"><i class="fa fa-search" aria-hidden="true"></i></a> ';
+            $sViewUserButton = '<a class="btn btn-sm btn-primary" title="View Details" href="'. route('admin.federation-point-person-details') . '?guid=' . $oUser->guid . '"><i class="fa fa-search" aria-hidden="true"></i></a> ';
             if ((int)$oUser->status_id === 1) {
                 $sStatusUpdateButton = '<a class="btn btn-sm btn-success update-status deactivate" title="Update Status" href="#" id="'. $oUser->id .'">'
                 . '<i class="fa fa-pencil" aria-hidden="true"></i>'
