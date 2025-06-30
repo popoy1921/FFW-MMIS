@@ -17,7 +17,6 @@ export default defineConfig({
                 'resources/js/datatables-demo.js',
                 'resources/js/sb-admin-2.js',
                 'resources/js/sb-admin-2.min.js',
-                'resources/js/mmisTable.js',
                 'resources/js/admin/trade-federation-details.js',
             ],
             refresh: true,
