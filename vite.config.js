@@ -10,13 +10,22 @@ export default defineConfig({
                 'resources/css/common.css',
                 'resources/css/sb-admin-2.css',
                 'resources/css/sb-admin-2.min.css',
-                
-                
+
+                // scss
                 'resources/scss/app.scss',
 
+                // JS
                 'resources/js/datatables-demo.js',
                 'resources/js/sb-admin-2.js',
                 'resources/js/sb-admin-2.min.js',
+                
+                'resources/js/app.js',
+                'resources/js/admin/trade-federations-details.js',
+                'resources/js/admin/trade-federations.js',
+                'resources/js/admin/users.js',
+                'resources/js/admin/trade-federations-details.js',
+                'resources/js/admin/trade-federations-point-person.js',
+                'resources/js/users.js',
             ],
             refresh: true,
         }),
