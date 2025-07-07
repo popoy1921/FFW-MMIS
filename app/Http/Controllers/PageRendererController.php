@@ -206,6 +206,7 @@ class PageRendererController extends Controller
             'side_menu'                     => 'point_persons',
             'federation'                    => Federation::where('guid', '=', $aData['guid'])->first(),
             'userStatuses'                  => UserStatus::orderBy('id', 'desc')->get(),
+            'is_list'                       => true,
         );
         return view('admin.trade-federation-details.point-persons', $aPageDetails);
     }

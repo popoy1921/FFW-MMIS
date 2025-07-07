@@ -20,10 +20,12 @@
     @else
     <a data-name="details" class="list-group-item list-group-item-action" href="{{ route('admin.trade-federation-cba-provisions') . '?guid=' . $federation->guid }}">Table of Key CBA Provisions</a>
     @endif
-    @if ($side_menu === 'point_persons')
+    @if ($side_menu !== 'point_persons')
+    <a data-name="details" class="list-group-item list-group-item-action" href="{{ route('admin.federation-point-persons') . '?guid=' . $federation->guid }}">MMIS Point Persons</a>
+    @elseif (isset($is_list) === true)
     <a data-name="details" class="list-group-item list-group-item-action active" href="#">MMIS Point Persons</a>
     @else
-    <a data-name="details" class="list-group-item list-group-item-action" href="{{ route('admin.federation-point-persons') . '?guid=' . $federation->guid }}">MMIS Point Persons</a>
+    <a data-name="details" class="list-group-item list-group-item-action active" href="{{ route('admin.federation-point-persons') . '?guid=' . $federation->guid }}">MMIS Point Persons</a>
     @endif
 </div>
 
