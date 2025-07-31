@@ -12,13 +12,13 @@ class LocalUnionsSeeder extends Seeder
     {
         DB::table('local_unions')->insert([
             [ 
-                'name'          => 'TF 1 LU 1',
-                'federation_id' => 1,
+                'name'          => 'Cooperative - LU 1',
+                'federation_id' => 14,
                 'region_id'     => 1,
             ],
             [ 
-                'name'          => 'TF 1 LU 2',
-                'federation_id' => 1,
+                'name'          => 'Cooperative - LU 2',
+                'federation_id' => 14,
                 'region_id'     => 2,
             ],
             [ 

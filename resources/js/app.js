@@ -131,7 +131,7 @@ function confirmSubmitForm(sFromId, sSuccessMsg, fCallBack)
             let oErrors = oXHRResponse.responseJSON.errors;
             Object.keys(oErrors).forEach(sKey => {
                 console.log('input[name="' + sKey + '"]');
-                var oInput = oForm.find('input[name="' + sKey + '"]');
+                var oInput = oForm.find('[name="' + sKey + '"]');
                 oInput.addClass('is-invalid');
                 var oFormGroup = oInput.closest('.form-group');
                 var oErrorDiv = $('<div></div>').addClass(['invalid-feedback', 'd-block']).append(oErrors[sKey]);

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FederationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FederationOfficerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/user/userDetails', [UserController::class, 'getUserDetails'])->name('api.user.user-details');
 Route::get('/user/getList', [UserController::class, 'getList'])->name('api.user.list');
 Route::get('/federation/getList', [FederationController::class, 'getList'])->name('api.federation.list');
+Route::get('/federation-officer/getList', [FederationOfficerController::class, 'getList'])->name('api.federation-officers.list');

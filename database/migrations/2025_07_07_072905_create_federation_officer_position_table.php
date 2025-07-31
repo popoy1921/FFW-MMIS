@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lu_user_age_ranges', function (Blueprint $table) {
-            $table->id();
+        Schema::create('lu_federation_officer_positions', function (Blueprint $table) {
+            $table->integer('id');
             $table->string('description');
-            $table->integer('min');
-            $table->integer('max');
         });
     }
 
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lu_user_age_ranges');
+        Schema::dropIfExists('lu_federation_officer_positions');
     }
 };

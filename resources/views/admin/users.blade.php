@@ -7,7 +7,9 @@
 </div>
 
 <!-- Content  -->
+
 <div class="card shadow mb-4">
+    <!-- Filter  -->
     <div class="card-header py-3">
         <div class="cb-search-container">
             <div class="form-row">
@@ -64,6 +66,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Table  -->
     <div class="card-body">
         <div class="table-responsive">
             <table id="users-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.user.list') }}">
@@ -81,6 +85,7 @@
             </table>
         </div>
     </div>
+    
 </div>
 @endsection
 

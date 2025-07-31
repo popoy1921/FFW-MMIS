@@ -11,10 +11,10 @@ class UserAgeRangesSeeder extends Seeder
     public function run()
     {
         DB::table('lu_user_age_ranges')->insert([
-            [ 'description' => '15-29 years old'],
-            [ 'description' => '30-40 years old'],
-            [ 'description' => '41-50 years old'],
-            [ 'description' => '51-64 years old'],
+            [ 'description' => '15-29 years old', 'min' => 15, 'max' => 29],
+            [ 'description' => '30-40 years old', 'min' => 30, 'max' => 40],
+            [ 'description' => '41-50 years old', 'min' => 41, 'max' => 50],
+            [ 'description' => '51-64 years old', 'min' => 51, 'max' => 64],
         ]);
     }
 }

@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
 use App\Http\Services\UserService;
 use App\Models\Federation;
+use App\Models\FederationOfficer;
+use App\Models\FederationOfficerPosition;
+use App\Models\FederationOfficerGender;
 use App\Models\FederationCategory;
 use App\Models\FederationStatus;
+use App\Models\LocalUnion;
 use App\Models\Region;
 use App\Models\User;
 use App\Models\UserRole;
 use App\Models\UserStatus;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class PageRendererController extends Controller
 {
@@ -178,12 +183,56 @@ class PageRendererController extends Controller
     public function showAdminTradeFederationOfficersPage(Request $oRequest) : View
     {
         $aData = $oRequest->all();
+        $oFederation = Federation::where('guid', '=', $aData['guid'])->first();
         $aPageDetails = array(
-            'top_menu'              => 'trade_federations',
-            'side_menu'             => 'officers',
-            'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
+            'top_menu'                      => 'trade_federations',
+            'side_menu'                     => 'officers',
+            'federation'                    => $oFederation,
         );
         return view('admin.trade-federation-details.officers', $aPageDetails);
+    }
+
+    public function showAdminCreateUpdateTradeFederationOfficerPage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $bNew = false;
+        if (isset($aData['federation_guid']) === true) {
+            $sFormType = 'create';
+            $sFormTitle = 'Add Officer';
+            $oFederationOfficer = null;
+            $sFederationGuid = $aData['federation_guid'];
+            $sAction = route('admin.federation-officer.create');
+        } else {
+            $sFormType = 'update';
+            $sFormTitle = 'Update Officer';
+            $oFederationOfficer = FederationOfficer::where('guid', '=', $aData['guid'])->first();
+            $sFederationGuid = $oFederationOfficer->federation->guid;
+            $sAction = route('admin.federation-officer.update');
+            if ((int)$oFederationOfficer->newly_created === 1) {
+                $bNew = true;
+                $oFederationUpdate = FederationOfficer::where('guid', '=', $aData['guid'])->first();
+                $oFederationUpdate->newly_created = 0;
+                $oFederationUpdate->save();
+            }
+        }
+        $oFederation = Federation::where('guid', '=', $sFederationGuid)->first();
+        $oLocalUnions = LocalUnion::where('federation_id', '=', $oFederation->id)->orderBy('name', 'desc')->get();
+        $aPageDetails = array(
+            'form_type'                     => $sFormType,
+            'form_title'                    => $sFormTitle,
+            'form_action'                   => $sAction,
+            'newly_created'                 => $bNew,
+            'federation_officer'            => $oFederationOfficer,    
+            'federation_guid'               => $sFederationGuid,
+            'top_menu'                      => 'trade_federations',
+            'side_menu'                     => 'officers',
+            'federation_officer_positions'  => FederationOfficerPosition::orderBy('description', 'asc')->get(),
+            'federations'                   => Federation::orderBy('name', 'asc')->get(),
+            'federation_id'                 => $oFederation->id,
+            'local_unions'                  => $oLocalUnions,
+            'federation_officer_genders'    => FederationOfficerGender::orderBy('description', 'asc')->get(),
+        );
+        return view('admin.trade-federation-details.officer', $aPageDetails);
     }
 
     public function showAdminTradeFederationCBAProvisionsPage(Request $oRequest) : View
@@ -226,7 +275,7 @@ class PageRendererController extends Controller
         return view('admin.trade-federation-details.point-person', $aPageDetails);
     }
 
-    public function showAdminCreateTradeFederationPointPersonsPage(Request $oRequest) : View
+    public function showAdminCreateTradeFederationPointPersonPage(Request $oRequest) : View
     {
         $aData = $oRequest->all();
         $aPageDetails = array(

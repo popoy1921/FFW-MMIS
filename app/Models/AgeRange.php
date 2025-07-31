@@ -46,12 +46,6 @@ class Federation extends Model
         return $this->hasMany(FederationPointPerson::class);
     }
 
-    // Define the relationship to the FederationOfficer model
-    public function officers()
-    {
-        return $this->hasMany(FederationOfficer::class);
-    }
-
     // Define the relationship to the FederationCategory model
     public function federationStatus()
     {

@@ -13,7 +13,7 @@
     @if ($side_menu === 'officers')
     <a data-name="details" class="list-group-item list-group-item-action active" href="#">Officers</a>
     @else
-    <a data-name="details" class="list-group-item list-group-item-action" href="{{ route('admin.trade-federation-officers') . '?guid=' . $federation->guid }}">Officers</a>
+    <a data-name="details" class="list-group-item list-group-item-action" href="{{ route('admin.federation-officers') . '?guid=' . $federation->guid }}">Officers</a>
     @endif
     @if ($side_menu === 'cba_provisions')
     <a data-name="details" class="list-group-item list-group-item-action active" href="#">Table of Key CBA Provisions</a>
@@ -49,7 +49,7 @@
         @if ($side_menu === 'officers')
         <a data-name="details" class="dropdown-item active" href="#">Officers</a>
         @else
-        <a data-name="details" class="dropdown-item" href="{{ route('admin.trade-federation-officers') . '?guid=' . $federation->guid }}">Officers</a>
+        <a data-name="details" class="dropdown-item" href="{{ route('admin.federation-officers') . '?guid=' . $federation->guid }}">Officers</a>
         @endif
         @if ($side_menu === 'cba_provisions')
         <a data-name="details" class="dropdown-item active" href="#">Table of Key CBA Provisions</a>

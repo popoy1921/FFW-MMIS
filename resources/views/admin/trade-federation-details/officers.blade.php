@@ -8,12 +8,33 @@
     </div>
 </div>
 <div class="card-body">
-    @if(session('federation-update'))
-        <div class="alert alert-success text-center">
-            {{ session('federation-update') }}
+    <!-- Filter -->
+    <input name="federation_id" type="hidden" value="{{ $federation->id }}">
+
+    <!-- Table -->
+    <div class="card-body">
+        <div class="text-right">
+            <a class="btn btn-primary" href="{{ route('admin.add-federation-officers') }}?federation_guid={{ $federation->guid }}">Add Officer</a>    
         </div>
-    @endif
-    <form method="POST" action="{{ route('admin.trade-federation-update') }}">
-    </form>
+        <div class="table-responsive">
+            <table id="federation-officers-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.federation-officers.list') }}">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Local Union</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
 </div>
+@endsection
+
+@section('javascript')
+    @include('admin.remove-officer-form')
+    @vite('resources/js/admin/federation-officers.js')
 @endsection

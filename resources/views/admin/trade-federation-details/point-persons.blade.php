@@ -43,7 +43,7 @@
     <!-- Table -->
     <div class="card-body">
         <div class="text-right">
-            <a class="btn btn-primary" href="{{ route('admin.add-federation-point-persons') }}?guid={{ $federation_guid }}">Add MMIS Point Person</a>    
+            <a class="btn btn-primary" href="{{ route('admin.add-federation-point-person') }}?guid={{ $federation_guid }}">Add MMIS Point Person</a>    
         </div>
         <div class="table-responsive">
             <table id="federation-point-person-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.user.list') }}">
@@ -76,5 +76,5 @@
 @section('javascript')
     @include('admin.activate-user-form')
     @include('admin.deactivate-user-form')
-    @vite('resources/js/admin/trade-federations-point-person.js')
+    @vite('resources/js/admin/federation-point-persons.js')
 @endsection

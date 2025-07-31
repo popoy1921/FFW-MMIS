@@ -76,7 +76,7 @@
                                 content        : 'Are you sure you want to proceed in the creating this Point Person for this Trade Federation?',
                                 confirm_button : 'Save',
                                 cancel_button  : 'Cancel',
-                                success_msg    : 'MMIS Point Person added successfully! An email has been sent with instructions to set the password..'
+                                success_msg    : 'MMIS Point Person added successfully! An email has been sent with instructions to set the password.'
                             },
                         );"
                     >Save</button>
