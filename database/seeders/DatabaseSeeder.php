@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FederationsSeeder::class);
         $this->call(FederationStatusesSeeder::class);
         $this->call(IndustriesSeeder::class);
+        $this->call(IslandGroupsSeeder::class);
         $this->call(LocalUnionsSeeder::class);
         $this->call(RegionsSeeder::class);
         $this->call(UserAgeRangesSeeder::class);

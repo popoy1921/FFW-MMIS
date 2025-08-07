@@ -11,22 +11,70 @@ class RegionsSeeder extends Seeder
     public function run()
     {
         DB::table('lu_regions')->insert([
-            [ 'description' => 'Region I: Ilocos' ],
-            [ 'description' => 'Region II: Cagayan Valley' ],
-            [ 'description' => 'Region III: Central Luzon' ],
-            [ 'description' => 'NCR: National Capital Region' ],
-            [ 'description' => 'Region IV-A: Calabarzon' ],
-            [ 'description' => 'Region IV-B: MIMAROPA' ],
-            [ 'description' => 'Region V: Bicol' ],
-            [ 'description' => 'Region VI: Western Visayas' ],
-            [ 'description' => 'Region VII: Central Visayas' ],
-            [ 'description' => 'Region VIII: Eastern Visayas' ],
-            [ 'description' => 'Region IX: Zamboanga Peninsula' ],
-            [ 'description' => 'Region X: Northern Mindanao' ],
-            [ 'description' => 'Region XI: Davao' ],
-            [ 'description' => 'Region XII: SOCCSKSARGEN' ],
-            [ 'description' => 'Region XIII: Caraga' ],
-            [ 'description' => 'BARMM: Bangsamoro Autonomous Region in Muslim Mindanao' ],
+            [ 
+                'region_description'       => 'Region I: Ilocos',
+                'island_group_id'   => 1,
+            ],
+            [ 
+                'region_description'       => 'Region II: Cagayan Valley',
+                'island_group_id'   => 1,
+            ],
+            [ 
+                'region_description'       => 'Region III: Central Luzon',
+                'island_group_id'   => 1,
+            ],
+            [ 
+                'region_description'       => 'NCR: National Capital Region',
+                'island_group_id'   => 1,
+            ],
+            [ 
+                'region_description'       => 'Region IV-A: Calabarzon',
+                'island_group_id'   => 1,
+            ],
+            [ 
+                'region_description'       => 'Region IV-B: MIMAROPA',
+                'island_group_id'   => 1,
+            ],
+            [ 
+                'region_description'       => 'Region V: Bicol',
+                'island_group_id'   => 1,
+            ],
+            [ 
+                'region_description'       => 'Region VI: Western Visayas',
+                'island_group_id'   => 2,
+            ],
+            [ 
+                'region_description'       => 'Region VII: Central Visayas',
+                'island_group_id'   => 2,
+            ],
+            [ 
+                'region_description'       => 'Region VIII: Eastern Visayas',
+                'island_group_id'   => 2,
+            ],
+            [ 
+                'region_description'       => 'Region IX: Zamboanga Peninsula',
+                'island_group_id'   => 3,
+            ],
+            [ 
+                'region_description'       => 'Region X: Northern Mindanao',
+                'island_group_id'   => 3,
+            ],
+            [ 
+                'region_description'       => 'Region XI: Davao',
+                'island_group_id'   => 3,
+            ],
+            [ 
+                'region_description'       => 'Region XII: SOCCSKSARGEN',
+                'island_group_id'   => 3,
+            ],
+            [ 
+                'region_description'       => 'Region XIII: Caraga',
+                'island_group_id'   => 3,
+            ],
+            [ 
+                'region_description'       => 'BARMM: Bangsamoro Autonomous Region in Muslim Mindanao',
+                'island_group_id'   => 3,
+            ],
         ]);
     }
 }

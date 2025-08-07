@@ -22,8 +22,8 @@ class LocalUnionsSeeder extends Seeder
                 'region_id'     => 2,
             ],
             [ 
-                'name'          => 'TF 2 LU 1',
-                'federation_id' => 2,
+                'name'          => 'Cooperative - LU 3',
+                'federation_id' => 14,
                 'region_id'     => 1,
             ],
             [ 

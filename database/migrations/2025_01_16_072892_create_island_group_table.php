@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lu_regions', function (Blueprint $table) {
+        Schema::create('lu_island_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('region_description');
-            $table->integer('island_group_id');
+            $table->string('island_description');
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lu_regions');
+        Schema::dropIfExists('lu_island_groups');
     }
 };

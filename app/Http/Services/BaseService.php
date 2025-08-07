@@ -15,14 +15,20 @@ class BaseService
      * Current records
      * @var LengthAwarePaginator
      */
-    private LengthAwarePaginator $oRecords;
+    protected LengthAwarePaginator $oRecords;
+
+    /**
+     * Current records
+     * @var LengthAwarePaginator
+     */
+    protected Builder $oModelBuilder;
 
     /**
      * get records of 
      *
      * @return LengthAwarePaginator
      */
-    public function getPaginatedRecords(Builder $oBuilder, int $iPage, int $iNumberOfRecords) : LengthAwarePaginator
+    protected function getPaginatedRecords(Builder $oBuilder, int $iPage, int $iNumberOfRecords) : LengthAwarePaginator
     {
         return $oBuilder->paginate($iNumberOfRecords, ['*'], 'page', $iPage);;
     }
@@ -32,7 +38,7 @@ class BaseService
      * 
      * @return array
      */
-    public function getPaginationDetails(LengthAwarePaginator $oRecords) : array
+    protected function getPaginationDetails(LengthAwarePaginator $oRecords) : array
     {
         $iCurrentPage = $oRecords->currentPage();
         $iLastPage = $oRecords->lastPage();
@@ -45,6 +51,26 @@ class BaseService
             'is_first_min' => $iPaginationFirstPage === 1,
             'current_page' => $iCurrentPage,
         );
+    }
+
+    /**
+     * perform Sort From Other Table
+     *
+     * @param  array $aColumns           ''
+     * @param  string $sDirection
+     * @return void
+     */
+    protected function performSortFromOtherTable(array $aColumns, string $sDirection)
+    {
+        $sCurrentTableName = $this->oModelBuilder->getModel()->getTable();
+        $aColumnsValues = $aColumns;
+        $sForeignTableName = $aColumnsValues[0];        
+        $sCurrentTableField = $sCurrentTableName . '.' . $aColumnsValues[2];
+        $sForiegnIdField = $sForeignTableName . '.id';
+        $sSortingFieldName = $aColumnsValues[0] . '.' . $aColumnsValues[1];
+
+        $this->oModelBuilder->join($sForeignTableName, $sForiegnIdField, '=', $sCurrentTableField);
+        $this->oModelBuilder->orderBy($sSortingFieldName, $sDirection);
     }
     
     /**

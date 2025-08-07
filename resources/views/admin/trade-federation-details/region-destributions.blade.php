@@ -8,12 +8,29 @@
     </div>
 </div>
 <div class="card-body">
-    @if(session('federation-update'))
-        <div class="alert alert-success text-center">
-            {{ session('federation-update') }}
+    <!-- Table -->
+    <div class="card-body">
+        <!-- Hidden Inputs -->
+        <input type="hidden" name="federation_id" value='{{ $federation->id }}'>
+
+        <input class="deactivate-id" type="hidden" name="id">
+        <div class="table-responsive">
+            <table id="regional-distribution-datatable" class="table table-bordered table-hover my-3"
+                width="100%" cellspacing="0" 
+                reference="{{ route('api.regional-distribution.list') }}">
+                <thead>
+                    <tr>
+                        <th>Island Group</th>
+                        <th>Region Name</th>
+                        <th># of Local Unions </th>
+                    </tr>
+                </thead>
+            </table>
         </div>
-    @endif
-    <form method="POST" action="{{ route('admin.trade-federation-update') }}">
-    </form>
+    </div>
 </div>
+@endsection
+
+@section('javascript')
+    @vite('resources/js/admin/region-distributions.js')
 @endsection

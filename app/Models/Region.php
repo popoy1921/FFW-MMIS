@@ -16,4 +16,16 @@ class Region extends Model
     * @var string
     */
     protected $table = 'lu_regions';
+
+    // Define the relationship to the IslandGroup model
+    public function islandGroup()
+    {
+        return $this->belongsTo(IslandGroup::class, 'island_group_id');
+    }
+    
+    // Define the relationship to the FederationOfficerPosition model
+    public function localUnions()
+    {
+        return $this->hasMany(LocalUnion::class);
+    }
 }
