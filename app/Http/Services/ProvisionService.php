@@ -2,7 +2,7 @@
 
 namespace App\Http\Services;
 
-use App\Models\Region;
+use App\Models\Provision;
 use Illuminate\Support\Collection as FormattedCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * Class that would handle any logic for Regions Distribution
  */
-class RegionalDistributionService extends BaseService
+class ProvisionService extends BaseService
 {
     /**
      * __construct
@@ -20,10 +20,10 @@ class RegionalDistributionService extends BaseService
     public function __construct()
     {
         $aRelationShips = [
-            'islandGroup',
-            'localUnions',
+            'localUnion',
+            'provisionType',
         ];
-        $this->oModelBuilder = Region::with($aRelationShips);
+        $this->oModelBuilder = Provision::with($aRelationShips);
     }
     
     /**
@@ -68,7 +68,6 @@ class RegionalDistributionService extends BaseService
 
         return array(
             'draw'            => intval($aFilter['draw']),              // Return the draw counter
-            'recordsFiltered' => $iNumberOfFilteredRecords,             // Total records after filtering
             'data'            => $this->formatTableData($oRegionalDistributionRecords, $aFilter), // Data for the current page
         );
     }
@@ -125,7 +124,6 @@ class RegionalDistributionService extends BaseService
         $oNewRegionalDistributions = collect([]);
         $oRegionalDistributions->map(function ($oRegionalDistribution) use ($oNewRegionalDistributions, $aFilter) {
             $oFilteredLocalUnions = $oRegionalDistribution->localUnions->filter(function ($oLocalUnion) use ($aFilter) {
-                dump($oLocalUnion);
                 return $oLocalUnion->federation_id === $aFilter['default_federation'];
             });
 

@@ -13,6 +13,7 @@ use App\Models\FederationOfficerGender;
 use App\Models\FederationCategory;
 use App\Models\FederationStatus;
 use App\Models\LocalUnion;
+use App\Models\ProvisionType;
 use App\Models\Region;
 use App\Models\User;
 use App\Models\UserRole;
@@ -238,10 +239,13 @@ class PageRendererController extends Controller
     public function showAdminTradeFederationCBAProvisionsPage(Request $oRequest) : View
     {
         $aData = $oRequest->all();
+        $oFederation = Federation::where('guid', '=', $aData['guid'])->first();
         $aPageDetails = array(
             'top_menu'              => 'trade_federations',
             'side_menu'             => 'cba_provisions',
-            'federation'            => Federation::where('guid', '=', $aData['guid'])->first(),
+            'local_unions'          => LocalUnion::where('federation_id', '=', $oFederation->id)->get(),
+            'provision_types'       => ProvisionType::get(),
+            'federation'            => $oFederation,
         );
         return view('admin.trade-federation-details.cba-provisions', $aPageDetails);
     }

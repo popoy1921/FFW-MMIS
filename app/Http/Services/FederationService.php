@@ -157,7 +157,7 @@ class FederationService extends BaseService
      * @param  string $sDirection
      * @return void
      */
-    private function performSortFromOtherTable(array $aColumns, string $sDirection)
+    public function performSortFromOtherTable(array $aColumns, string $sDirection)
     {
         $sUserTableName = $this->oFederationModelBuilder->getModel()->getTable();
         $aColumnsValues = $aColumns;

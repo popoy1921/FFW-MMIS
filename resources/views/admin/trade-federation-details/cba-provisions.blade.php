@@ -8,12 +8,55 @@
     </div>
 </div>
 <div class="card-body">
-    @if(session('federation-update'))
-        <div class="alert alert-success text-center">
-            {{ session('federation-update') }}
+    <!-- Filter  -->
+    <div class="card-header py-3">
+        <div class="cb-search-container">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="status_id">Local Union</label>
+                    <select name="status_id" class="form-control">
+                        <option value=''>- All -</option>
+                        @foreach($local_unions as $local_union)
+                            <option value="{{ $local_union->id }}">{{ $local_union->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="status_id">Category</label>
+                    <select name="status_id" class="form-control">
+                        <option value=''>- Any -</option>
+                        @foreach($provision_types as $provision_type)
+                            <option value="{{ $provision_type->id }}">{{ $provision_type->description }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-4 mt-auto">
+                    <div class="btn-group w-100" role="group">
+                        <button id="provision-filter-submit" class="btn btn-primary w-50">Search</button>
+                        <button type="button" class="btn btn-secondary w-50" onclick="window.location.reload();">Reset</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    @endif
-    <form method="POST" action="{{ route('admin.trade-federation-update') }}">
-    </form>
+    </div>
+    <!-- Table  -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="users-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.user.list') }}">
+                <thead>
+                    <tr>
+                        <th>Local Union</th>
+                        <th>Category</th>
+                        <th>Key CBA Provision</th>
+                    </tr>
+                </thead>                                    
+            </table>
+        </div>
+    </div>
+
 </div>
+@endsection
+
+@section('javascript')
+    @vite('resources/js/admin/provisions.js')
 @endsection

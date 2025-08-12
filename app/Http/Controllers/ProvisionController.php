@@ -7,11 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-use App\Http\Services\RegionalDistributionService;
+use App\Http\Services\ProvisionService;
 
-class RegionalDistributionController extends Controller
+class ProvisionController extends Controller
 {
-    private RegionalDistributionService $oRegionalDistributionService;
+    private ProvisionService $oProvisionService;
     
     /**
      * __construct
@@ -19,9 +19,9 @@ class RegionalDistributionController extends Controller
      * @param  FederationService $oFederationService
      * @return void
      */
-    public function __construct(RegionalDistributionService $oRegionalDistributionService)
+    public function __construct(ProvisionService $oProvisionService)
     {
-        $this->oRegionalDistributionService = $oRegionalDistributionService;
+        $this->oProvisionService = $oProvisionService;
     }
 
     /**
@@ -33,9 +33,9 @@ class RegionalDistributionController extends Controller
     public function getList(Request $oRequest) : JsonResponse
     {
         $aFilter = $oRequest->all();
-        $this->oRegionalDistributionService->setDefaults($aFilter);
-        $iUnfiltertedCount = $this->oRegionalDistributionService->getCount();
-        $aRegionalDistributionList = $this->oRegionalDistributionService->getFormattedTableData($aFilter);
+        $this->oProvisionService->setDefaults($aFilter);
+        $iUnfiltertedCount = $this->oProvisionService->getCount();
+        $aRegionalDistributionList = $this->oProvisionService->getFormattedTableData($aFilter);
         $aRegionalDistributionList['recordsTotal'] = $iUnfiltertedCount;
         return response()->json($aRegionalDistributionList);
     }

@@ -60,7 +60,7 @@ class BaseService
      * @param  string $sDirection
      * @return void
      */
-    protected function performSortFromOtherTable(array $aColumns, string $sDirection)
+    public function performSortFromOtherTable(array $aColumns, string $sDirection)
     {
         $sCurrentTableName = $this->oModelBuilder->getModel()->getTable();
         $aColumnsValues = $aColumns;
@@ -71,6 +71,7 @@ class BaseService
 
         $this->oModelBuilder->join($sForeignTableName, $sForiegnIdField, '=', $sCurrentTableField);
         $this->oModelBuilder->orderBy($sSortingFieldName, $sDirection);
+        dump($this->oModelBuilder->toSql());
     }
     
     /**
