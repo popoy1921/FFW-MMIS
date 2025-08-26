@@ -9,12 +9,13 @@
 </div>
 <div class="card-body">
     <!-- Filter  -->
+    <input name="federation_id" type="hidden" value="{{ $federation->id }}"/>
     <div class="card-header py-3">
         <div class="cb-search-container">
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="status_id">Local Union</label>
-                    <select name="status_id" class="form-control">
+                    <label for="local_union_id">Local Union</label>
+                    <select name="local_union_id" class="form-control">
                         <option value=''>- All -</option>
                         @foreach($local_unions as $local_union)
                             <option value="{{ $local_union->id }}">{{ $local_union->name }}</option>
@@ -22,8 +23,8 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="status_id">Category</label>
-                    <select name="status_id" class="form-control">
+                    <label for="provision_type_id">Category</label>
+                    <select name="provision_type_id" class="form-control">
                         <option value=''>- Any -</option>
                         @foreach($provision_types as $provision_type)
                             <option value="{{ $provision_type->id }}">{{ $provision_type->description }}</option>
@@ -42,7 +43,7 @@
     <!-- Table  -->
     <div class="card-body">
         <div class="table-responsive">
-            <table id="users-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.user.list') }}">
+            <table id="regional-distribution-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.provision.list') }}">
                 <thead>
                     <tr>
                         <th>Local Union</th>

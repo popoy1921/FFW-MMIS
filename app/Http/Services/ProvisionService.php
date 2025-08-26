@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class ProvisionService extends BaseService
 {
+    private array $aRelationShips = [
+            'localUnion',
+            'provisionType',
+    ];
+
     /**
      * __construct
      *
@@ -19,11 +24,7 @@ class ProvisionService extends BaseService
      */
     public function __construct()
     {
-        $aRelationShips = [
-            'localUnion',
-            'provisionType',
-        ];
-        $this->oModelBuilder = Provision::with($aRelationShips);
+        $this->oModelBuilder = Provision::with($this->aRelationShips);
     }
     
     /**
@@ -35,7 +36,7 @@ class ProvisionService extends BaseService
     public function setDefaults(array $aInputs) : void
     {
         if (isset($aInputs['default_federation'])) {
-            $this->oModelBuilder->whereHas('localUnions', function($query) use ($aInputs) {
+            $this->oModelBuilder->whereHas('localUnion', function($query) use ($aInputs) {
                 $query->where('federation_id', (int) $aInputs['default_federation']);
             });
         }
@@ -64,11 +65,12 @@ class ProvisionService extends BaseService
 
         $iNumberOfRecords = (int)$aFilter['length'];
         $iPage = ((int)$aFilter['start'] / $iNumberOfRecords) + 1;
-        $oRegionalDistributionRecords = $this->getPaginatedRecords($this->oModelBuilder, $iPage, $iNumberOfRecords);
+        $oProvisionRecords = $this->getPaginatedRecords($this->oModelBuilder, $iPage, $iNumberOfRecords);
 
         return array(
-            'draw'            => intval($aFilter['draw']),              // Return the draw counter
-            'data'            => $this->formatTableData($oRegionalDistributionRecords, $aFilter), // Data for the current page
+            'draw'            => intval($aFilter['draw']),                              // Return the draw counter
+            'recordsFiltered' => $iNumberOfFilteredRecords,             // Total records after filtering
+            'data'            => $this->formatTableData($oProvisionRecords, $aFilter),  // Data for the current page
         );
     }
 
@@ -81,11 +83,25 @@ class ProvisionService extends BaseService
     public function setUserModelQueries(array $aFilter) : void
     {
         $this->filterDataQuery($aFilter);
-        $this->sortDataQuery($aFilter);
+        // $this->sortDataQuery($aFilter);
     }
 
     private function filterDataQuery(array $aFilter) : void
     {
+        if (isset($aFilter['local_union_id'])) {
+            $this->oModelBuilder = Provision::with($this->aRelationShips);
+            $this->oModelBuilder->whereHas('localUnion', function($query) use ($aFilter) {
+                dd($aFilter['local_union_id']);
+                $query->where('federation_id', $aFilter['default_federation']);
+                $query->where('id', '=' . $aFilter['local_union_id']);
+            });
+        }
+        if (isset($aFilter['provision_type_id'])) {
+            $this->oModelBuilder->whereHas('provisionType', function($query) use ($aFilter) {
+                $query->where('id', '=' . $aFilter['provision_type_id']);
+            });
+        }
+        dd($this->oModelBuilder->toSql());
     }
 
     private function sortDataQuery(array $aFilter) : void
@@ -115,24 +131,19 @@ class ProvisionService extends BaseService
     /**
      * Update format of the users data for page rendering when using API
      *
-     * @param  mixed $oRegionalDistributions
+     * @param  mixed $oProvisions
      * @param  array $aFilter
      * @return FormattedCollection
      */
-    private function formatTableData(LengthAwarePaginator $oRegionalDistributions, array $aFilter) : FormattedCollection
+    private function formatTableData(LengthAwarePaginator $oProvisions, array $aFilter) : FormattedCollection
     {
-        $oNewRegionalDistributions = collect([]);
-        $oRegionalDistributions->map(function ($oRegionalDistribution) use ($oNewRegionalDistributions, $aFilter) {
-            $oFilteredLocalUnions = $oRegionalDistribution->localUnions->filter(function ($oLocalUnion) use ($aFilter) {
-                return $oLocalUnion->federation_id === $aFilter['default_federation'];
-            });
-
-            $oNewRegionalDistributions->push(array(
-                'island_group_description'  => $oRegionalDistribution->islandGroup->island_description,
-                'region_description'        => $oRegionalDistribution->region_description,
-                'number_of_local_unions'    => count($oFilteredLocalUnions),
-            ));
+        $aFormattedProvisions = $oProvisions->map(function ($oProvision) {
+            return [
+                'local_union'               => $oProvision->localUnion->name,
+                'category'                  => $oProvision->provisionType->description,
+                'provision'                 => $oProvision->description,
+            ];
         });
-        return $oNewRegionalDistributions;
+        return $aFormattedProvisions;
     }
 }
