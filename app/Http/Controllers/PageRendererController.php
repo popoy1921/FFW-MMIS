@@ -291,6 +291,16 @@ class PageRendererController extends Controller
         );
         return view('admin.trade-federation-details.add-point-persons', $aPageDetails);
     }
+
+    public function showAdminFinancePage(Request $oRequest) : View
+    {
+        $aData = $oRequest->all();
+        $aPageDetails = array(
+            'top_menu'      => 'finance',
+            'federations'   => Federation::get(),
+        );
+        return view('admin.finance', $aPageDetails);
+    }
     
     // ------------------- FEDERATION-POINT-PERSON -------------------
     /**

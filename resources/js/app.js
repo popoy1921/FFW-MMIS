@@ -5,6 +5,7 @@ import 'bootstrap-select';
 import 'jquery-easing';
 import 'datatables';
 import 'datatables.net-bs4';
+import flatpickr from "flatpickr";
 import Alpine from 'alpinejs';
 import iziToast from 'izitoast';
 
@@ -23,6 +24,21 @@ $(document).ready(function() {
         width: '100%',
         container: 'body',
         selectedTextFormat: 'count > 1'      
+    });
+
+    // Select with live search
+    $('.live-select').selectpicker({
+        title: "- Any -",
+        liveSearch: true,
+        actionsBox: true,
+        width: '100%',
+        container: 'body',
+        selectedTextFormat: 'count > 1'      
+    });
+
+    flatpickr('.date-picker', {
+        enableTime: false,
+        dateFormat: "Y-m-d",
     });
 
     // Show password

@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/users', [PageRendererController::class, 'showAdminUsersPage'])->name('admin.users');
         Route::get('/admin/user-details', [PageRendererController::class, 'showAdminUserDetialsPage'])->name('admin.user-details');
         Route::get('/admin/federations', [PageRendererController::class, 'showAdminTradeFederationsPage'])->name('admin.trade-federations');
+        Route::get('/admin/finance', [PageRendererController::class, 'showAdminFinancePage'])->name('admin.finance');
         Route::get('/admin/add-federation', [PageRendererController::class, 'showAdminCreateFederationpage'])->name('admin.add-federations');
         Route::post('/admin/createFederation', [FederationController::class, 'createFederation'])->name('admin.create-federation');
         Route::patch('/admin/federations/updatestatus', [FederationController::class, 'updateStatus'])->name('admin.trade-federations.update-status');

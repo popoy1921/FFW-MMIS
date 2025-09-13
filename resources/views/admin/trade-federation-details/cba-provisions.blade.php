@@ -15,8 +15,7 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="local_union_id">Local Union</label>
-                    <select name="local_union_id" class="form-control">
-                        <option value=''>- All -</option>
+                    <select name="local_union_id" class="form-control live-select">
                         @foreach($local_unions as $local_union)
                             <option value="{{ $local_union->id }}">{{ $local_union->name }}</option>
                         @endforeach

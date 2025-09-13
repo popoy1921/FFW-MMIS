@@ -125,7 +125,6 @@ class RegionalDistributionService extends BaseService
         $oNewRegionalDistributions = collect([]);
         $oRegionalDistributions->map(function ($oRegionalDistribution) use ($oNewRegionalDistributions, $aFilter) {
             $oFilteredLocalUnions = $oRegionalDistribution->localUnions->filter(function ($oLocalUnion) use ($aFilter) {
-                dump($oLocalUnion);
                 return $oLocalUnion->federation_id === $aFilter['default_federation'];
             });
 

@@ -83,7 +83,7 @@ class ProvisionService extends BaseService
     public function setUserModelQueries(array $aFilter) : void
     {
         $this->filterDataQuery($aFilter);
-        // $this->sortDataQuery($aFilter);
+        $this->sortDataQuery($aFilter);
     }
 
     private function filterDataQuery(array $aFilter) : void
@@ -91,24 +91,22 @@ class ProvisionService extends BaseService
         if (isset($aFilter['local_union_id'])) {
             $this->oModelBuilder = Provision::with($this->aRelationShips);
             $this->oModelBuilder->whereHas('localUnion', function($query) use ($aFilter) {
-                dd($aFilter['local_union_id']);
-                $query->where('federation_id', $aFilter['default_federation']);
-                $query->where('id', '=' . $aFilter['local_union_id']);
+                $query->where('federation_id', (int)$aFilter['default_federation']);
+                $query->where('id' , (int)$aFilter['local_union_id']);
             });
         }
         if (isset($aFilter['provision_type_id'])) {
             $this->oModelBuilder->whereHas('provisionType', function($query) use ($aFilter) {
-                $query->where('id', '=' . $aFilter['provision_type_id']);
+                $query->where('id', $aFilter['provision_type_id']);
             });
         }
-        dd($this->oModelBuilder->toSql());
     }
 
     private function sortDataQuery(array $aFilter) : void
     {
         $aColumns = [
-            'lu_island_groups.island_description.island_group_id',
-            'id',
+            'local_unions.name.local_union_id',
+            'lu_provision_types.description.provision_type_id',
         ];
         
         $iColumnNumber = 0;

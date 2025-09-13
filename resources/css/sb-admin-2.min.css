@@ -2187,7 +2187,7 @@ pre code {
 }
 
 .form-control:disabled,
-.form-control[readonly] {
+.form-control[readonly]:not(.flatpickr-input) {
 	background-color: #eaecf4;
 	opacity: 1
 }

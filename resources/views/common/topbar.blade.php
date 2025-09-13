@@ -87,6 +87,11 @@
                 <span class="mr-2">Users</span>
             </a>
         </li>
+        <li class="nav-item d-none d-lg-inline {{ $top_menu === 'finance' ? 'active' : '' }}" id="nav-local-unions">
+            <a class="nav-link " href="{{ route('admin.finance') }}">
+                <span class="mr-2">Finance</span>
+            </a>
+        </li>
         
         <!-- Nav Item - Menus (Visible only on small screens) -->
         <li class="nav-item dropdown no-arrow d-lg-none " id="nav-menus">
@@ -106,6 +111,9 @@
                 </a>
                 <a class="dropdown-item {{ $top_menu === 'users' ? 'active' : '' }}" href="{{ route('admin.users') }}">
                     <span>Users</span>
+                </a>
+                <a class="dropdown-item {{ $top_menu === 'finance' ? 'active' : '' }}" href="{{ route('admin.finance') }}">
+                    <span>Finance</span>
                 </a>
             </div>
         </li>

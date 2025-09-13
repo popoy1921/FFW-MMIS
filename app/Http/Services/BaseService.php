@@ -71,7 +71,7 @@ class BaseService
 
         $this->oModelBuilder->join($sForeignTableName, $sForiegnIdField, '=', $sCurrentTableField);
         $this->oModelBuilder->orderBy($sSortingFieldName, $sDirection);
-        dump($this->oModelBuilder->toSql());
+        $this->oModelBuilder->select($sCurrentTableName . '.*' , $sSortingFieldName);
     }
     
     /**
