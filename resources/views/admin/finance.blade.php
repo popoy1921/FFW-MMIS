@@ -60,27 +60,14 @@
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
-                </thead>                                    
+                </thead> 
             </table>
         </div> -->
     </div>
 </div>
 
-<!-- Templates -->
-
-<a class="btn btn-sm btn-success update-status deactivate template" title="Update Status" href="#">
-    <i class="fa fa-pencil" aria-hidden="true"></i>
-</a>
-
-<a class="btn btn-sm btn-success update-status activate template" title="Update Status" href="#">
-    <i class="fa fa-pencil" aria-hidden="true"></i>
-</a>
-
-<!-- End of -Templates -->
 @endsection
 
 @section('javascript')
-    @include('admin.activate-federation-form')
-    @include('admin.deactivate-federation-form')
-    @vite('resources/js/admin/trade-federations.js')
+    @vite('resources/js/admin/finance.js')
 @endsection
