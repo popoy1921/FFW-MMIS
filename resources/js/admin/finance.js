@@ -1,14 +1,22 @@
+import axios from 'axios';
 $(document).ready(function() {
     console.log(1);
     $('.cb-search-container').on('change', '[name="federation_id"]', function() {
         let iFeddeartionId = $(this).val();
+        populateLocalUnions(iFeddeartionId);
         console.log(iFeddeartionId);
     });
 
-    async function populateLocalUnions() {
+    async function populateLocalUnions(iFeddeartionId) {
         try {
-            const response = await axios.get('/');
-            console.log('Data received:', response.data);
+            const response = await axios.get('/api/local-union/getList?federation_id=' + iFeddeartionId);
+            var aLocalUnions = response.data;
+            var oLocalUnionSelect = $('select[name="local_union_id"');
+            oLocalUnionSelect.empty();
+            aLocalUnions.forEach(oLocalUnion => {
+                console.log(oLocalUnion);
+                oLocalUnionSelect.append(`<option value="${oLocalUnion.id}">${oLocalUnion.name}</option>`);
+            });
         } catch (error) {
             console.error('Error fetching data:', error);
         }

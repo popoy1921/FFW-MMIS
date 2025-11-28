@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProvisionTypesSeeder::class);
         $this->call(ProvisionsSeeder::class);
         $this->call(RegionsSeeder::class);
+        $this->call(RemmitanceSeeder::class);
         $this->call(UserAgeRangesSeeder::class);
         $this->call(UserRolesSeeder::class);
         $this->call(UsersSeeder::class);

@@ -8,61 +8,57 @@
 
 <!-- Content  -->
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <div class="cb-search-container">
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="federation_id">Trade Federation</label>
-                    <select name="federation_id" class="form-control">
-                        <option value=''>- Any -</option>
-                        @foreach($federations as $federation)
-                            <option value="{{ $federation->id }}">{{ $federation->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="local_union_id">Local Union</label>
-                    <select name="local_union_id" class="form-control">
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="from_date">From</label>
-                    <input name="from_date" class="form-control date-picker">
-                </div>
-                <div class="form-group col-md-3 mt-auto">
-                    <div class="btn-group w-100" role="group">
-                        <button id="federation-filter-submit" class="btn btn-primary w-50">Search</button>
-                        <button type="button" class="btn btn-secondary w-50" onclick="window.location.reload();">Reset</button>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-3 mt-auto">
-                    <div class="btn-group w-100" role="group">
-                        <button id="federation-filter-submit" class="btn btn-primary w-50">Search</button>
-                        <button type="button" class="btn btn-secondary w-50" onclick="window.location.reload();">Reset</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="card-body">
-        <!-- <div class="text-right">
-            <a class="btn btn-primary" href="{{ route('admin.add-federations') }}">Add Trade Federation</a>    
+        <div class="card-header py-3">
+            <div class="cb-search-container">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="federation_id">Trade Federation</label>
+                        <select name="federation_id" class="form-control">
+                            <option value=''>- Any -</option>
+                            @foreach($federations as $federation)
+                                <option value="{{ $federation->id }}">{{ $federation->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="local_union_id">Local Union</label>
+                        <select name="local_union_id" class="form-control">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="from_date">From</label>
+                        <input name="from_date" class="form-control date-picker">
+                    </div>                    
+                    <div class="form-group col-md-3">
+                        <label for="to_date">To</label>
+                        <input name="to_date" class="form-control date-picker">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3 mt-auto">
+                        <div class="btn-group w-100" role="group">
+                            <button id="federation-filter-submit" class="btn btn-primary w-50">Search</button>
+                            <button type="button" class="btn btn-secondary w-50" onclick="window.location.reload();">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="table-responsive">
             <table id="trade-federations-datatable" class="table table-bordered table-hover my-3" width="100%" cellspacing="0" reference="{{ route('api.federation.list') }}">
                 <thead>
                     <tr>
-                        <th>Category</th>
-                        <th>Trade Federation Name</th>
-                        <th>Total Number of Local Unions</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Trade Federation</th>
+                        <th>Local Union</th>
+                        <th>Monthly Dues Remittance</th>
+                        <th>Date Paid</th>
+                        <th>Action</th>
                     </tr>
                 </thead> 
             </table>
-        </div> -->
+        </div>
     </div>
 </div>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FederationController;
+use App\Http\Controllers\LocalUnionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FederationOfficerController;
 use App\Http\Controllers\ProvisionController;
@@ -29,3 +30,4 @@ Route::get('/federation/getList', [FederationController::class, 'getList'])->nam
 Route::get('/federation-officer/getList', [FederationOfficerController::class, 'getList'])->name('api.federation-officers.list');
 Route::get('/federation-distribution/getList', [RegionalDistributionController::class, 'getList'])->name('api.regional-distribution.list');
 Route::get('/provision/getList', [ProvisionController::class, 'getList'])->name('api.provision.list');
+Route::get('/local-union/getList', [LocalUnionController::class, 'getList'])->name('api.localunion.list');
